@@ -1,6 +1,6 @@
 # UssElement 
 
-A PHP Library for Effortless HTML Generation
+A PHP Library for Effortless HTML Generation (Package From [User Synthetics](https://github.com/ucscode/user-synthetics))
 
 ### Description:
 
