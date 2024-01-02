@@ -33,27 +33,40 @@ composer require ucscode/uss-element
 ```php
 use Ucscode\UssElement\UssElement;
 
-// Create a new UssElement instance for a div element
+// Create Elements
+
 $div = new UssElement(UssElement::NODE_DIV);
-
-// Set div attributes
-$div->setAttribute('class', 'container');
-
-// Create a new UssElement instance for a span element
 $span = new UssElement(UssElement::NODE_SPAN);
 
-// Set span attribute
-$span->setAttribute('style', "color: red;");
+// Modify Elements
 
-// Set inner HTML content
+$div->setAttribute('class', 'container');
+$span->setAttribute('style', "color: red;");
 $span->setContent("Hello world!");
 
-// Append Child
+// Organize Element
+
 $div->appendChild($span);
 
 // Generate and output HTML string
+
 echo $div->getHTML(true); // true to indent html output
 ```
+
+## Inquiry
+
+But why use this over the default PHP `DOMDocument`? <br>
+
+UssElement not only provides out of the box methods and concept but is prepared for ultimate future increase. The default DOMDocument uses methods that are similar to that of Javascript and nothing more. There are also maximized limitation like being unable to directly insert `innerHTML` into your document context.
+
+With UssElement, you can do all that and even more. For example, you can set the visibility of an element to render with other element or not.
+
+```php
+$div->appendChild($span);
+$span->setInvisible(true);
+```
+
+In the above example, span is a child of div and always will be unless removed. However, when the content is rendered in HTML, the span element will be absent, giving you the ability to control the element visiblity without actually removing the element.
 
 ## Methods
 
