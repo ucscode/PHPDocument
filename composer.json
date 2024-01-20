@@ -1,0 +1,23 @@
+{
+    "name": "ucscode/uss-element",
+    "description": "UssElement is a PHP library for building and manipulating HTML elements programmatically.",
+    "keywords": ["php", "html", "dom", "element", "library"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Uchenna Ajah",
+            "email": "uche23mail@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ucscode\\UssElement\\": "src/"
+        }
+    },
+    "minimum-stability": "RC",
+    "prefer-stable": true
+}
