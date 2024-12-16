@@ -90,10 +90,6 @@ class NodeList extends AbstractCollection
     {
         $node->getParentElement()?->removeChild($node);
 
-        if ($this->exists($node) && !$this->isFirst($node)) {
-            $this->remove($node);
-        }
-
         array_unshift($this->items, $node);
 
         return $this;
@@ -108,10 +104,6 @@ class NodeList extends AbstractCollection
     public function append(NodeInterface $node): static
     {
         $node->getParentElement()?->removeChild($node);
-
-        if ($this->exists($node) && !$this->isLast($node)) {
-            $this->remove($node);
-        }
 
         array_push($this->items, $node);
 

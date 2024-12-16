@@ -65,37 +65,55 @@ class ElementNodeTest extends TestCase
 
         $this->assertTrue($this->getNodeForm()->hasChild($this->getNodeH1()));
 
-        $newNode = new ElementNode(NodeEnum::NODE_SELECT);
+        $selectNode = new ElementNode(NodeEnum::NODE_SELECT);
 
-        $this->getNodeForm()->replaceChild($newNode, $this->getNodeH1());
+        $this->getNodeForm()->replaceChild($selectNode, $this->getNodeH1());
 
         $this->assertFalse($this->getNodeForm()->hasChild($this->getNodeH1()));
-        $this->assertTrue($this->getNodeForm()->hasChild($newNode));
+        $this->assertTrue($this->getNodeForm()->hasChild($selectNode));
         $this->assertCount(5, $this->getNodeForm()->getChildNodes());
-        $this->assertSame($newNode->getPreviousSibling(), $this->getNodeButton());
+        $this->assertSame($selectNode->getPreviousSibling(), $this->getNodeButton());
 
-        $newNode->moveToFirst();
+        $selectNode->moveToFirst();
 
-        $this->assertSame($this->getNodeForm()->getFirstChild(), $newNode);
+        $this->assertSame($this->getNodeForm()->getFirstChild(), $selectNode);
 
-        $newNode->moveToLast();
+        $selectNode->moveToLast();
 
-        $this->assertSame($this->getNodeForm()->getLastChild(), $newNode);
+        $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
 
-        $newNode->moveToIndex(3);
+        $selectNode->moveToIndex(3);
 
-        $this->assertSame($this->getNodeForm()->getChildNodes()->get(3), $newNode);
+        $this->assertSame($this->getNodeForm()->getChildNodes()->get(3), $selectNode);
 
-        $newNode->moveBefore($this->getNodeImg());
+        $selectNode->moveBefore($this->getNodeImg());
 
-        var_dump(array_map(fn ($value) => $value->getNodeName(), $this->getNodeForm()->getChildNodes()->toArray()));
+        $this->assertSame($selectNode->getNextSibling(), $this->getNodeImg());
 
-        $this->assertSame($newNode->getNextSibling(), $this->getNodeImg());
+        $selectNode->moveAfter($this->getNodeImg());
 
-        $newNode->moveAfter($this->getNodeImg());
+        $this->assertSame($selectNode->getPreviousSibling(), $this->getNodeImg());
 
-        var_dump(array_map(fn ($value) => $value->getNodeName(), $this->getNodeForm()->getChildNodes()->toArray()));
+        $this->getNodeForm()->sortChildNodes(function ($a, $b) {
+            return strcmp($a->getNodeName(), $b->getNodeName());
+        });
 
-        $this->assertSame($newNode->getPreviousSibling(), $this->getNodeImg());
+        $this->assertSame($this->getNodeForm()->getFirstChild(), $this->getNodeBr());
+        $this->assertSame($this->getNodeForm()->getChild(1), $this->getNodeButton());
+        $this->assertSame($this->getNodeForm()->getChild(2), $this->getNodeImg());
+        $this->assertSame($this->getNodeForm()->getChild(3), $this->getNodeInput());
+        $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
+    }
+
+    public function testElementLogic(): void
+    {
+
+    }
+
+    protected function summarize(NodeInterface $node): void
+    {
+        $names = array_map(fn ($node) => $node->getNodeName(), $node->getChildNodes()->toArray());
+
+        var_dump($names);
     }
 }

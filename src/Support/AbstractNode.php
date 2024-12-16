@@ -87,9 +87,19 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->childNodes->first();
     }
 
+    public function isFirstChild(NodeInterface $node): bool
+    {
+        return $this->childNodes->isFirst($node);
+    }
+
     public function getLastChild(): ?NodeInterface
     {
         return $this->childNodes->last();
+    }
+
+    public function isLastChild(NodeInterface $node): bool
+    {
+        return $this->childNodes->isLast($node);
     }
 
     /**
@@ -141,13 +151,19 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->childNodes->exists($node);
     }
 
+    public function getChild(int $offset): ?NodeInterface
+    {
+        return $this->childNodes->get($offset);
+    }
+
     /**
      * @param static $newNode
      */
     public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
-        if (false !== $key = $this->childNodes->indexOf($referenceNode)) {
-            $this->insertChild($key, $newNode);
+        if ($this->hasChild($referenceNode)) {
+            $this->removeChild($newNode); // reset the node keys
+            $this->insertChild($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
         return $this;
@@ -158,7 +174,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
-        if (false !== $key = $this->childNodes->indexOf($referenceNode)) {
+        if ($this->hasChild($referenceNode)) {
+            $this->removeChild($newNode); // reset the node keys
+            $key = $this->childNodes->indexOf($referenceNode);
             $this->insertChild($key + 1, $newNode);
         }
 

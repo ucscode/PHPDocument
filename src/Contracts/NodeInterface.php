@@ -93,11 +93,27 @@ interface NodeInterface
     public function getFirstChild(): ?NodeInterface;
 
     /**
+     * Verify that the specified node is first in the list
+     *
+     * @param NodeInterface $node
+     * @return boolean
+     */
+    public function isFirstChild(NodeInterface $node): bool;
+
+    /**
      * Returns a Node representing the last direct child node of the node, or null if the node has no child.
      *
      * @return NodeInterface|null
      */
     public function getLastChild(): ?NodeInterface;
+
+    /**
+     * Verify that the specified node is last in the list
+     *
+     * @param NodeInterface $node
+     * @return boolean
+     */
+    public function isLastChild(NodeInterface $node): bool;
 
     /**
      * Returns a Node representing the next node in the tree, or null if there isn't such node.
@@ -147,6 +163,14 @@ interface NodeInterface
      * @return boolean
      */
     public function hasChild(NodeInterface $node): bool;
+
+    /**
+     * Get a child node from the Nodelist
+     *
+     * @param integer $offset
+     * @return NodeInterface|null
+     */
+    public function getChild(int $offset): ?NodeInterface;
 
     /**
      * Removes a child node from the current element, which must be a child of the current node.
