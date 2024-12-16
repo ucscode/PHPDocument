@@ -2,31 +2,36 @@
 
 namespace Ucscode\PHPDocument\Support;
 
-use Ucscode\Element\Enums\NodeNameEnum;
+use Ucscode\PHPDocument\Enums\NodeEnum;
 use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 
+/**
+ * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
+ */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
     abstract public function getNodeType(): int;
 
     protected string $nodeName;
+    protected bool $visible = true;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
+
     /**
      * @var NodeList<int, NodeInterface>
      */
     protected NodeList $childNodes;
-    protected bool $visible = true;
 
-    public function __construct(string|NodeNameEnum $nodeName)
+    public function __construct(string|NodeEnum $nodeName)
     {
-        if ($nodeName instanceof NodeNameEnum) {
+        if ($nodeName instanceof NodeEnum) {
             $nodeName = $nodeName->value;
         }
 
         $this->nodeName = strtoupper($nodeName);
+        $this->childNodes = new NodeList();
         $this->nodePresets();
     }
 
@@ -35,11 +40,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->render();
     }
 
-    /**
-     * Return the name of the current node
-     *
-     * @return string
-     */
     public function getNodeName(): string
     {
         return $this->nodeName;
@@ -69,7 +69,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function getChildNodes(): NodeList
     {
-        return $this->childNodes->getReplica();
+        return new NodeList($this->childNodes->toArray());
     }
 
     public function getNextSibling(): ?NodeInterface
@@ -82,20 +82,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->getSibling(-1);
     }
 
-    public function prependChild(NodeInterface $node): static
-    {
-        $this->childNodes->prepend($node);
-
-        return $this;
-    }
-
-    public function appendChild(NodeInterface $node): static
-    {
-        $this->childNodes->append($node);
-
-        return $this;
-    }
-
     public function getFirstChild(): ?NodeInterface
     {
         return $this->childNodes->first();
@@ -106,26 +92,74 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->childNodes->last();
     }
 
-    public function insertChild(int $offset, NodeInterface $node): static
+    /**
+     * @param static $node
+     */
+    public function prependChild(NodeInterface $node): static
     {
-        $this->childNodes->insertAt($offset, $node);
+        $this->childNodes->prepend($node);
+        $node->setParentNode($this);
 
         return $this;
     }
 
+    /**
+     * @param static $node
+     */
+    public function appendChild(NodeInterface $node): static
+    {
+        $this->childNodes->append($node);
+        $node->setParentNode($this);
+
+        return $this;
+    }
+
+    /**
+     * @param static $node
+     */
+    public function insertChild(int $offset, NodeInterface $node): static
+    {
+        $this->childNodes->insertAt($offset, $node);
+        $node->setParentNode($this);
+
+        return $this;
+    }
+
+    /**
+     * @param static $node
+     */
+    public function removeChild(NodeInterface $node): static
+    {
+        $this->childNodes->remove($node);
+        $node->setParentNode(null);
+
+        return $this;
+    }
+
+    public function hasChild(NodeInterface $node): bool
+    {
+        return $this->childNodes->exists($node);
+    }
+
+    /**
+     * @param static $newNode
+     */
     public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
         if (false !== $key = $this->childNodes->indexOf($referenceNode)) {
-            $this->childNodes->insertAt($key, $newNode);
+            $this->insertChild($key, $newNode);
         }
 
         return $this;
     }
 
+    /**
+     * @param static $newNode
+     */
     public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
         if (false !== $key = $this->childNodes->indexOf($referenceNode)) {
-            $this->childNodes->insertAt($key + 1, $newNode);
+            $this->insertChild($key + 1, $newNode);
         }
 
         return $this;
@@ -135,13 +169,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         $this->insertBefore($newNode, $oldNode);
         $this->removeChild($oldNode);
-
-        return $this;
-    }
-
-    public function removeChild(NodeInterface $node): static
-    {
-        $this->childNodes->remove($node);
 
         return $this;
     }
@@ -183,6 +210,40 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         }
 
         return $this;
+    }
+
+    public function moveToFirst(): static
+    {
+        $this->parentNode?->prependChild($this);
+
+        return $this;
+    }
+
+    public function moveToLast(): static
+    {
+        $this->parentNode?->appendChild($this);
+
+        return $this;
+    }
+
+    public function moveToIndex(int $index): static
+    {
+        $this->parentNode?->insertChild($index, $this);
+
+        return $this;
+    }
+
+    /**
+     * @param NodeInterface $parentNode
+     * @return void
+     */
+    protected function setParentNode(?NodeInterface $parentNode): void
+    {
+        $this->parentNode = $parentNode;
+
+        if ($parentNode instanceof ElementInterface) {
+            $this->parentElement = $parentNode;
+        }
     }
 
     /**

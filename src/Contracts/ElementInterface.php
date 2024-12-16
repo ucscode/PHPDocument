@@ -4,7 +4,7 @@ namespace Ucscode\PHPDocument\Contracts;
 
 use Ucscode\PHPDocument\Collection\NodeList;
 
-interface ElementInterface
+interface ElementInterface extends NodeInterface
 {
     public function setInnerHtml(string $innerHTML): static;
     public function getInnerHtml(): string;
@@ -12,4 +12,5 @@ interface ElementInterface
     public function isVoid(): bool;
     public function getOpenTag(): string;
     public function getCloseTag(): ?string;
+    public function getChildren(): NodeList;
 }

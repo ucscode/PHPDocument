@@ -4,13 +4,13 @@ namespace Ucscode\PHPDocument\Enums;
 
 enum NodeTypeEnum: int
 {
-    case ELEMENT_NODE = 1;
-    case ATTRIBUTE_NODE = 2;
-    case TEXT_NODE = 3;
-    case CDATA_SECTION_NODE = 4;
-    case PROCESSING_INSTRUCTION_NODE = 7;
-    case COMMENT_NODE = 8;
-    case DOCUMENT_NODE = 9;
-    case DOCUMENT_TYPE_NODE = 10;
-    case DOCUMENT_FRAGMENT_NODE = 11;
+    case NODE_ELEMENT = 1;
+    case NODE_ATTRIBUTE = 2;
+    case NODE_TEXT = 3;
+    case NODE_CDATA_SECTION = 4;
+    case NODE_PROCESSING_INSTRUCTION = 7;
+    case NODE_COMMENT = 8;
+    case NODE_DOCUMENT = 9;
+    case NODE_DOCUMENT_TYPE = 10;
+    case NODE_DOCUMENT_FRAGMENT = 11;
 }

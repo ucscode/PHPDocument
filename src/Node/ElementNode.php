@@ -2,8 +2,9 @@
 
 namespace Ucscode\PHPDocument\Node;
 
-use Ucscode\Element\Enums\NodeNameEnum;
+use Ucscode\PHPDocument\Enums\NodeEnum;
 use Ucscode\PHPDocument\Collection\Attributes;
+use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 use Ucscode\PHPDocument\Enums\NodeTypeEnum;
@@ -27,7 +28,7 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function getNodeType(): int
     {
-        return NodeTypeEnum::ELEMENT_NODE->value;
+        return NodeTypeEnum::NODE_ELEMENT->value;
     }
 
     public function render(): string
@@ -72,12 +73,20 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->isVoid() ? null : sprintf('</%s>', strtolower($this->nodeName));
     }
 
+    public function getChildren(): NodeList
+    {
+        return $this->childNodes->filter(
+            fn (NodeInterface $node) => $node->getNodeType() === NodeTypeEnum::NODE_ELEMENT->value
+        );
+    }
+
     protected function nodePresets(): void
     {
         $this->tagName = $this->nodeName;
-
-        $voidCasesStringMap = array_map(fn (NodeNameEnum $enum) => $enum->value, NodeNameEnum::voidCases());
-
-        $this->void = in_array($this->nodeName, $voidCasesStringMap);
+        $this->attributes = new Attributes();
+        $this->void = in_array(
+            $this->nodeName,
+            array_map(fn (NodeEnum $enum) => $enum->value, NodeEnum::voidCases())
+        );
     }
 }

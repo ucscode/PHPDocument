@@ -7,6 +7,20 @@ use Ucscode\PHPDocument\Collection\NodeList;
 interface NodeInterface
 {
     /**
+     * Return the name of the current node
+     *
+     * @return string
+     */
+    public function getNodeName(): string;
+
+    /**
+     * Return the node identifier
+     *
+     * @return integer
+     */
+    public function getNodeType(): int;
+
+    /**
      * Set the visibility status of a node
      *
      * If the node visibility is set to `false`, it will not be attached as member of the node when converted to HTML
@@ -51,7 +65,7 @@ interface NodeInterface
     /**
      * Returns a NodeList containing all the children of this node (including elements, text and comments).
      *
-     * @return NodeList
+     * @return NodeList<NodeInterface>
      */
     public function getChildNodes(): NodeList;
 
@@ -127,6 +141,14 @@ interface NodeInterface
     public function insertChild(int $offset, NodeInterface $node): static;
 
     /**
+     * Verify that a node has the provided child node
+     *
+     * @param NodeInterface $node
+     * @return boolean
+     */
+    public function hasChild(NodeInterface $node): bool;
+
+    /**
      * Removes a child node from the current element, which must be a child of the current node.
      *
      * @param NodeInterface $node
@@ -180,4 +202,25 @@ interface NodeInterface
      * @return static
      */
     public function moveAfter(NodeInterface $siblingNode): static;
+
+    /**
+     * Move the current node to the first position of the its relative sibling nodes
+     *
+     * @return static
+     */
+    public function moveToFirst(): static;
+
+    /**
+     * Move the current node to the last position of its relative sibling nodes
+     *
+     * @return static
+     */
+    public function moveToLast(): static;
+
+    /**
+     * Move the current node to a specific position within its sibling nodes
+     *
+     * @return static
+     */
+    public function moveToIndex(int $index): static;
 }

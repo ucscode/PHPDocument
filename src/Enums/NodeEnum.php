@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\Element\Enums;
+namespace Ucscode\PHPDocument\Enums;
 
-enum NodeNameEnum: string
+enum NodeEnum: string
 {
     case NODE_A = 'A';
     case NODE_ABBR = 'ABBR';
@@ -149,7 +149,7 @@ enum NodeNameEnum: string
      *
      * The returned enums are those that do not have closing tags
      *
-     * @return array<NodeNameEnum>
+     * @return array<NodeEnum>
      */
     public static function voidCases(): array
     {

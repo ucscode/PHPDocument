@@ -9,9 +9,11 @@ class TextNode extends AbstractNode
 {
     protected string $value = '';
 
-    public function __construct()
+    public function __construct(string $text = '')
     {
         parent::__construct('#text');
+
+        $this->value = $text;
     }
 
     public function render(): string
@@ -21,6 +23,6 @@ class TextNode extends AbstractNode
 
     public function getNodeType(): int
     {
-        return NodeTypeEnum::TEXT_NODE->value;
+        return NodeTypeEnum::NODE_TEXT->value;
     }
 }

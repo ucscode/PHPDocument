@@ -69,11 +69,13 @@ class NodeList extends AbstractCollection
      */
     public function insertAt(int $index, NodeInterface $node): static
     {
+        $node->getParentElement()?->removeChild($node);
+
         if ($this->exists($node)) {
             $this->remove($node);
         }
 
-        array_splice($this->items, $index, 0, $node);
+        array_splice($this->items, $index, 0, [$node]);
 
         return $this;
     }
@@ -86,6 +88,8 @@ class NodeList extends AbstractCollection
      */
     public function prepend(NodeInterface $node): static
     {
+        $node->getParentElement()?->removeChild($node);
+
         if ($this->exists($node) && !$this->isFirst($node)) {
             $this->remove($node);
         }
@@ -103,6 +107,8 @@ class NodeList extends AbstractCollection
      */
     public function append(NodeInterface $node): static
     {
+        $node->getParentElement()?->removeChild($node);
+
         if ($this->exists($node) && !$this->isLast($node)) {
             $this->remove($node);
         }

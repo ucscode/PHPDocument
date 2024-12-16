@@ -11,16 +11,6 @@ abstract class AbstractCollection implements CollectionInterface
 
     }
 
-    /**
-     * Return the same values with a different wrapper
-     *
-     * @return static
-     */
-    public function getReplica(): static
-    {
-        return new static($this->items);
-    }
-
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->items);
@@ -85,6 +75,17 @@ abstract class AbstractCollection implements CollectionInterface
     public function map(callable $callback): static
     {
         return new static(array_map($callback, $this->items));
+    }
+
+    /**
+     * Return a filtered list of elements
+     *
+     * @param callable $callback
+     * @return static
+     */
+    public function filter(callable $callback): static
+    {
+        return new static(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }
 
     public function offsetExists(mixed $offset): bool
