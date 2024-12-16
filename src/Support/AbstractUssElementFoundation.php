@@ -3,9 +3,9 @@
 namespace Ucscode\UssElement\Abstract;
 
 use Ucscode\UssElement\Interface\UssElementInterface;
-use Ucscode\UssElement\Interface\UssElementNodeListInterface;
+use Ucscode\UssElement\Interface\NodeListInterface;
 
-abstract class AbstractUssElementFoundation implements UssElementInterface, UssElementNodeListInterface
+abstract class AbstractUssElementFoundation implements UssElementInterface, NodeListInterface
 {
     public readonly string $tagName;
     public readonly string $nodeName;
@@ -53,7 +53,7 @@ abstract class AbstractUssElementFoundation implements UssElementInterface, UssE
         $this->void = in_array($this->nodeName, $this->voidTags);
         return $this;
     }
-    
+
     protected function setParent(UssElementInterface $parent): void
     {
         $this->parentElement = $parent;

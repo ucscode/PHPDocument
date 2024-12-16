@@ -67,7 +67,7 @@ abstract class AbstractUssElementChildCatalyst extends AbstractUssElementParser
     public function replaceChild(UssElementInterface $child, UssElementInterface $reference): self
     {
         $key = array_search($reference, $this->children, true);
-        if($key !== false) {
+        if ($key !== false) {
             $child = $this->inspectChild($child, __METHOD__);
             $this->children[$key] = $child;
         }
@@ -115,7 +115,7 @@ abstract class AbstractUssElementChildCatalyst extends AbstractUssElementParser
     public function removeChild(UssElementInterface $child): void
     {
         $key = array_search($child, $this->children, true);
-        if($key !== false) {
+        if ($key !== false) {
             unset($this->children[$key]);
             $this->children = array_values($this->children);
         };
@@ -138,7 +138,7 @@ abstract class AbstractUssElementChildCatalyst extends AbstractUssElementParser
      */
     protected function insertAtReferenceIndex(UssElementInterface $child, UssElementInterface $reference, int $index = 0): self
     {
-        if(array_search($reference, $this->children, true) !== false) {
+        if (array_search($reference, $this->children, true) !== false) {
             $child = $this->inspectChild($child, __METHOD__);
             $key = array_search($reference, $this->children, true);
             array_splice($this->children, ($key + $index), 0, [$child]);
@@ -152,12 +152,12 @@ abstract class AbstractUssElementChildCatalyst extends AbstractUssElementParser
      */
     protected function inspectChild(AbstractUssElementFoundation $child, string $method): UssElementInterface
     {
-        if($this === $child) {
+        if ($this === $child) {
             $errorContext = sprintf("Trying to add self as child in %s", $method);
             throw new Exception($errorContext);
         };
         $key = array_search($child, $this->children, true);
-        if($key !== false) {
+        if ($key !== false) {
             array_splice($this->children, $key, 1);
             $this->children = array_values($this->children);
         };

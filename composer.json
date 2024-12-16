@@ -15,9 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Ucscode\\UssElement\\": "src/"
+            "Ucscode\\PHPDocument\\": "src/",
+            "Ucscode\\PHPDocument\\Test\\": "tests/"
         }
     },
     "minimum-stability": "RC",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    }
 }

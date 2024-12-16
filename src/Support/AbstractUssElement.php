@@ -9,7 +9,7 @@ abstract class AbstractUssElement extends AbstractUssElementChildCatalyst
         $debugInfo = [];
         $hiddenProperties = ['parentElement', 'voidTags'];
         foreach ($this as $property => $value) {
-            if(!in_array($property, $hiddenProperties)) {
+            if (!in_array($property, $hiddenProperties)) {
                 $value = $property == 'children' ? count($value) : $value;
                 $debugInfo[$property] = $value;
             }
