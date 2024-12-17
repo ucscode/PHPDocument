@@ -109,10 +109,10 @@ class ElementNodeTest extends TestCase
         };
     }
 
-    // public function testElementLogic(): void
-    // {
-
-    // }
+    public function testElementAttributes(): void
+    {
+        $this->assertTrue($this->getNodeBody()->attributes->has('id'));
+    }
 
     protected function summarize(NodeInterface $node): void
     {

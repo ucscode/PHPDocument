@@ -15,13 +15,9 @@ class MutableNodeList extends NodeList
      */
     public function insertAt(int $index, NodeInterface $node): static
     {
-        $node->getParentElement()?->removeChild($node);
-
-        if ($this->exists($node)) {
-            $this->remove($node);
+        if ($this->mutateNode($node)) {
+            array_splice($this->items, $index, 0, [$node]);
         }
-
-        array_splice($this->items, $index, 0, [$node]);
 
         return $this;
     }
@@ -34,9 +30,9 @@ class MutableNodeList extends NodeList
      */
     public function prepend(NodeInterface $node): static
     {
-        $node->getParentElement()?->removeChild($node);
-
-        array_unshift($this->items, $node);
+        if ($this->mutateNode($node)) {
+            array_unshift($this->items, $node);
+        }
 
         return $this;
     }
@@ -49,9 +45,9 @@ class MutableNodeList extends NodeList
      */
     public function append(NodeInterface $node): static
     {
-        $node->getParentElement()?->removeChild($node);
-
-        array_push($this->items, $node);
+        if ($this->mutateNode($node)) {
+            array_push($this->items, $node);
+        }
 
         return $this;
     }
@@ -71,5 +67,15 @@ class MutableNodeList extends NodeList
         }
 
         return $this;
+    }
+
+    private function mutateNode(NodeInterface $node): bool
+    {
+        if ($node->getParentElement() !== $node) {
+            $node->getParentElement()?->removeChild($node);
+            return true;
+        }
+
+        return false;
     }
 }

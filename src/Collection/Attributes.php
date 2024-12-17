@@ -161,7 +161,9 @@ class Attributes extends AbstractCollection implements \Stringable
 
     protected function validateItemType(mixed $item)
     {
-        if (!is_string($item)) {
+        $stringable = is_null($item) || is_scalar($item) || (is_object($item) && method_exists($item, '__toString'));
+
+        if (!$stringable) {
             throw new InvalidAttributeException(
                 sprintf(InvalidAttributeException::ATTRIBUTE_VALUE_EXCEPTION, gettype($item))
             );

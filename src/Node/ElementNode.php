@@ -12,13 +12,15 @@ use Ucscode\PHPDocument\Support\AbstractNode;
 
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    protected Attributes $attributes;
+    public readonly Attributes $attributes;
     protected bool $void;
     protected string $tagName;
 
-    public function getAttributes(): Attributes
+    public function __construct(string|NodeEnum $nodeName, array $attributes = [])
     {
-        return $this->attributes;
+        parent::__construct($nodeName);
+
+        $this->nodePresets($attributes);
     }
 
     public function getTagName(): string
@@ -83,10 +85,10 @@ class ElementNode extends AbstractNode implements ElementInterface
         return new HtmlCollection($filter);
     }
 
-    protected function nodePresets(): void
+    private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
-        $this->attributes = new Attributes();
+        $this->attributes = new Attributes($attributes);
         $this->void = in_array(
             $this->nodeName,
             array_map(fn (NodeEnum $enum) => $enum->value, NodeEnum::voidCases())

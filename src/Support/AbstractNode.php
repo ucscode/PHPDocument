@@ -33,7 +33,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         $this->nodeName = strtoupper($nodeName);
         $this->childNodes = new MutableNodeList();
-        $this->nodePresets();
     }
 
     public function __toString(): string
@@ -266,16 +265,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         if ($parentNode instanceof ElementInterface) {
             $this->parentElement = $parentNode;
         }
-    }
-
-    /**
-     * Do custom constructor configuration if you do not want to modify the default constructor
-     *
-     * @return void
-     */
-    protected function nodePresets(): void
-    {
-        // Your preset logics
     }
 
     /**
