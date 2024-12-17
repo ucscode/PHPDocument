@@ -4,6 +4,7 @@ namespace Ucscode\PHPDocument\Node;
 
 use Ucscode\PHPDocument\Enums\NodeEnum;
 use Ucscode\PHPDocument\Collection\Attributes;
+use Ucscode\PHPDocument\Collection\ClassList;
 use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
@@ -12,6 +13,7 @@ use Ucscode\PHPDocument\Support\AbstractNode;
 
 class ElementNode extends AbstractNode implements ElementInterface
 {
+    public readonly ClassList $classList;
     protected Attributes $attributes;
     protected bool $void;
     protected string $tagName;
@@ -85,9 +87,36 @@ class ElementNode extends AbstractNode implements ElementInterface
         return new HtmlCollection($filter);
     }
 
+    public function getAttribute(string $name, \Stringable|string|null $default = null): ?string
+    {
+        return $this->attributes->get($name, $default);
+    }
+
+    public function hasAttribute(string $name): bool
+    {
+        return $this->attributes->has($name);
+    }
+
+    public function getAttributeNames(): array
+    {
+        return array_keys($this->attributes->toArray());
+    }
+
+    public function setAttribute(string $name, \Stringable|string|null $value): static
+    {
+        if (strtolower(trim($name)) === 'class' && $value !== $this->classList) {
+            $value = $this->classList->add($value ?? '');
+        }
+
+        $this->attributes->set($name, $value);
+
+        return $this;
+    }
+
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
+        $this->classList = new ClassList();
         $this->attributes = new Attributes($attributes);
         $this->void = in_array(
             $this->nodeName,

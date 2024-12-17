@@ -4,8 +4,13 @@ namespace Ucscode\PHPDocument\Collection;
 
 use Ucscode\PHPDocument\Support\AbstractCollection;
 
-class ClassList extends AbstractCollection
+class ClassList extends AbstractCollection implements \Stringable
 {
+    public function __toString(): string
+    {
+        return implode(' ', $this->items);
+    }
+
     /**
      * Add a class to the items if it does not exist
      *
@@ -14,7 +19,7 @@ class ClassList extends AbstractCollection
      */
     public function add(string $value): static
     {
-        
+
     }
 
     /**
@@ -30,7 +35,7 @@ class ClassList extends AbstractCollection
 
     /**
      * Replace an existing class with a new one
-     * 
+     *
      * If the previous class does not exists, add a new one
      *
      * @param string $previous
@@ -55,7 +60,7 @@ class ClassList extends AbstractCollection
 
     /**
      * Toggle a class
-     * 
+     *
      * If the class exists, remove it, otherwise, add it
      *
      * @param string $value
@@ -68,6 +73,6 @@ class ClassList extends AbstractCollection
 
     protected function validateItemType(mixed $item)
     {
-        
+
     }
 }

@@ -96,4 +96,9 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $this->items[$offset] = $value;
     }
+
+    protected function canBeString(mixed $item): bool
+    {
+        return is_null($item) || is_scalar($item) || $item instanceof \Stringable;
+    }
 }

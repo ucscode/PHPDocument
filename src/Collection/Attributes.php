@@ -20,11 +20,11 @@ class Attributes extends AbstractCollection implements \Stringable
      * Set or update an attribute.
      *
      * @param string $name The attribute name.
-     * @param string|null $value The attribute value. Null means the attribute has no value.
+     * @param \Stringable|string|null $value The attribute value. Null means the attribute has no value.
      */
-    public function set(string $name, ?string $value): static
+    public function set(string $name, \Stringable|string|null $value): static
     {
-        $this->items[$name] = $value;
+        $this->items[$this->revise($name)] = $value;
 
         return $this;
     }
@@ -37,7 +37,7 @@ class Attributes extends AbstractCollection implements \Stringable
      */
     public function has(string $name): bool
     {
-        return array_key_exists($name, $this->items);
+        return array_key_exists($this->revise($name), $this->items);
     }
 
     /**
@@ -46,9 +46,9 @@ class Attributes extends AbstractCollection implements \Stringable
      * @param string $name The attribute name.
      * @return string|null The attribute value, or null if the attribute does not exist.
      */
-    public function get(string $name, mixed $substitute = null): ?string
+    public function get(string $name, \Stringable|string|null $default = null): ?string
     {
-        return $this->items[$name] ?? $substitute;
+        return $this->items[$this->revise($name)] ?? $default;
     }
 
     /**
@@ -58,74 +58,21 @@ class Attributes extends AbstractCollection implements \Stringable
      */
     public function remove(string $name): static
     {
-        if (array_key_exists($name, $this->items)) {
-            unset($this->items[$name]);
+        if (array_key_exists($this->revise($name), $this->items)) {
+            unset($this->items[$this->revise($name)]);
         }
 
         return $this;
     }
 
     /**
-     * Prepend a value to an existing attribute.
+     * Get all the names available in the attribute
      *
-     * @param string $name The attribute name.
-     * @param string $value The value to prepend.
+     * @return array
      */
-    public function prependValue(string $name, ?string $value): static
+    public function getNames(): array
     {
-        $this->has($name) ?
-            $this->set($name, sprintf('%s %s', $value, $this->items[$name])) :
-            $this->set($name, $value)
-        ;
-
-        return $this;
-    }
-
-    /**
-     * Append a value to an existing attribute.
-     *
-     * @param string $name The attribute name.
-     * @param string $value The value to append.
-     */
-    public function appendValue(string $name, ?string $value): static
-    {
-        $this->has($name) ?
-            $this->set($name, sprintf('%s %s', $this->items[$name], $value)) :
-            $this->set($name, $value)
-        ;
-
-        return $this;
-    }
-
-    /**
-     * Check if an attribute has a value
-     *
-     * @param string $name
-     * @param string $value
-     * @return boolean
-     */
-    public function hasValue(string $name, string $value): bool
-    {
-        return in_array(trim($value), explode(' ', $this->get($name)));
-    }
-
-    /**
-     * Remove a value of an attribute.
-     *
-     * @param string $key The attribute name.
-     * @return string|null The attribute value, or null if the attribute does not exist.
-     */
-    public function removeValue(string $name, string $value): static
-    {
-        $valueArray = explode(' ', $this->get($name, ''));
-
-        if (false !== $key = array_search(trim($value), $valueArray)) {
-            unset($valueArray[$key]);
-
-            $this->set($name, implode(' ', $valueArray));
-        }
-
-        return $this;
+        return array_keys($this->items);
     }
 
     /**
@@ -150,20 +97,19 @@ class Attributes extends AbstractCollection implements \Stringable
     }
 
     /**
-     * Get all the names available in the attribute
+     * Trim and make a value case insensitive
      *
-     * @return array
+     * @param string $name
+     * @return string
      */
-    public function getNames(): array
+    private function revise(string $name): string
     {
-        return array_keys($this->items);
+        return strtolower(trim($name));
     }
 
     protected function validateItemType(mixed $item)
     {
-        $stringable = is_null($item) || is_scalar($item) || (is_object($item) && method_exists($item, '__toString'));
-
-        if (!$stringable) {
+        if (!$this->canBeString($item)) {
             throw new InvalidAttributeException(
                 sprintf(InvalidAttributeException::ATTRIBUTE_VALUE_EXCEPTION, gettype($item))
             );
