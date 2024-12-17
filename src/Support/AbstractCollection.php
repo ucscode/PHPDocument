@@ -6,9 +6,18 @@ use Ucscode\PHPDocument\Contracts\CollectionInterface;
 
 abstract class AbstractCollection implements CollectionInterface
 {
+    /**
+     * Validate the integrity of an item to retain an array of static types
+     *
+     * @param mixed $item The item to validate
+     */
+    abstract protected function validateItemType(mixed $item);
+
     public function __construct(protected array $items = [])
     {
-
+        foreach ($this->items as $item) {
+            $this->validateItemType($item);
+        }
     }
 
     public function getIterator(): \Traversable
@@ -64,28 +73,6 @@ abstract class AbstractCollection implements CollectionInterface
         usort($this->items, $callback);
 
         return $this;
-    }
-
-    /**
-     * Return a mapped version of the collection
-     *
-     * @param callable $callback
-     * @return static
-     */
-    public function map(callable $callback): static
-    {
-        return new static(array_map($callback, $this->items));
-    }
-
-    /**
-     * Return a filtered list of elements
-     *
-     * @param callable $callback
-     * @return static
-     */
-    public function filter(callable $callback): static
-    {
-        return new static(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }
 
     public function offsetExists(mixed $offset): bool

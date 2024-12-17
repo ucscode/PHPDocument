@@ -103,12 +103,16 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeForm()->getChild(2), $this->getNodeImg());
         $this->assertSame($this->getNodeForm()->getChild(3), $this->getNodeInput());
         $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
+
+        foreach ($this->getNodeForm()->getChildren() as $kid) {
+
+        };
     }
 
-    public function testElementLogic(): void
-    {
+    // public function testElementLogic(): void
+    // {
 
-    }
+    // }
 
     protected function summarize(NodeInterface $node): void
     {

@@ -2,7 +2,7 @@
 
 namespace Ucscode\PHPDocument\Contracts;
 
-use Ucscode\PHPDocument\Collection\NodeList;
+use Ucscode\PHPDocument\Collection\HtmlCollection;
 
 interface ElementInterface extends NodeInterface
 {
@@ -12,5 +12,5 @@ interface ElementInterface extends NodeInterface
     public function isVoid(): bool;
     public function getOpenTag(): string;
     public function getCloseTag(): ?string;
-    public function getChildren(): NodeList;
+    public function getChildren(): HtmlCollection;
 }

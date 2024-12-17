@@ -2,8 +2,13 @@
 
 namespace Ucscode\PHPDocument\Collection;
 
+use Ucscode\PHPDocument\Exception\InvalidAttributeException;
 use Ucscode\PHPDocument\Support\AbstractCollection;
 
+/**
+ * @template T
+ * @implements IteratorAggregate<string, string>
+ */
 class Attributes extends AbstractCollection implements \Stringable
 {
     public function __toString(): string
@@ -152,5 +157,14 @@ class Attributes extends AbstractCollection implements \Stringable
     public function getNames(): array
     {
         return array_keys($this->items);
+    }
+
+    protected function validateItemType(mixed $item)
+    {
+        if (!is_string($item)) {
+            throw new InvalidAttributeException(
+                sprintf(InvalidAttributeException::ATTRIBUTE_VALUE_EXCEPTION, gettype($item))
+            );
+        }
     }
 }

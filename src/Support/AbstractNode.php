@@ -2,6 +2,7 @@
 
 namespace Ucscode\PHPDocument\Support;
 
+use Ucscode\PHPDocument\Collection\MutableNodeList;
 use Ucscode\PHPDocument\Enums\NodeEnum;
 use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
@@ -20,9 +21,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected ?ElementInterface $parentElement = null;
 
     /**
-     * @var NodeList<int, NodeInterface>
+     * @var MutableNodeList<int, NodeInterface>
      */
-    protected NodeList $childNodes;
+    protected MutableNodeList $childNodes;
 
     public function __construct(string|NodeEnum $nodeName)
     {
@@ -31,7 +32,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         }
 
         $this->nodeName = strtoupper($nodeName);
-        $this->childNodes = new NodeList();
+        $this->childNodes = new MutableNodeList();
         $this->nodePresets();
     }
 
@@ -200,13 +201,16 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function cloneNode(bool $deep = false): NodeInterface
     {
-        $clone = new self($this->nodeName);
+        $clone = new static($this->nodeName);
         $clone->visible = true;
 
         if ($deep) {
-            $clone->childNodes = $this->childNodes->map(function (NodeInterface $node) {
-                return $node->cloneNode(true);
-            });
+            $childClones = array_map(
+                fn (NodeInterface $node) => $node->cloneNode(true),
+                $this->childNodes->toArray()
+            );
+
+            $clone->childNodes = new NodeList($childClones);
         }
 
         return $clone;

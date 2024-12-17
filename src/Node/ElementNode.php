@@ -4,7 +4,7 @@ namespace Ucscode\PHPDocument\Node;
 
 use Ucscode\PHPDocument\Enums\NodeEnum;
 use Ucscode\PHPDocument\Collection\Attributes;
-use Ucscode\PHPDocument\Collection\NodeList;
+use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 use Ucscode\PHPDocument\Enums\NodeTypeEnum;
@@ -73,11 +73,14 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->isVoid() ? null : sprintf('</%s>', strtolower($this->nodeName));
     }
 
-    public function getChildren(): NodeList
+    public function getChildren(): HtmlCollection
     {
-        return $this->childNodes->filter(
+        $filter = array_filter(
+            $this->childNodes->toArray(),
             fn (NodeInterface $node) => $node->getNodeType() === NodeTypeEnum::NODE_ELEMENT->value
         );
+
+        return new HtmlCollection($filter);
     }
 
     protected function nodePresets(): void
