@@ -12,7 +12,7 @@ use Ucscode\PHPDocument\Support\AbstractNode;
 
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    public readonly Attributes $attributes;
+    protected Attributes $attributes;
     protected bool $void;
     protected string $tagName;
 
