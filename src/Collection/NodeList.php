@@ -35,17 +35,6 @@ class NodeList extends AbstractCollection
     }
 
     /**
-     * Verify that the specified node is first in the list
-     *
-     * @param NodeInterface $node
-     * @return boolean
-     */
-    public function isFirst(NodeInterface $node): bool
-    {
-        return $this->indexOf($node) === 0;
-    }
-
-    /**
      * Get the last existing node or null if list is empty
      *
      * @return NodeInterface
@@ -53,17 +42,6 @@ class NodeList extends AbstractCollection
     public function last(): ?NodeInterface
     {
         return $this->isEmpty() ? null : $this->get($this->count() - 1);
-    }
-
-    /**
-     * Verify that the specified node is last in the list
-     *
-     * @param NodeInterface $node
-     * @return boolean
-     */
-    public function isLast(NodeInterface $node): bool
-    {
-        return $this->indexOf($node) === ($this->count() - 1);
     }
 
     /**

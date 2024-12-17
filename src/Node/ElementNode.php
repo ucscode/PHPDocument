@@ -99,7 +99,7 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function getAttributeNames(): array
     {
-        return array_keys($this->attributes->toArray());
+        return $this->attributes->getNames();
     }
 
     public function setAttribute(string $name, \Stringable|string|null $value): static

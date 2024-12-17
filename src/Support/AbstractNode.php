@@ -89,7 +89,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function isFirstChild(NodeInterface $node): bool
     {
-        return $this->childNodes->isFirst($node);
+        return $this->childNodes->first() === $node;
     }
 
     public function getLastChild(): ?NodeInterface
@@ -99,7 +99,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function isLastChild(NodeInterface $node): bool
     {
-        return $this->childNodes->isLast($node);
+        return $this->childNodes->last() === $node;
     }
 
     /**
