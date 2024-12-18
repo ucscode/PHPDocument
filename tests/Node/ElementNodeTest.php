@@ -4,7 +4,7 @@ namespace Ucscode\PHPDocument\Test\Node;
 
 use PHPUnit\Framework\TestCase;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeEnum;
+use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Node\ElementNode;
 use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
 
@@ -14,7 +14,7 @@ class ElementNodeTest extends TestCase
 
     public function testInitialValues(): void
     {
-        $this->assertSame($this->getNodeBody()->getNodeName(), NodeEnum::NODE_BODY->value);
+        $this->assertSame($this->getNodeBody()->getNodeName(), NodeNameEnum::NODE_BODY->value);
         $this->assertTrue($this->getNodeImg()->isVoid());
         $this->assertFalse($this->getNodeButton()->isVoid());
         $this->assertCount(1, $this->getNodeBody()->getChildren());
@@ -47,7 +47,7 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeA()->getLastChild(), $this->getNodeImg());
         $this->assertCount(3, $this->getNodeForm()->getChildNodes());
 
-        $this->getNodeForm()->insertChild(1, $this->getNodeImg());
+        $this->getNodeForm()->insertAdjacentNode(1, $this->getNodeImg());
         $this->assertCount(0, $this->getNodeA()->getChildNodes());
         $this->assertCount(4, $this->getNodeForm()->getChildNodes());
 
@@ -65,7 +65,7 @@ class ElementNodeTest extends TestCase
 
         $this->assertTrue($this->getNodeForm()->hasChild($this->getNodeH1()));
 
-        $selectNode = new ElementNode(NodeEnum::NODE_SELECT);
+        $selectNode = new ElementNode(NodeNameEnum::NODE_SELECT);
 
         $this->getNodeForm()->replaceChild($selectNode, $this->getNodeH1());
 
@@ -111,8 +111,9 @@ class ElementNodeTest extends TestCase
 
     public function testElementAttributes(): void
     {
-        // $this->assertTrue($this->getNodeBody()->hasAttribute('id'));
-
+        $this->assertTrue($this->getNodeBody()->hasAttribute('id'));
+        // $this->getNodeBody()->classList->add('super');
+        // $this->assertStringContainsString('super', $this->getNodeBody()->getAttribute('class'));
     }
 
     protected function summarize(NodeInterface $node): void

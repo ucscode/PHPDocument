@@ -4,7 +4,7 @@ namespace Ucscode\PHPDocument\Test\Traits;
 
 use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeEnum;
+use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Node\ElementNode;
 use Ucscode\PHPDocument\Node\TextNode;
 
@@ -21,35 +21,35 @@ trait NodeHelperTrait
     protected function setUp(): void
     {
         $this->nodeList = new NodeList([
-            new ElementNode(NodeEnum::NODE_BODY, [
+            new ElementNode(NodeNameEnum::NODE_BODY, [
                 'class' => 'body',
                 'id' => 'body',
             ]),
-            new ElementNode(NodeEnum::NODE_DIV, [
+            new ElementNode(NodeNameEnum::NODE_DIV, [
                 'class' => 'position-relative',
                 'data-theme' =>  'dark',
             ]),
-            new ElementNode(NodeEnum::NODE_H1),
-            new ElementNode(NodeEnum::NODE_FORM, [
+            new ElementNode(NodeNameEnum::NODE_H1),
+            new ElementNode(NodeNameEnum::NODE_FORM, [
                 'action' => '',
                 'name' => 'form'
             ]),
-            new ElementNode(NodeEnum::NODE_INPUT, [
+            new ElementNode(NodeNameEnum::NODE_INPUT, [
                 'name' => 'username',
                 'value' => '224',
                 'type' => 'text',
             ]),
-            new ElementNode(NodeEnum::NODE_A, [
+            new ElementNode(NodeNameEnum::NODE_A, [
                 'href' => 'https://example.com',
                 'error' => 3,
             ]),
-            new ElementNode(NodeEnum::NODE_BR),
-            new ElementNode(NodeEnum::NODE_BUTTON, [
+            new ElementNode(NodeNameEnum::NODE_BR),
+            new ElementNode(NodeNameEnum::NODE_BUTTON, [
                 'class' => 'btn btn-primary',
                 'type' => 'submit',
                 'data-value' => '["data1", "data2"]',
             ]),
-            new ElementNode(NodeEnum::NODE_IMG, [
+            new ElementNode(NodeNameEnum::NODE_IMG, [
                 'src' => 'https://dummyimage.com/300x500/fff',
                 'class' => 'img-fluid',
                 'id' => 'factor',

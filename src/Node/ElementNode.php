@@ -2,7 +2,7 @@
 
 namespace Ucscode\PHPDocument\Node;
 
-use Ucscode\PHPDocument\Enums\NodeEnum;
+use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Collection\Attributes;
 use Ucscode\PHPDocument\Collection\ClassList;
 use Ucscode\PHPDocument\Collection\HtmlCollection;
@@ -18,7 +18,7 @@ class ElementNode extends AbstractNode implements ElementInterface
     protected bool $void;
     protected string $tagName;
 
-    public function __construct(string|NodeEnum $nodeName, array $attributes = [])
+    public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
     {
         parent::__construct($nodeName);
 
@@ -113,6 +113,43 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this;
     }
 
+    public function hasAttributes(): bool
+    {
+        return !$this->attributes->isEmpty();
+    }
+
+    public function removeAttribute(string $name): static
+    {
+        $this->attributes->remove($name);
+
+        return $this;
+    }
+
+    public function querySelector(string $selector): ?ElementInterface
+    {
+
+    }
+
+    public function querySelectorAll(string $selector): HtmlCollection
+    {
+
+    }
+
+    public function matches(string $selector): bool
+    {
+
+    }
+
+    public function getElementsByClassName(string $className): HtmlCollection
+    {
+
+    }
+
+    public function getElementsByTagName(string $tagName): HtmlCollection
+    {
+
+    }
+
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
@@ -120,7 +157,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         $this->attributes = new Attributes($attributes);
         $this->void = in_array(
             $this->nodeName,
-            array_map(fn (NodeEnum $enum) => $enum->value, NodeEnum::voidCases())
+            array_map(fn (NodeNameEnum $enum) => $enum->value, NodeNameEnum::voidCases())
         );
     }
 }

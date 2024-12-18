@@ -3,7 +3,7 @@
 namespace Ucscode\PHPDocument\Support;
 
 use Ucscode\PHPDocument\Collection\MutableNodeList;
-use Ucscode\PHPDocument\Enums\NodeEnum;
+use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
@@ -25,9 +25,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     protected MutableNodeList $childNodes;
 
-    public function __construct(string|NodeEnum $nodeName)
+    public function __construct(string|NodeNameEnum $nodeName)
     {
-        if ($nodeName instanceof NodeEnum) {
+        if ($nodeName instanceof NodeNameEnum) {
             $nodeName = $nodeName->value;
         }
 
@@ -127,7 +127,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     /**
      * @param static $node
      */
-    public function insertChild(int $offset, NodeInterface $node): static
+    public function insertAdjacentNode(int $offset, NodeInterface $node): static
     {
         $this->childNodes->insertAt($offset, $node);
         $node->setParentNode($this);
@@ -163,7 +163,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         if ($this->hasChild($referenceNode)) {
             $this->removeChild($newNode); // reset the node keys
-            $this->insertChild($this->childNodes->indexOf($referenceNode), $newNode);
+            $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
         return $this;
@@ -177,7 +177,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         if ($this->hasChild($referenceNode)) {
             $this->removeChild($newNode); // reset the node keys
             $key = $this->childNodes->indexOf($referenceNode);
-            $this->insertChild($key + 1, $newNode);
+            $this->insertAdjacentNode($key + 1, $newNode);
         }
 
         return $this;
@@ -249,7 +249,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveToIndex(int $index): static
     {
-        $this->parentNode?->insertChild($index, $this);
+        $this->parentNode?->insertAdjacentNode($index, $this);
 
         return $this;
     }

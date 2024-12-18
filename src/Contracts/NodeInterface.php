@@ -154,7 +154,7 @@ interface NodeInterface
      * @param NodeInterface $node
      * @return static
      */
-    public function insertChild(int $offset, NodeInterface $node): static;
+    public function insertAdjacentNode(int $offset, NodeInterface $node): static;
 
     /**
      * Verify that a node has the provided child node
