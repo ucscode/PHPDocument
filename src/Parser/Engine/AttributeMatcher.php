@@ -5,7 +5,11 @@ namespace Ucscode\PHPDocument\Parser\Engine;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 
 /**
+ * Compare selector attributes against a node to verify if the node attribute matches the attributes in the selector
+ *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
+ * @internal Used internally by Matcher
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class AttributeMatcher
 {

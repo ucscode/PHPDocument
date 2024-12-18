@@ -4,12 +4,17 @@ namespace Ucscode\PHPDocument\Parser\Engine;
 
 use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
 
+/**
+ * A transformer class that encode and decode css selector for several use cases
+ *
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class Transformer
 {
     /**
-     * Encode attribute values to base64
+     * Encode quoted strings to base64
      *
-     * This is done to improve focus on css related rules
+     * This is done to avoid "space" character conflict between parent-child selector and attribute value
      *
      * @param string $selector
      * @return string
@@ -22,7 +27,7 @@ class Transformer
     }
 
     /**
-     * Reverse attribute value base64 encoding
+     * Decode quoted string from base64
      *
      * @param string $encodedValueSelector
      * @return string

@@ -5,6 +5,11 @@ namespace Ucscode\PHPDocument\Parser\Engine;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 
+/**
+ * Compare a css selector against a node to verify that the node attributes matches the selector
+ *
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class Matcher
 {
     protected ?AttributeMatcher $attributeMatcher = null;

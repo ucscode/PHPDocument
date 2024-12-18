@@ -43,5 +43,12 @@ class MatcherTest extends TestCase
         );
 
         $this->assertTrue($matcher->matchesNode());
+
+        $matcher = new Matcher(
+            $this->getNodeInput(),
+            new Tokenizer((new Transformer())->encodeQuotedStrings('[name][value="224"][type=text]'))
+        );
+
+        $this->assertTrue($matcher->matchesNode());
     }
 }

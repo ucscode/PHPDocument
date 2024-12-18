@@ -2,12 +2,39 @@
 
 namespace Ucscode\PHPDocument\Parser\Engine;
 
+/**
+ * Tokenize a (non-recursive) selector
+ *
+ * Selector Rules
+ *
+ * - The tokenization can only be applied to a non-recursive element selector
+ * - Siblings and descendants selectors are not prioritized
+ * - The selector must be a single rule without space (because space represent descendants)
+ * - The selector must not have combinator (because combinator represents descendants or sibliings)
+ * - Attribute values within selector must be base64 encoded
+ *
+ * Valid Selector
+ *
+ * - (valid) node-name.class-name#id[attr-name*="base64-value"][attr-name-2]
+ *
+ * Invalid Selector
+ *
+ * - (has combinator) node-name.class-name>#id+[attr-name]
+ * - (has space) node-name.class #id [attr-name]
+ *
+ * Best Practice
+ *
+ * - Break selector into chunks using `Transformer::splitIndividualSelector(...)`
+ * - $tokenizer = new Tokenizer($chunk[0])
+ *
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class Tokenizer
 {
     protected string $selector;
 
     /**
-     * @param string $selector Attribute values (or quoted strings) must be encoded to base64
+     * @param string $selector Attribute values (or quoted strings) must be base64 encoded
      */
     public function __construct(string $selector)
     {
