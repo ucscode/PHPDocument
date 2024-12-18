@@ -7,6 +7,7 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Node\ElementNode;
 use Ucscode\PHPDocument\Node\TextNode;
+use Ucscode\PHPDocument\Parser\Engine\Transformer;
 
 trait NodeHelperTrait
 {
@@ -14,12 +15,15 @@ trait NodeHelperTrait
      * @return ElementNode
      */
     protected NodeList $nodeList;
+    protected Transformer $transformer;
 
     /**
      * @return ElementNode
      */
     protected function setUp(): void
     {
+        $this->transformer = new Transformer();
+
         $this->nodeList = new NodeList([
             new ElementNode(NodeNameEnum::NODE_BODY, [
                 'class' => 'body',
@@ -197,5 +201,18 @@ trait NodeHelperTrait
                 </div>
             </body>
         */
+    }
+
+    protected function encodeRawSelector(string $rawSelector): string
+    {
+        return $this->transformer->encodeAttributes(
+            $this->transformer->encodeQuotedStrings($rawSelector)
+        );
+    }
+
+    protected function dump(mixed $value): void
+    {
+        var_dump($value);
+        echo "\n\n";
     }
 }

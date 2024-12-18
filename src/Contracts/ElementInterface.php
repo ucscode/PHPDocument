@@ -2,12 +2,10 @@
 
 namespace Ucscode\PHPDocument\Contracts;
 
+use Ucscode\PHPDocument\Collection\Attributes;
 use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Collection\ClassList;
 
-/**
- * @property ClassList $classList
- */
 interface ElementInterface extends NodeInterface
 {
     public function setInnerHtml(string $innerHTML): static;
@@ -18,6 +16,7 @@ interface ElementInterface extends NodeInterface
     public function getCloseTag(): ?string;
     public function getChildren(): HtmlCollection;
     public function getAttribute(string $name): ?string;
+    public function getAttributes(): Attributes;
     public function getAttributeNames(): array;
     public function hasAttribute(string $name): bool;
     public function hasAttributes(): bool;
@@ -25,6 +24,7 @@ interface ElementInterface extends NodeInterface
     public function removeAttribute(string $name): static;
     public function querySelector(string $selector): ?ElementInterface;
     public function querySelectorAll(string $selector): HtmlCollection;
+    public function getClassList(): ClassList;
     public function matches(string $selector): bool;
     public function getElementsByClassName(string $className): HtmlCollection;
     public function getElementsByTagName(string $tagName): HtmlCollection;

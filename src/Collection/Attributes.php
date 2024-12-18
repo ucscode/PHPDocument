@@ -17,19 +17,6 @@ class Attributes extends AbstractCollection implements \Stringable
     }
 
     /**
-     * Set or update an attribute.
-     *
-     * @param string $name The attribute name.
-     * @param \Stringable|string|null $value The attribute value. Null means the attribute has no value.
-     */
-    public function set(string $name, \Stringable|string|null $value): static
-    {
-        $this->items[$this->revise($name)] = $value;
-
-        return $this;
-    }
-
-    /**
      * Check if an attribute exists.
      *
      * @param string $name The attribute name to check.
@@ -37,7 +24,7 @@ class Attributes extends AbstractCollection implements \Stringable
      */
     public function has(string $name): bool
     {
-        return array_key_exists($this->revise($name), $this->items);
+        return array_key_exists($this->insensitive($name), $this->items);
     }
 
     /**
@@ -48,21 +35,7 @@ class Attributes extends AbstractCollection implements \Stringable
      */
     public function get(string $name, \Stringable|string|null $default = null): ?string
     {
-        return $this->items[$this->revise($name)] ?? $default;
-    }
-
-    /**
-     * Remove an attribute.
-     *
-     * @param string $name The attribute name to remove.
-     */
-    public function remove(string $name): static
-    {
-        if (array_key_exists($this->revise($name), $this->items)) {
-            unset($this->items[$this->revise($name)]);
-        }
-
-        return $this;
+        return $this->items[$this->insensitive($name)] ?? $default;
     }
 
     /**
@@ -102,7 +75,7 @@ class Attributes extends AbstractCollection implements \Stringable
      * @param string $name
      * @return string
      */
-    private function revise(string $name): string
+    protected function insensitive(string $name): string
     {
         return strtolower(trim($name));
     }

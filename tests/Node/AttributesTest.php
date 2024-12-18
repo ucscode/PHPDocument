@@ -3,13 +3,13 @@
 namespace Ucscode\PHPDocument\Test\Node;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Collection\Attributes;
+use Ucscode\PHPDocument\Collection\AttributesMutable;
 
 final class AttributesTest extends TestCase
 {
     public function testAttributeMethods(): void
     {
-        $attributes = new Attributes([
+        $attributes = new AttributesMutable([
             'data-name' => 'ucscode',
         ]);
 

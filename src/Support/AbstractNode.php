@@ -2,7 +2,7 @@
 
 namespace Ucscode\PHPDocument\Support;
 
-use Ucscode\PHPDocument\Collection\MutableNodeList;
+use Ucscode\PHPDocument\Collection\NodeListMutable;
 use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Collection\NodeList;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
@@ -21,9 +21,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected ?ElementInterface $parentElement = null;
 
     /**
-     * @var MutableNodeList<int, NodeInterface>
+     * @var NodeListMutable<int, NodeInterface>
      */
-    protected MutableNodeList $childNodes;
+    protected NodeListMutable $childNodes;
 
     public function __construct(string|NodeNameEnum $nodeName)
     {
@@ -32,7 +32,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         }
 
         $this->nodeName = strtoupper($nodeName);
-        $this->childNodes = new MutableNodeList();
+        $this->childNodes = new NodeListMutable();
     }
 
     public function __toString(): string

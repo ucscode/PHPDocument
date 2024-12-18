@@ -67,10 +67,9 @@ class Matcher
 
         if (!empty($this->tokenizer->getClasses())) {
             // ensure all class in the tokenizer also exist on the node
-            $this->matches['classes'] = empty(array_diff(
-                $this->tokenizer->getClasses(),
-                $this->node->classList->toArray()
-            ));
+            $classDifference = array_diff($this->tokenizer->getClasses(), $this->node->getClassList()->toArray());
+
+            $this->matches['classes'] = empty($classDifference);
         }
 
         if (!empty($this->tokenizer->getAttributes())) {
@@ -78,7 +77,8 @@ class Matcher
              * This is more complex due to attribute operators
              * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
              */
-            $this->attributeMatcher = new AttributeMatcher($this->node, $this->tokenizer->getAttributes(true));
+            $this->attributeMatcher = new AttributeMatcher($this->node, $this->tokenizer->getAttributeDtoCollection());
+
             $this->matches['attributes'] = $this->attributeMatcher->matchesNode();
         }
 

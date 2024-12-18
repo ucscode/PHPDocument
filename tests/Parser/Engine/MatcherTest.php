@@ -3,52 +3,68 @@
 namespace Ucscode\PHPDocument\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
-use Ucscode\PHPDocument\Node\ElementNode;
 use Ucscode\PHPDocument\Parser\Engine\Matcher;
 use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
-use Ucscode\PHPDocument\Parser\Engine\Transformer;
 use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
+use Ucscode\PHPDocument\Contracts\ElementInterface;
 
 class MatcherTest extends TestCase
 {
     use NodeHelperTrait;
 
+    public function dataProvider(): array
+    {
+        return [
+            '.position-relative[data-theme*="dark"]' => [
+                $this->getNodeDiv(),
+                true,
+            ],
+            '[name=\'username\'][value=][type="text"]' => [
+                $this->getNodeDiv(),
+                true,
+            ],
+            '[name=\'username\'][value=][type=""]' => [
+                $this->getNodeDiv(),
+                false,
+            ],
+            '[name][value="224"][type=]' => [
+                $this->getNodeDiv(),
+                true,
+            ],
+            '[name][value="224"][type=text]' => [
+                $this->getNodeDiv(),
+                true,
+            ],
+            '[name][value="224"][type=tex]' => [
+                $this->getNodeDiv(),
+                false,
+            ]
+        ];
+    }
+
     public function testElementMatch(): void
     {
-        $matcher = new Matcher(
-            $this->getNodeDiv(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('.position-relative[data-theme*="dark"]'))
-        );
+        $index = 0;
 
-        $this->assertTrue($matcher->matchesNode());
+        /**
+         * @var array{0:ElementInterface,1:boolean} $context
+         */
+        foreach ($this->dataProvider() as $selector => $context) {
+            $matcher = new Matcher(
+                $context[0],
+                new Tokenizer($this->encodeRawSelector($selector))
+            );
 
-        $matcher = new Matcher(
-            $this->getNodeInput(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('[name=\'username\'][value=][type="text"]'))
-        );
+            $message = sprintf(
+                'Failure at index %s that %s matches %s',
+                $index,
+                $selector,
+                $context[0]->getOpenTag(),
+            );
 
-        $this->assertTrue($matcher->matchesNode());
+            $this->assertSame($context[1], $matcher->matchesNode(), $message);
 
-        $matcher = new Matcher(
-            $this->getNodeInput(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('[name=\'username\'][value=][type=""]'))
-        );
-
-        $this->assertFalse($matcher->matchesNode());
-
-        $matcher = new Matcher(
-            $this->getNodeInput(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('[name][value="224"][type=]'))
-        );
-
-        $this->assertTrue($matcher->matchesNode());
-
-        $matcher = new Matcher(
-            $this->getNodeInput(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('[name][value="224"][type=text]'))
-        );
-
-        $this->assertTrue($matcher->matchesNode());
+            $index++;
+        }
     }
 }

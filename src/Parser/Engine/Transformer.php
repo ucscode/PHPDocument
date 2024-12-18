@@ -12,7 +12,7 @@ use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
 class Transformer
 {
     /**
-     * Encode quoted strings to base64
+     * Encode strings in quotes to base64
      *
      * This is done to avoid "space" character conflict between parent-child selector and attribute value
      *
@@ -21,22 +21,26 @@ class Transformer
      */
     public function encodeQuotedStrings(string $selector): string
     {
-        return preg_replace_callback(NodeQueryRegexpEnum::EXPR_QUOTED_STRING->value, function ($match) {
-            return sprintf('%1$s%2$s%1$s', $match[1], base64_encode($match[2]));
-        }, $selector);
+        return preg_replace_callback(
+            NodeQueryRegexpEnum::REGEXP_QUOTED_STRING->value,
+            fn (array $match) => sprintf('%1$s%2$s%1$s', $match[1], base64_encode($match[2])),
+            $selector
+        );
     }
 
     /**
-     * Decode quoted string from base64
+     * Decode strings in quotes from base64
      *
      * @param string $encodedValueSelector
      * @return string
      */
-    public function decodeQuotedStrings(string $encodedValueSelector): string
+    public function decodeQuotedStrings(string $encodedSelector): string
     {
-        return preg_replace_callback(NodeQueryRegexpEnum::EXPR_QUOTED_STRING->value, function ($match) {
-            return sprintf('%1$s%2$s%1$s', $match[1], base64_decode($match[2]));
-        }, $encodedValueSelector);
+        return preg_replace_callback(
+            NodeQueryRegexpEnum::REGEXP_QUOTED_STRING->value,
+            fn (array $match) => sprintf('%1$s%2$s%1$s', $match[1], base64_decode($match[2], true)),
+            $encodedSelector
+        );
     }
 
     /**
@@ -48,11 +52,13 @@ class Transformer
      * @return string
      * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors#attr_operator_value_i
      */
-    public function encodeSelectorAttributes(string $selector): string
+    public function encodeAttributes(string $selector): string
     {
-        return preg_replace_callback(NodeQueryRegexpEnum::EXPR_ATTRIBUTE->value, function ($match) {
-            return sprintf('[%s]', base64_encode($match[1]));
-        }, $selector);
+        return preg_replace_callback(
+            NodeQueryRegexpEnum::REGEXP_ATTRIBUTES->value,
+            fn (array $match) => sprintf('[%s]', base64_encode($match[1])),
+            $selector
+        );
     }
 
     /**
@@ -61,11 +67,13 @@ class Transformer
      * @param string $encodedSelector
      * @return string
      */
-    public function decodeSelectorAttributes(string $encodedSelector): string
+    public function decodeAttributes(string $encodedSelector): string
     {
-        return preg_replace_callback(NodeQueryRegexpEnum::EXPR_ATTRIBUTE->value, function ($match) {
-            return sprintf('[%s]', base64_decode($match[1], true));
-        }, $encodedSelector);
+        return preg_replace_callback(
+            NodeQueryRegexpEnum::REGEXP_ATTRIBUTES->value,
+            fn (array $match) => sprintf('[%s]', base64_decode($match[1], true)),
+            $encodedSelector
+        );
     }
 
     /**
@@ -90,7 +98,10 @@ class Transformer
         // add space around combinators
         $selector = preg_replace('/(\>|\~|\+)/', ' $1 ', $selector);
 
-        return array_filter(array_map('trim', explode(' ', $selector)), fn (string $value) => $value !== '');
+        return array_filter(
+            array_map('trim', explode(' ', $selector)),
+            fn (string $value) => $value !== ''
+        );
     }
 
     /**
@@ -102,9 +113,9 @@ class Transformer
     public function decodeAttributesInSelectorChunks(array $selectorChunks, bool $decodeQuotedStrings = false): array
     {
         return array_map(function (string $selector) use ($decodeQuotedStrings) {
-            if (preg_match(NodeQueryRegexpEnum::EXPR_ATTRIBUTE->value, $selector)) {
+            if (preg_match(NodeQueryRegexpEnum::REGEXP_ATTRIBUTES->value, $selector)) {
                 $transcoder = new Transformer();
-                $selector = $transcoder->decodeSelectorAttributes($selector);
+                $selector = $transcoder->decodeAttributes($selector);
 
                 if ($decodeQuotedStrings) {
                     $selector = $transcoder->decodeQuotedStrings($selector);

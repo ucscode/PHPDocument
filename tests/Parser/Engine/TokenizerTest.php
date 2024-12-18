@@ -3,13 +3,20 @@
 namespace Ucscode\PHPDocument\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
+use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
+use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
 use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
+use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
 
 class TokenizerTest extends TestCase
 {
+    use NodeHelperTrait;
+
     public function testSimpleTokenization(): void
     {
-        $tokenizer = new Tokenizer('body#water-mark.content-of_the-world[data-value][data-model~="lot"]');
+        $tokenizer = new Tokenizer(
+            $this->encodeRawSelector('body#water-mark.content-of_the-world[data-value][data-model~="lot" i]')
+        );
 
         $this->assertSame('body', $tokenizer->getTag());
         $this->assertSame('water-mark', $tokenizer->getId());
@@ -21,37 +28,46 @@ class TokenizerTest extends TestCase
 
     public function testComplexTokenization(): void
     {
-        $tokenizer = new Tokenizer('div.wrapper.product-collection#main[data-role~="container"][data-state="active"][name=][empty=""]:not(.hidden):nth-child(2n+1):enabled::before::after');
+        $tokenizer = new Tokenizer(
+            $this->encodeRawSelector('div.wrapper.product-collection#main[data-role~="container" i][data-state="active"][name= s][empty=""]:not(.hidden):nth-child(2n+1):enabled::before::after')
+        );
 
         $this->assertSame('div', $tokenizer->getTag());
-
         $this->assertSame('main', $tokenizer->getId());
 
-        $this->assertCount(2, $tokenizer->getClasses());
-        $this->assertContains('wrapper', $tokenizer->getClasses());
-        $this->assertContains('product-collection', $tokenizer->getClasses());
+        $classes = $tokenizer->getClasses();
 
-        $this->assertCount(4, $tokenizer->getAttributes());
-        $this->assertContains('data-role~="container"', $tokenizer->getAttributes());
-        $this->assertContains('data-state="active"', $tokenizer->getAttributes());
-        $this->assertContains('name=', $tokenizer->getAttributes());
-        $this->assertContains('empty=""', $tokenizer->getAttributes());
+        $this->assertCount(2, $classes);
+        $this->assertContains('wrapper', $classes);
+        $this->assertContains('product-collection', $classes);
 
-        $this->assertArrayHasKey('data-role~', $tokenizer->getAttributes(true));
-        $this->assertArrayHasKey('data-state', $tokenizer->getAttributes(true));
-        $this->assertArrayHasKey('name', $tokenizer->getAttributes(true));
-        $this->assertArrayHasKey('empty', $tokenizer->getAttributes(true));
-        $this->assertContains('active', $tokenizer->getAttributes(true));
-        $this->assertContains('container', $tokenizer->getAttributes(true));
-        $this->assertContains(null, $tokenizer->getAttributes(true));
-        $this->assertContains('', $tokenizer->getAttributes(true));
+        $attributes = $tokenizer->getAttributes();
 
-        $attributes = $tokenizer->getAttributes(true);
+        $this->assertCount(4, $attributes);
+        $this->assertContains('data-role~="container" i', $attributes);
+        $this->assertContains('data-state="active"', $attributes);
+        $this->assertContains('name= s', $attributes);
+        $this->assertContains('empty=""', $attributes);
 
-        $this->assertSame('container', $attributes['data-role~']);
-        $this->assertSame('active', $attributes['data-state']);
-        $this->assertNull($attributes['name']);
-        $this->assertSame('', $attributes['empty']);
+        $attributeDtoCollection = $tokenizer->getAttributeDtoCollection();
+
+        $this->assertInstanceOf(AttributeDtoCollection::class, $attributeDtoCollection);
+        $this->assertCount(4, $attributeDtoCollection);
+
+        $this->assertTrue($attributeDtoCollection->has('data-role'));
+        $this->assertTrue($attributeDtoCollection->has('data-state'));
+        $this->assertTrue($attributeDtoCollection->has('name'));
+        $this->assertTrue($attributeDtoCollection->has('empty'));
+
+        $this->assertContains('active', $attributeDtoCollection->values());
+        $this->assertContains('container', $attributeDtoCollection->values());
+        $this->assertContains(null, $attributeDtoCollection->values());
+        $this->assertContains('', $attributeDtoCollection->values());
+
+        $this->assertSame('container', $attributeDtoCollection->get('data-role')->getValue());
+        $this->assertSame('active', $attributeDtoCollection->get('data-state')->getValue());
+        $this->assertNull($attributeDtoCollection->get('name')->getValue());
+        $this->assertSame('', $attributeDtoCollection->get('empty')->getValue());
 
         $this->assertCount(2, $tokenizer->getPseudoFunctions());
         $this->assertArrayHasKey('not', $tokenizer->getPseudoFunctions());

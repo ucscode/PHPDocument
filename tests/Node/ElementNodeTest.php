@@ -112,14 +112,7 @@ class ElementNodeTest extends TestCase
     public function testElementAttributes(): void
     {
         $this->assertTrue($this->getNodeBody()->hasAttribute('id'));
-        // $this->getNodeBody()->classList->add('super');
-        // $this->assertStringContainsString('super', $this->getNodeBody()->getAttribute('class'));
-    }
-
-    protected function summarize(NodeInterface $node): void
-    {
-        $names = array_map(fn ($node) => $node->getNodeName(), $node->getChildNodes()->toArray());
-
-        var_dump($names);
+        $this->getNodeBody()->getClassList()->add('super');
+        $this->assertStringContainsString('super', $this->getNodeBody()->getAttribute('class'));
     }
 }

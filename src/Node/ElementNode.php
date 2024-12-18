@@ -2,8 +2,9 @@
 
 namespace Ucscode\PHPDocument\Node;
 
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Collection\Attributes;
+use Ucscode\PHPDocument\Enums\NodeNameEnum;
+use Ucscode\PHPDocument\Collection\AttributesMutable;
 use Ucscode\PHPDocument\Collection\ClassList;
 use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
@@ -13,8 +14,8 @@ use Ucscode\PHPDocument\Support\AbstractNode;
 
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    public readonly ClassList $classList;
-    protected Attributes $attributes;
+    protected ClassList $classList;
+    protected AttributesMutable $attributes;
     protected bool $void;
     protected string $tagName;
 
@@ -69,7 +70,7 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function getOpenTag(): string
     {
-        return sprintf("<%s %s%s>", strtolower($this->nodeName), $this->attributes->render(), $this->isVoid() ? '' : '/');
+        return sprintf("<%s %s%s>", strtolower($this->nodeName), $this->attributes->render(), $this->isVoid() ? '/' : '');
     }
 
     public function getCloseTag(): ?string
@@ -92,9 +93,21 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->attributes->get($name, $default);
     }
 
+    public function getAttributes(): Attributes
+    {
+        $attributes = array_map(fn ($value) => (string)$value, $this->attributes->toArray());
+
+        return new Attributes($attributes);
+    }
+
     public function hasAttribute(string $name): bool
     {
         return $this->attributes->has($name);
+    }
+
+    public function getClassList(): ClassList
+    {
+        return $this->classList;
     }
 
     public function getAttributeNames(): array
@@ -153,7 +166,7 @@ class ElementNode extends AbstractNode implements ElementInterface
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
-        $this->attributes = new Attributes();
+        $this->attributes = new AttributesMutable();
         $this->classList = new ClassList();
 
         foreach ($attributes as $name => $value) {

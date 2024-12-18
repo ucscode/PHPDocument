@@ -3,6 +3,8 @@
 namespace Ucscode\PHPDocument\Parser\Engine;
 
 use Ucscode\PHPDocument\Contracts\ElementInterface;
+use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
+use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
 
 /**
  * Compare selector attributes against a node to verify if the node attribute matches the attributes in the selector
@@ -19,9 +21,9 @@ class AttributeMatcher
      * Undocumented function
      *
      * @param ElementInterface $node
-     * @param array<string, string|null> $attributes values are base64 encoded
+     * @param AttributeDtoCollection<int, AttributeDto> $attributes values are base64 encoded
      */
-    public function __construct(protected ElementInterface $node, protected array $attributes)
+    public function __construct(protected ElementInterface $node, protected AttributeDtoCollection $attributeDtoCollection)
     {
         $this->validateNodeAgainstAttributes();
     }
@@ -38,36 +40,42 @@ class AttributeMatcher
 
     protected function validateNodeAgainstAttributes(): void
     {
-        foreach ($this->attributes as $key => $value) {
-
-            /**
-             * @var string $name (e.g data-name)
-             * @var string $operator [~^$|*]
-             */
-            [$name, $operator] = $this->splitAttributeKey($key);
+        /**
+         * @var AttributeDto $attributeDto Attribute properties from css selector
+         */
+        foreach ($this->attributeDtoCollection as $attributeDto) {
+            $name = $attributeDto->getName();
+            $operator = $attributeDto->getOperator();
 
             // [attr] check if element has the attribute
             $this->matches[$name] = $this->node->hasAttribute($name);
 
+            $value = $attributeDto->getValue();
+            $attributeValue = $this->node->getAttribute($name);
+
             if ($value !== null) {
-                if ($value !== '') {
-                    $value = base64_decode($value, true) ?: $value;
+                if ($attributeDto->isCaseInSensitive()) {
+                    $value = strtolower($value);
+
+                    if ($attributeValue !== null) {
+                        $attributeValue = strtolower($attributeValue);
+                    }
                 }
 
                 if (empty($operator)) {
                     // [attr=value] verify that the 'selector value' equals the 'node attribute value'
-                    $this->matches["{$name}=?"] = $this->node->getAttribute($name) === $value;
+                    $this->matches["{$name}=?"] = $attributeValue === $value;
 
                     continue;
                 }
             }
 
             if (!empty($operator)) {
-                // get the node attribute value
-                $attributeValue = $this->node->getAttribute($name);
+                // a pointer for debugging
                 $pointer = "{$name}{$operator}=value";
 
-                if ($attributeValue !== null) {
+                if (null !== $attributeValue) {
+                    // verify that value matches the operator
                     $this->matches[$pointer] = match($operator) {
                         '$' => str_ends_with($attributeValue, $value),
                         '^' => str_starts_with($attributeValue, $value),
@@ -83,14 +91,5 @@ class AttributeMatcher
                 $this->matches[$pointer] = false;
             }
         }
-    }
-
-    public function splitAttributeKey(string $key): array
-    {
-        if (preg_match('/^([\w\-]+)([~^$*|]?)$/', $key, $matches)) {
-            return [$matches[1], $matches[2]];
-        }
-
-        return [$key, ''];
     }
 }

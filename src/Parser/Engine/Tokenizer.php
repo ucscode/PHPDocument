@@ -2,6 +2,10 @@
 
 namespace Ucscode\PHPDocument\Parser\Engine;
 
+use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
+use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
+use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
+
 /**
  * Tokenize a (non-recursive) selector
  *
@@ -9,23 +13,28 @@ namespace Ucscode\PHPDocument\Parser\Engine;
  *
  * - The tokenization can only be applied to a non-recursive element selector
  * - Siblings and descendants selectors are not prioritized
- * - The selector must be a single rule without space (because space represent descendants)
- * - The selector must not have combinator (because combinator represents descendants or sibliings)
- * - Attribute values within selector must be base64 encoded
+ * - The selector must be a single rule without space (because space represent descendant)
+ * - The selector must not have combinator (because combinator represents descendant or sibliing)
+ * - Attributes in the selector must be encoded in base64
+ * - When the selector attributes are decoded, quoted value must also be in base64 encoding
  *
  * Valid Selector
  *
- * - (valid) node-name.class-name#id[attr-name*="base64-value"][attr-name-2]
+ * - (valid) node-name.class-name#id[base64-encoded-attr][another-base64-encoded-attr]
  *
  * Invalid Selector
  *
- * - (has combinator) node-name.class-name>#id+[attr-name]
- * - (has space) node-name.class #id [attr-name]
+ * - (has combinator) node-name.class-name>#id+[base64-encoded-attr]
+ * - (has space) node-name.class #id [base64-encoded-attr]
+ * - (non encoded attribute) node-name#id[attr-name="sometext"]
  *
- * Best Practice
+ * How to properly pass a selector to the tokenizer
  *
- * - Break selector into chunks using `Transformer::splitIndividualSelector(...)`
- * - $tokenizer = new Tokenizer($chunk[0])
+ * ```
+ * $transformer = new Transformer();
+ * $encodedQuotes = $transformer->encodeQuotedStrings('your-selector');
+ * $fullyEncodedSelector = $transformer->encodeAttributes($encodedQuotes);
+ * $tokenizer = new Tokenizer($fullyEncodedSelector);
  *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
@@ -34,23 +43,23 @@ class Tokenizer
     protected string $selector;
 
     /**
-     * @param string $selector Attribute values (or quoted strings) must be base64 encoded
+     * @param string $fullyEncodedSelector Selector with base64 encoded attributes
      */
-    public function __construct(string $selector)
+    public function __construct(string $fullyEncodedSelector)
     {
-        $this->selector = trim($selector);
+        $this->selector = trim($fullyEncodedSelector);
     }
 
     public function getTag(): ?string
     {
-        preg_match('/^[a-z]+[a-z0-9-]*/i', $this->selector, $matches);
+        preg_match(NodeQueryRegexpEnum::REGEXP_TAG->value, $this->selector, $matches);
 
         return $matches[0] ?? null;
     }
 
     public function getId(): ?string
     {
-        preg_match('/#([a-z0-9_-]+)/i', $this->selector, $matches);
+        preg_match(NodeQueryRegexpEnum::REGEXP_ID->value, $this->selector, $matches);
 
         return $matches[1] ?? null;
     }
@@ -60,22 +69,39 @@ class Tokenizer
      */
     public function getClasses(): array
     {
-        preg_match_all('/(?<!\()\.([a-z0-9_-]+)/i', $this->selector, $matches);
+        preg_match_all(NodeQueryRegexpEnum::REGEXP_CLASSES->value, $this->selector, $matches);
 
         return $matches[1] ?? [];
     }
 
     /**
-     * @param boolean $explode Transform attributes to key/value pairs
-     * @return array<int|string, string|null>
+     * Return a linear list of attributes string
+     *
+     * @return string[]
      */
-    public function getAttributes(bool $explode = false): array
+    public function getAttributes(): array
     {
-        preg_match_all('/\[([^\]]+)\]/', $this->selector, $matches);
+        return array_map(
+            fn (string $value) => (new Transformer())->decodeQuotedStrings($value),
+            $this->getDecodedAttributes()
+        );
+    }
 
-        $result = $matches[1] ?? [];
+    /**
+     * Return a dto collection of attributes
+     *
+     * @return AttributeDtoCollection<int, AttributeDto>
+     */
+    public function getAttributeDtoCollection(): AttributeDtoCollection
+    {
+        $attributors = [];
 
-        return $explode && !empty($result) ? $this->keyValueAttributes($result) : $result;
+        foreach ($this->getDecodedAttributes() as $attribute) {
+            $attributor = new AttributeDto($attribute);
+            $attributors[$attributor->getName()] = $attributor;
+        }
+
+        return new AttributeDtoCollection($attributors);
     }
 
     /**
@@ -83,7 +109,7 @@ class Tokenizer
      */
     public function getPseudoClasses(): array
     {
-        preg_match_all('/(?<!:):([a-z-]+)(?!\()/i', $this->selector, $matches);
+        preg_match_all(NodeQueryRegexpEnum::REGEXP_PSEUDO_CLASSES->value, $this->selector, $matches);
 
         return $matches[1] ?? [];
     }
@@ -93,7 +119,7 @@ class Tokenizer
      */
     public function getPseudoFunctions(): array
     {
-        preg_match_all('/:([a-z-]+)\(([^\)]+)\)/i', $this->selector, $matches);
+        preg_match_all(NodeQueryRegexpEnum::REGEXP_PSEUDO_FUNCTIONS->value, $this->selector, $matches);
 
         if (!empty($matches[1])) {
             return array_combine($matches[1], $matches[2]);
@@ -107,26 +133,24 @@ class Tokenizer
      */
     public function getPseudoElements(): array
     {
-        preg_match_all('/::([a-z-]+)/i', $this->selector, $matches);
+        preg_match_all(NodeQueryRegexpEnum::REGEXP_PSEUDO_ELEMENTS->value, $this->selector, $matches);
 
         return $matches[1] ?? [];
     }
 
     /**
-     * @param array<int, string> $attributes
-     * @return array<string, string|null>
+     * Capture all attributes and decode each from base64 format
+     *
+     * @return string[]
      */
-    private function keyValueAttributes(array $attributes): array
+    private function getDecodedAttributes(): array
     {
-        $keyValues = [];
+        preg_match_all(NodeQueryRegexpEnum::REGEXP_ATTRIBUTES->value, $this->selector, $matches);
 
-        foreach ($attributes as $attribute) {
-            $segment = explode('=', $attribute);
-            $key = $segment[0];
-            $value = $segment[1] ?? null;
-            $keyValues[$key] = ($value === '' || $value === null) ? null : trim($value, "'\"");
-        }
-
-        return $keyValues;
+        // decode attributes from base64
+        return array_map(
+            fn (string $encoding) => base64_decode($encoding, true),
+            $matches[1] ?? []
+        );
     }
 }

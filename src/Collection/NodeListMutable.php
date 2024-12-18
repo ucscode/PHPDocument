@@ -4,7 +4,12 @@ namespace Ucscode\PHPDocument\Collection;
 
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 
-class MutableNodeList extends NodeList
+/**
+ * A mutable version of nodelist
+ *
+ * @author Name <email@email.com>
+ */
+class NodeListMutable extends NodeList
 {
     /**
      * Insert the given node at a specific position within the list
