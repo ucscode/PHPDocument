@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test;
+namespace Ucscode\PHPDocument\Test\Collection;
 
 use PHPUnit\Framework\TestCase;
 use Ucscode\PHPDocument\Collection\ClassList;

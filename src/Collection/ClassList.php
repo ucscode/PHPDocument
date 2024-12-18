@@ -2,7 +2,7 @@
 
 namespace Ucscode\PHPDocument\Collection;
 
-use PHPUnit\Event\InvalidArgumentException;
+use Ucscode\PHPDocument\Exception\InvalidAttributeException;
 use Ucscode\PHPDocument\Support\AbstractCollection;
 
 class ClassList extends AbstractCollection implements \Stringable
@@ -20,10 +20,8 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     public function add(string $value): static
     {
-        $classes = explode(' ', $value);
-        foreach ($classes as $class) {
-            $class = trim($class);
-            if (!empty($class) && !in_array($class, $this->items)) {
+        foreach ($this->splitClasses($value) as $class) {
+            if (!in_array($class, $this->items)) {
                 $this->items[] = $class;
             }
         }
@@ -39,15 +37,8 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     public function remove(string $value): static
     {
-        $classes = explode(' ', $value);
-        foreach ($classes as $class) {
-            $class = trim($class);
-
-            if (!empty($class)) {
-                $this->items = array_filter($this->items, function ($item) use ($class) {
-                    return $item !== $class;
-                });
-            }
+        foreach ($this->splitClasses($value) as $class) {
+            $this->items = array_filter($this->items, fn (string $item) => $item !== $class);
         }
 
         return $this;
@@ -64,13 +55,8 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     public function replace(string $previous, string $new): static
     {
-        $this->items = array_values(array_filter($this->items, function ($item) use ($previous) {
-            return $item !== $previous;
-        }));
-
-        if (!in_array($new, $this->items)) {
-            $this->items[] = $new;
-        }
+        $this->remove($previous); // remove previous class
+        $this->add($new); // add new class
 
         return $this;
     }
@@ -83,16 +69,14 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     public function contains(string $value): bool
     {
-        $classes = explode(' ', trim($value));
-
-        foreach ($classes as $class) {
-            $class = trim($class);
-
-            if (!empty($class) && in_array($class, $this->items)) {
-                return true;
+        foreach ($this->splitClasses($value) as $class) {
+            // `false` if the class does not exist
+            if (!in_array($class, $this->items)) {
+                return false;
             }
         }
-        return false;
+
+        return true;
     }
 
     /**
@@ -105,27 +89,43 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     public function toggle(string $value): static
     {
-        $classes = explode(' ', trim($value));
-
-        foreach ($classes as $class) {
-            $class = trim($class);
-
-            if (!empty($class)) {
-                if (in_array($class, $this->items)) {
-                    $this->remove($class);
-                } else {
-                    $this->add($class);
-                }
-            }
-
+        foreach ($this->splitClasses($value) as $class) {
+            /**
+             * Use ternary operator (shortcut if/else)
+             *
+             * @see https://www.phptutorial.net/php-tutorial/php-ternary-operator/
+             */
+            in_array($class, $this->items) ? $this->remove($class) : $this->add($class);
         }
+
         return $this;
     }
 
     protected function validateItemType(mixed $item)
     {
-        if (is_string($item)) {
-            throw new InvalidArgumentException('Only strings are allowed as classes.');
+        if (!$this->canBeString($item)) {
+            throw new InvalidAttributeException(
+                sprintf(InvalidAttributeException::CLASS_ATTRIBUTE_EXCEPTION, gettype($item))
+            );
         }
+    }
+
+    /**
+     * Return an array of non-empty classes
+     *
+     * @param string $value
+     * @return array<int, string>
+     */
+    private function splitClasses(string $value): array
+    {
+        // split the classes by space and trim all the values
+        $classes = array_map('trim', explode(' ', $value));
+
+        /**
+         * remove empty classes (using arrow function)
+         *
+         * @see https://www.php.net/manual/en/functions.arrow.php
+         */
+        return array_filter($classes, fn (string $class) => !empty($class));
     }
 }
