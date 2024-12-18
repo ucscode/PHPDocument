@@ -15,11 +15,16 @@ class AttributeMatcher
      * Undocumented function
      *
      * @param ElementInterface $node
-     * @param array<string, string> $attributes values are base64 encoded
+     * @param array<string, string|null> $attributes values are base64 encoded
      */
     public function __construct(protected ElementInterface $node, protected array $attributes)
     {
         $this->validateNodeAgainstAttributes();
+    }
+
+    public function getMatches(): array
+    {
+        return $this->matches;
     }
 
     public function matchesNode(): bool
@@ -38,14 +43,16 @@ class AttributeMatcher
             [$name, $operator] = $this->splitAttributeKey($key);
 
             // [attr] check if element has the attribute
-            $this->matches[] = $this->node->hasAttribute($name);
+            $this->matches[$name] = $this->node->hasAttribute($name);
 
-            if (!empty($value)) {
-                $value = base64_decode($value, true) ?: $value;
+            if ($value !== null) {
+                if ($value !== '') {
+                    $value = base64_decode($value, true) ?: $value;
+                }
 
                 if (empty($operator)) {
                     // [attr=value] verify that the 'selector value' equals the 'node attribute value'
-                    $this->matches[] = $this->node->getAttribute($name) === $value;
+                    $this->matches["{$name}=?"] = $this->node->getAttribute($name) === $value;
 
                     continue;
                 }
@@ -54,9 +61,10 @@ class AttributeMatcher
             if (!empty($operator)) {
                 // get the node attribute value
                 $attributeValue = $this->node->getAttribute($name);
+                $pointer = "{$name}{$operator}=value";
 
                 if ($attributeValue !== null) {
-                    $this->matches[] = match($operator) {
+                    $this->matches[$pointer] = match($operator) {
                         '$' => str_ends_with($attributeValue, $value),
                         '^' => str_starts_with($attributeValue, $value),
                         '*' => str_contains($attributeValue, $value),
@@ -68,7 +76,7 @@ class AttributeMatcher
                     continue;
                 }
 
-                $this->matches[] = false;
+                $this->matches[$pointer] = false;
             }
         }
     }

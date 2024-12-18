@@ -21,7 +21,7 @@ class TokenizerTest extends TestCase
 
     public function testComplexTokenization(): void
     {
-        $tokenizer = new Tokenizer('div.wrapper.product-collection#main[data-role~="container"][data-state="active"]:not(.hidden):nth-child(2n+1):enabled::before::after');
+        $tokenizer = new Tokenizer('div.wrapper.product-collection#main[data-role~="container"][data-state="active"][name=][empty=""]:not(.hidden):nth-child(2n+1):enabled::before::after');
 
         $this->assertSame('div', $tokenizer->getTag());
 
@@ -31,20 +31,27 @@ class TokenizerTest extends TestCase
         $this->assertContains('wrapper', $tokenizer->getClasses());
         $this->assertContains('product-collection', $tokenizer->getClasses());
 
-        $this->assertCount(2, $tokenizer->getAttributes());
+        $this->assertCount(4, $tokenizer->getAttributes());
         $this->assertContains('data-role~="container"', $tokenizer->getAttributes());
         $this->assertContains('data-state="active"', $tokenizer->getAttributes());
+        $this->assertContains('name=', $tokenizer->getAttributes());
+        $this->assertContains('empty=""', $tokenizer->getAttributes());
 
-        $this->assertCount(2, $tokenizer->getAttributes(true));
         $this->assertArrayHasKey('data-role~', $tokenizer->getAttributes(true));
         $this->assertArrayHasKey('data-state', $tokenizer->getAttributes(true));
+        $this->assertArrayHasKey('name', $tokenizer->getAttributes(true));
+        $this->assertArrayHasKey('empty', $tokenizer->getAttributes(true));
         $this->assertContains('active', $tokenizer->getAttributes(true));
         $this->assertContains('container', $tokenizer->getAttributes(true));
+        $this->assertContains(null, $tokenizer->getAttributes(true));
+        $this->assertContains('', $tokenizer->getAttributes(true));
 
         $attributes = $tokenizer->getAttributes(true);
 
         $this->assertSame('container', $attributes['data-role~']);
         $this->assertSame('active', $attributes['data-state']);
+        $this->assertNull($attributes['name']);
+        $this->assertSame('', $attributes['empty']);
 
         $this->assertCount(2, $tokenizer->getPseudoFunctions());
         $this->assertArrayHasKey('not', $tokenizer->getPseudoFunctions());

@@ -40,7 +40,7 @@ class Tokenizer
 
     /**
      * @param boolean $explode Transform attributes to key/value pairs
-     * @return array<int|string, string>
+     * @return array<int|string, string|null>
      */
     public function getAttributes(bool $explode = false): array
     {
@@ -87,16 +87,17 @@ class Tokenizer
 
     /**
      * @param array<int, string> $attributes
-     * @return array<string, string>
+     * @return array<string, string|null>
      */
     private function keyValueAttributes(array $attributes): array
     {
         $keyValues = [];
 
         foreach ($attributes as $attribute) {
-            [$key, $value] = explode('=', $attribute);
-            $value = trim($value, "'\"");
-            $keyValues[$key] = $value;
+            $segment = explode('=', $attribute);
+            $key = $segment[0];
+            $value = $segment[1] ?? null;
+            $keyValues[$key] = ($value === '' || $value === null) ? null : trim($value, "'\"");
         }
 
         return $keyValues;

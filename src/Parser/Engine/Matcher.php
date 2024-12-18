@@ -7,6 +7,8 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 
 class Matcher
 {
+    protected ?AttributeMatcher $attributeMatcher = null;
+
     /**
      * @var array<int, boolean>
      */
@@ -27,6 +29,16 @@ class Matcher
     public function __construct(protected ?NodeInterface $node, protected Tokenizer $tokenizer)
     {
         $this->validateNodeAgainstTokenizer();
+    }
+
+    public function getMatches(): array
+    {
+        return $this->matches;
+    }
+
+    public function getAttributeMatcher(): ?AttributeMatcher
+    {
+        return $this->attributeMatcher;
     }
 
     public function matchesNode(): bool
@@ -61,8 +73,8 @@ class Matcher
              * This is more complex due to attribute operators
              * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
              */
-            $attributeMatcher = new AttributeMatcher($this->node, $this->tokenizer->getAttributes(true));
-            $this->matches['attributes'] = $attributeMatcher->matchesNode();
+            $this->attributeMatcher = new AttributeMatcher($this->node, $this->tokenizer->getAttributes(true));
+            $this->matches['attributes'] = $this->attributeMatcher->matchesNode();
         }
 
         if (!empty($this->tokenizer->getPseudoClasses())) {

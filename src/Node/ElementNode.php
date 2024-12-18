@@ -153,11 +153,11 @@ class ElementNode extends AbstractNode implements ElementInterface
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
-        $this->attributes = new Attributes($attributes);
+        $this->attributes = new Attributes();
         $this->classList = new ClassList();
 
         foreach ($attributes as $name => $value) {
-            // $this->setAttribute($name, $value);
+            $this->setAttribute($name, $value);
         }
 
         $this->void = in_array(

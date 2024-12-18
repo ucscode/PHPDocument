@@ -18,7 +18,14 @@ class MatcherTest extends TestCase
     {
         $matcher = new Matcher(
             $this->getNodeDiv(),
-            new Tokenizer((new Transformer())->encodeQuotedStrings('#position-relative[data-theme*="dark"]'))
+            new Tokenizer((new Transformer())->encodeQuotedStrings('.position-relative[data-theme*="dark"]'))
+        );
+
+        $this->assertTrue($matcher->matchesNode());
+
+        $matcher = new Matcher(
+            $this->getNodeInput(),
+            new Tokenizer((new Transformer())->encodeQuotedStrings('[name=\'username\'][value=][type="text"]'))
         );
 
         $this->assertTrue($matcher->matchesNode());
@@ -28,6 +35,13 @@ class MatcherTest extends TestCase
             new Tokenizer((new Transformer())->encodeQuotedStrings('[name=\'username\'][value=][type=""]'))
         );
 
-        // $this->assertFalse($matcher->matchesNode());
+        $this->assertFalse($matcher->matchesNode());
+
+        $matcher = new Matcher(
+            $this->getNodeInput(),
+            new Tokenizer((new Transformer())->encodeQuotedStrings('[name][value="224"][type=]'))
+        );
+
+        $this->assertTrue($matcher->matchesNode());
     }
 }
