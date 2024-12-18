@@ -1,12 +1,14 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Codec;
+namespace Ucscode\PHPDocument\Parser\Engine;
 
 class Tokenizer
 {
     protected string $selector;
-    protected array $tokens = [];
 
+    /**
+     * @param string $selector Attribute values (or quoted strings) must be encoded to base64
+     */
     public function __construct(string $selector)
     {
         $this->selector = trim($selector);
@@ -26,6 +28,9 @@ class Tokenizer
         return $matches[1] ?? null;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getClasses(): array
     {
         preg_match_all('/(?<!\()\.([a-z0-9_-]+)/i', $this->selector, $matches);
@@ -33,20 +38,32 @@ class Tokenizer
         return $matches[1] ?? [];
     }
 
-    public function getAttributes(): array
+    /**
+     * @param boolean $explode Transform attributes to key/value pairs
+     * @return array<int|string, string>
+     */
+    public function getAttributes(bool $explode = false): array
     {
         preg_match_all('/\[([^\]]+)\]/', $this->selector, $matches);
 
-        return $matches[1] ?? [];
+        $result = $matches[1] ?? [];
+
+        return $explode && !empty($result) ? $this->keyValueAttributes($result) : $result;
     }
 
-    public function getPseudoSelectors(): array
+    /**
+     * @return array<int, string>
+     */
+    public function getPseudoClasses(): array
     {
         preg_match_all('/(?<!:):([a-z-]+)(?!\()/i', $this->selector, $matches);
 
         return $matches[1] ?? [];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getPseudoFunctions(): array
     {
         preg_match_all('/:([a-z-]+)\(([^\)]+)\)/i', $this->selector, $matches);
@@ -58,10 +75,30 @@ class Tokenizer
         return [];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getPseudoElements(): array
     {
         preg_match_all('/::([a-z-]+)/i', $this->selector, $matches);
 
         return $matches[1] ?? [];
+    }
+
+    /**
+     * @param array<int, string> $attributes
+     * @return array<string, string>
+     */
+    private function keyValueAttributes(array $attributes): array
+    {
+        $keyValues = [];
+
+        foreach ($attributes as $attribute) {
+            [$key, $value] = explode('=', $attribute);
+            $value = trim($value, "'\"");
+            $keyValues[$key] = $value;
+        }
+
+        return $keyValues;
     }
 }

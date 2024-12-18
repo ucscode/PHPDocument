@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Codec;
+namespace Ucscode\PHPDocument\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\Codec\Transformer;
+use Ucscode\PHPDocument\Parser\Engine\Transformer;
 
 class TransformerTest extends TestCase
 {

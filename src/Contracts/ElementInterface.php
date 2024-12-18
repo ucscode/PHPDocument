@@ -3,7 +3,11 @@
 namespace Ucscode\PHPDocument\Contracts;
 
 use Ucscode\PHPDocument\Collection\HtmlCollection;
+use Ucscode\PHPDocument\Collection\ClassList;
 
+/**
+ * @property ClassList $classList
+ */
 interface ElementInterface extends NodeInterface
 {
     public function setInnerHtml(string $innerHTML): static;

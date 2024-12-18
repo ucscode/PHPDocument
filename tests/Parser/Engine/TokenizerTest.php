@@ -1,15 +1,15 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Codec;
+namespace Ucscode\PHPDocument\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\Codec\Tokenizer;
+use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
 
 class TokenizerTest extends TestCase
 {
     public function testSimpleTokenization(): void
     {
-        $tokenizer = new Tokenizer('body#water-mark.content-of_the-world[data-value][data-model="lot"]');
+        $tokenizer = new Tokenizer('body#water-mark.content-of_the-world[data-value][data-model~="lot"]');
 
         $this->assertSame('body', $tokenizer->getTag());
         $this->assertSame('water-mark', $tokenizer->getId());
@@ -21,9 +21,10 @@ class TokenizerTest extends TestCase
 
     public function testComplexTokenization(): void
     {
-        $tokenizer = new Tokenizer('div.wrapper.product-collection#main[data-role="container"][data-state="active"]:not(.hidden):nth-child(2n+1):enabled::before::after');
+        $tokenizer = new Tokenizer('div.wrapper.product-collection#main[data-role~="container"][data-state="active"]:not(.hidden):nth-child(2n+1):enabled::before::after');
 
         $this->assertSame('div', $tokenizer->getTag());
+
         $this->assertSame('main', $tokenizer->getId());
 
         $this->assertCount(2, $tokenizer->getClasses());
@@ -31,8 +32,19 @@ class TokenizerTest extends TestCase
         $this->assertContains('product-collection', $tokenizer->getClasses());
 
         $this->assertCount(2, $tokenizer->getAttributes());
-        $this->assertContains('data-role="container"', $tokenizer->getAttributes());
+        $this->assertContains('data-role~="container"', $tokenizer->getAttributes());
         $this->assertContains('data-state="active"', $tokenizer->getAttributes());
+
+        $this->assertCount(2, $tokenizer->getAttributes(true));
+        $this->assertArrayHasKey('data-role~', $tokenizer->getAttributes(true));
+        $this->assertArrayHasKey('data-state', $tokenizer->getAttributes(true));
+        $this->assertContains('active', $tokenizer->getAttributes(true));
+        $this->assertContains('container', $tokenizer->getAttributes(true));
+
+        $attributes = $tokenizer->getAttributes(true);
+
+        $this->assertSame('container', $attributes['data-role~']);
+        $this->assertSame('active', $attributes['data-state']);
 
         $this->assertCount(2, $tokenizer->getPseudoFunctions());
         $this->assertArrayHasKey('not', $tokenizer->getPseudoFunctions());
@@ -45,7 +57,7 @@ class TokenizerTest extends TestCase
         $this->assertSame('.hidden', $pseudoFunctions['not']);
         $this->assertSame('2n+1', $pseudoFunctions['nth-child']);
 
-        $this->assertContains('enabled', $tokenizer->getPseudoSelectors());
+        $this->assertContains('enabled', $tokenizer->getPseudoClasses());
 
         $this->assertCount(2, $tokenizer->getPseudoElements());
         $this->assertContains('before', $tokenizer->getPseudoElements());

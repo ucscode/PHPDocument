@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Codec;
+namespace Ucscode\PHPDocument\Parser\Engine;
 
 use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
 
@@ -59,14 +59,14 @@ class Transformer
     public function decodeSelectorAttributes(string $encodedSelector): string
     {
         return preg_replace_callback(NodeQueryRegexpEnum::EXPR_ATTRIBUTE->value, function ($match) {
-            return sprintf('[%s]', base64_decode($match[1]));
+            return sprintf('[%s]', base64_decode($match[1], true));
         }, $encodedSelector);
     }
 
     /**
      * Split multiple selectors by comma
      *
-     * @param string $selector
+     * @param string $selector selector with encoded attributes
      * @return array<int, string>
      */
     public function splitGroupedSelectors(string $selector): array
@@ -77,7 +77,7 @@ class Transformer
     /**
      * Split an individual selector by spaces (to handle parent-child relationships)
      *
-     * @param string $selector
+     * @param string $selector selector with encoded attributes
      * @return array<int, string>
      */
     public function splitIndividualSelector(string $selector): array

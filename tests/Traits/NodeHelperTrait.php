@@ -26,7 +26,7 @@ trait NodeHelperTrait
                 'id' => 'body',
             ]),
             new ElementNode(NodeNameEnum::NODE_DIV, [
-                'class' => 'position-relative',
+                'id' => 'position-relative',
                 'data-theme' =>  'dark',
             ]),
             new ElementNode(NodeNameEnum::NODE_H1),
