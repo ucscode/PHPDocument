@@ -2,6 +2,7 @@
 
 namespace Ucscode\PHPDocument\Collection;
 
+use PHPUnit\Event\InvalidArgumentException;
 use Ucscode\PHPDocument\Support\AbstractCollection;
 
 class ClassList extends AbstractCollection
@@ -14,7 +15,17 @@ class ClassList extends AbstractCollection
      */
     public function add(string $value): static
     {
-        
+        $classes = explode(' ', $value);
+        foreach ($classes as $class) 
+        {
+             $class = trim($class);
+        if (!empty($class) && !in_array($class, $this->items)) 
+        {
+            $this->items[] = $class;
+        }
+    }
+
+    return $this;
     }
 
     /**
@@ -25,7 +36,20 @@ class ClassList extends AbstractCollection
      */
     public function remove(string $value): static
     {
+        $classes = explode(' ', $value);
+        foreach ($classes as $class) 
+        {
+            $class = trim($class);
 
+            if (!empty($class)) 
+            {
+                $this->items = array_filter($this->items, function ($item) use ($class) {
+                    return $item !== $class;
+                });
+            }
+        }
+
+            return $this;
     }
 
     /**
@@ -39,7 +63,16 @@ class ClassList extends AbstractCollection
      */
     public function replace(string $previous, string $new): static
     {
+        $this->items = array_values(array_filter($this->items, function ($item) use ($previous){
+            return $item !== $previous;
+        }));
 
+        if(!in_array($new, $this->items))
+        {
+            $this->items[] = $new;
+        }
+
+        return $this;
     }
 
     /**
@@ -48,9 +81,20 @@ class ClassList extends AbstractCollection
      * @param string $value
      * @return static
      */
-    public function contains(string $value): static
+    public function contains(string $value): bool
     {
+        $classes = explode(' ', trim($value));
 
+        foreach ($classes as $class) 
+        {
+            $class = trim($class); 
+
+            if (!empty($class) && in_array($class, $this->items)) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -63,11 +107,30 @@ class ClassList extends AbstractCollection
      */
     public function toggle(string $value): static
     {
+        $classes = explode(' ', trim($value));
 
+        foreach($classes as $class)
+        {
+            $class = trim($class);
+            
+            if (!empty($class)) 
+            {    
+                if(in_array($class, $this->items))
+                {
+                    $this->remove($class);
+                }else{
+                    $this->add($class);
+                }
+            }
+
+            }
+        return $this;
     }
 
     protected function validateItemType(mixed $item)
     {
-        
+        if(is_string($item)){
+            throw new InvalidArgumentException('Only strings are allowed as classes.');
+        }
     }
 }
