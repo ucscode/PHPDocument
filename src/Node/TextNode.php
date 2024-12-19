@@ -3,28 +3,27 @@
 namespace Ucscode\PHPDocument\Node;
 
 use Ucscode\PHPDocument\Enums\NodeTypeEnum;
+use Ucscode\PHPDocument\Support\AbstractCharacterData;
 use Ucscode\PHPDocument\Support\AbstractNode;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
-class TextNode extends AbstractNode
+class TextNode extends AbstractCharacterData
 {
-    protected string $value = '';
-
-    public function __construct(string $text = '')
+    public function __construct(string $data = '')
     {
         parent::__construct('#text');
 
-        $this->value = $text;
+        $this->data = $data;
     }
 
     public function render(?int $indent = null): string
     {
-        $text = $this->value;
+        $text = $this->data;
 
         if ($indent !== null) {
-            $text = $this->indent($this->value, max(0, $indent));
+            $text = $this->indent($this->data, max(0, $indent));
         }
 
         return $text;
@@ -33,5 +32,15 @@ class TextNode extends AbstractNode
     public function getNodeType(): int
     {
         return NodeTypeEnum::NODE_TEXT->value;
+    }
+
+    public function isContentWhiteSpace(): bool
+    {
+        return trim($this->data) === '';
+    }
+
+    public function isWhiteSpaceInContent(): bool
+    {
+        return preg_match('/\s+/', $this->data);
     }
 }

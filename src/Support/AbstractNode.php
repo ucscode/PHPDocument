@@ -10,6 +10,7 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 
 /**
  * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
+ * @author Name <email@email.com>
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
@@ -33,7 +34,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         $this->nodeName = strtoupper($nodeName);
         $this->childNodes = new NodeListMutable();
-        $this->temp = new Collection();
     }
 
     public function __toString(): string

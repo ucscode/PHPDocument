@@ -11,6 +11,7 @@ use Ucscode\PHPDocument\Collection\ClassList;
  */
 interface ElementInterface extends NodeInterface
 {
+    public function getTagName(): string;
     public function setInnerHtml(string $innerHTML): static;
     public function getInnerHtml(): string;
     public function setVoid(bool $void): static;
