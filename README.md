@@ -157,7 +157,7 @@ $html = <<< 'HERE'
   <form name="my-form>
     <input name="username"/>
   </form>
-HERE>>>
+HERE;
 
 $htmlLoader = new HtmlLoader($html);
 
