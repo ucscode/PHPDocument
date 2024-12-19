@@ -424,7 +424,9 @@ $element->render(); // <x-widget :vue-binder="project"/>
 
 ## ElementInterface methods
 
-All [NodeInterface methods](#nodeinterface-methods) and:
+Includes: 
+
+- [NodeInterface methods](#nodeinterface-methods)
 
 <table>
   <thead>
@@ -545,7 +547,9 @@ All [NodeInterface methods](#nodeinterface-methods) and:
 
 ## TextNode methods
 
-All [NodeInterface methods](#nodeinterface-methods) and:
+Includes: 
+
+- [NodeInterface methods](#nodeinterface-methods)
 
 <table>
   <thead>
