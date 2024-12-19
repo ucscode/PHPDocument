@@ -569,27 +569,97 @@ All [NodeInterface methods](#nodeinterface-methods) and:
   </tbody>
 </table>
 
-## Collection Objects  
+## Collection Objects
 
-- **Attributes**: Manages attributes of an element.  
-- **ClassList**: Handles class names for an element.  
-- **HtmlCollection**: A collection of `ElementNode` types.  
-- **NodeList**: A collection of any node types.  
+<table>
+  <thead>
+    <tr>
+      <th>PHP Class</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Attributes</code></td>
+      <td>Manages attributes of an element.</td>
+    </tr>
+    <tr>
+      <td><code>ClassList</code></td>
+      <td>Handles class names for an element.</td>
+    </tr>
+    <tr>
+      <td><code>HtmlCollection</code></td>
+      <td>A collection of <code>ElementNode</code> types.</td>
+    </tr>
+    <tr>
+      <td><code>NodeList</code></td>
+      <td>A collection of any node types.</td>
+    </tr>
+  </tbody>
+</table>
 
-## Node Objects  
+## Node Objects
 
-- **CommentNode**: Represents HTML comments.  
-- **DocumentTypeNode**: Represents the `<!DOCTYPE>` declaration.  
-- **ElementNode**: Represents HTML elements.  
-- **TextNode**: Represents textual content.  
+<table>
+  <thead>
+    <tr>
+      <th>PHP Class</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>CommentNode</code></td>
+      <td>Represents HTML comments.</td>
+    </tr>
+    <tr>
+      <td><code>DocumentTypeNode</code></td>
+      <td>Represents the <code>&lt;!DOCTYPE&gt;</code> declaration.</td>
+    </tr>
+    <tr>
+      <td><code>ElementNode</code></td>
+      <td>Represents HTML elements.</td>
+    </tr>
+    <tr>
+      <td><code>TextNode</code></td>
+      <td>Represents textual content.</td>
+    </tr>
+  </tbody>
+</table>
 
-### Parser Objects  
+## Parser Objects
 
-- **HtmlLoader**: Parses an HTML string into nodes.  
-- **Matcher**: Matches nodes against CSS selectors.  
-- **Tokenizer**: Breaks down CSS selectors into tokens.  
-- **Transformer**: Encodes and decodes CSS selectors.  
-- **NodeSelector**: Finds descendants matching CSS selectors.  
+<table>
+  <thead>
+    <tr>
+      <th>PHP Class</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>HtmlLoader</code></td>
+      <td>Parses an HTML string into nodes.</td>
+    </tr>
+    <tr>
+      <td><code>Matcher</code></td>
+      <td>Matches nodes against CSS selectors.</td>
+    </tr>
+    <tr>
+      <td><code>Tokenizer</code></td>
+      <td>Breaks down CSS selectors into tokens.</td>
+    </tr>
+    <tr>
+      <td><code>Transformer</code></td>
+      <td>Encodes and decodes CSS selectors.</td>
+    </tr>
+    <tr>
+      <td><code>NodeSelector</code></td>
+      <td>Finds descendants matching CSS selectors.</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ## Providing Support For:
 
