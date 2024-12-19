@@ -235,7 +235,7 @@ $element->render(); // <x-widget :vue-binder="project"/>
 
 ## NodeInterface methods
 
-<table border="1">
+<table>
   <thead>
     <tr>
       <th>Method</th>
@@ -401,7 +401,7 @@ $element->render(); // <x-widget :vue-binder="project"/>
 
 All methods in `NodeInterface` plus
 
-<table border="1">
+<table>
   <thead>
     <tr>
       <th>Method</th>
@@ -522,7 +522,7 @@ All methods in `NodeInterface` plus
 
 All methods in `NodeInterface` plus:
 
-<table border="1">
+<table>
   <thead>
     <tr>
       <th>Method</th>
