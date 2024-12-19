@@ -26,6 +26,6 @@ interface ElementInterface extends NodeInterface
     public function querySelectorAll(string $selector): HtmlCollection;
     public function getClassList(): ClassList;
     public function matches(string $selector): bool;
-    public function getElementsByClassName(string $className): HtmlCollection;
-    public function getElementsByTagName(string $tagName): HtmlCollection;
+    public function getElementsByClassName(string $names): HtmlCollection;
+    public function getElementsByTagName(string $name): HtmlCollection;
 }

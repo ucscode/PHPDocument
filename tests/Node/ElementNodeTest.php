@@ -112,7 +112,43 @@ class ElementNodeTest extends TestCase
     public function testElementAttributes(): void
     {
         $this->assertTrue($this->getNodeBody()->hasAttribute('id'));
-        $this->getNodeBody()->getClassList()->add('super');
+        $this->getNodeBody()->getClassList()->add('super legis supreme');
         $this->assertStringContainsString('super', $this->getNodeBody()->getAttribute('class'));
+        $this->assertCount(4, $this->getNodeBody()->getClassList());
+        $this->getNodeBody()->setAttribute('class', 'puma');
+        $this->assertCount(1, $this->getNodeBody()->getClassList());
+        $this->getNodeBody()->setAttribute('class', null);
+        $this->assertCount(0, $this->getNodeBody()->getClassList());
+        $this->getNodeBody()->setAttribute('class', 'model-22_g and coperate');
+        $this->assertCount(3, $this->getNodeBody()->getClassList());
+    }
+
+    public function testElementParser(): void
+    {
+        $collection = $this->getNodeBody()->getElementsByClassName('case-2');
+
+        $this->assertCount(2, $collection);
+
+        $collection = $this->getNodeBody()->getElementsByClassName('case-2 case-1');
+
+        $this->assertCount(1, $collection);
+
+        $collection = $this->getNodeBody()->getElementsByTagName('img');
+
+        $this->assertCount(1, $collection);
+
+        $collection = $this->getNodeBody()->getElementsByTagName('*');
+
+        $this->assertCount(8, $collection);
+
+        $collection = $this->getNodeBody()->querySelectorAll('*.case-1');
+
+        $this->assertCount(3, $collection);
+
+        $this->assertTrue($this->getNodeButton()->matches('.btn'));
+
+        $nodeBr = $this->getNodeDiv()->querySelector('br');
+
+        $this->assertSame($this->getNodeBr(), $nodeBr);
     }
 }

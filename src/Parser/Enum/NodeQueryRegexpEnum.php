@@ -40,7 +40,7 @@ enum NodeQueryRegexpEnum: string
     /**
      * Match nodename in selector
      */
-    case REGEXP_TAG = '/^[a-z]+[a-z0-9-]*/i';
+    case REGEXP_TAG = '/^(?:[a-z]+[a-z0-9-]*)|\*/i';
 
     /**
      * Match id in selector

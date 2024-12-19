@@ -18,9 +18,9 @@ Example:
 .name div#id [data-value] span
 ```
 
-1. create an `HtmlCollection` containing only `span` elements
+1. Find all elements matching `span`
 2. check if the `span` element has parent `[data-value]`
 3. check if the `[data-value]` has parent `div#id`
 4. check if the `div#id` has parent `.name`
 
-for each failure, filter `span` element from the collection list
+If any fails, discard `span` element, otherwise, add it to the collection list

@@ -61,7 +61,7 @@ class Matcher
         }
 
         if ($tag = $this->tokenizer->getTag()) {
-            $this->matches['tag'] = $this->node->getNodeName() === strtoupper($tag);
+            $this->matches['tag'] = $this->node->getNodeName() === strtoupper($tag) || $tag === '*';
         }
 
         if ($id = $this->tokenizer->getId()) {

@@ -27,7 +27,7 @@ trait NodeHelperTrait
         $this->nodeList = new NodeList([
             new ElementNode(NodeNameEnum::NODE_BODY, [
                 'class' => 'body',
-                'id' => 'body',
+                'id' => 'body case-2',
             ]),
             new ElementNode(NodeNameEnum::NODE_DIV, [
                 'class' => 'position-relative case-1',
@@ -42,7 +42,7 @@ trait NodeHelperTrait
                 'name' => 'username',
                 'value' => '224',
                 'type' => 'text',
-                'class' => 'case-1',
+                'class' => 'case-1 case-2',
             ]),
             new ElementNode(NodeNameEnum::NODE_A, [
                 'href' => 'https://example.com',
@@ -50,7 +50,7 @@ trait NodeHelperTrait
             ]),
             new ElementNode(NodeNameEnum::NODE_BR),
             new ElementNode(NodeNameEnum::NODE_BUTTON, [
-                'class' => 'btn btn-primary',
+                'class' => 'btn btn-primary case-2',
                 'type' => 'submit',
                 'data-value' => '["data1", "data2"]',
             ]),

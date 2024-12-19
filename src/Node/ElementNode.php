@@ -10,6 +10,10 @@ use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Contracts\ElementInterface;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 use Ucscode\PHPDocument\Enums\NodeTypeEnum;
+use Ucscode\PHPDocument\Parser\Engine\Matcher;
+use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
+use Ucscode\PHPDocument\Parser\Engine\Transformer;
+use Ucscode\PHPDocument\Parser\NodeSelector;
 use Ucscode\PHPDocument\Support\AbstractNode;
 
 class ElementNode extends AbstractNode implements ElementInterface
@@ -117,8 +121,12 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function setAttribute(string $name, \Stringable|string|null $value): static
     {
-        if (strtolower(trim($name)) === 'class' && $value !== $this->classList) {
-            $value = $this->classList->add($value ?? '');
+        if (strtolower(trim($name)) === 'class') {
+            if ($value !== $this->classList) {
+                $this->classList->clear();
+
+                $value = ($value !== null) ? $this->classList->add($value) : $this->classList;
+            }
         }
 
         $this->attributes->set($name, $value);
@@ -138,29 +146,35 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this;
     }
 
-    public function querySelector(string $selector): ?ElementInterface
-    {
-
-    }
-
     public function querySelectorAll(string $selector): HtmlCollection
     {
+        return (new NodeSelector($this, $selector))->getResult();
+    }
 
+    public function querySelector(string $selector): ?ElementInterface
+    {
+        return $this->querySelectorAll($selector)->first();
     }
 
     public function matches(string $selector): bool
     {
+        $transformer = new Transformer();
+        $encodeSelector = $transformer->encodeAttributes($transformer->encodeQuotedStrings($selector));
+        $matcher = new Matcher($this, new Tokenizer($encodeSelector));
 
+        return $matcher->matchesNode();
     }
 
-    public function getElementsByClassName(string $className): HtmlCollection
+    public function getElementsByClassName(string $names): HtmlCollection
     {
+        $classes = implode('.', array_map('trim', explode(' ', $names)));
 
+        return $this->querySelectorAll(".{$classes}");
     }
 
-    public function getElementsByTagName(string $tagName): HtmlCollection
+    public function getElementsByTagName(string $name): HtmlCollection
     {
-
+        return $this->querySelectorAll($name);
     }
 
     private function nodePresets(array $attributes): void
