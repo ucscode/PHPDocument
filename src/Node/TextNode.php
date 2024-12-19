@@ -37,9 +37,4 @@ class TextNode extends AbstractCharacterData
     {
         return trim($this->data) === '';
     }
-
-    public function isWhiteSpaceInContent(): bool
-    {
-        return preg_match('/\s+/', $this->data);
-    }
 }

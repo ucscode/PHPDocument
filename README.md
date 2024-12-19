@@ -27,6 +27,10 @@ The library is lightweight, fast, and easy to integrate into any project, making
 - Flexibility and Extensibility
 - Improving Developer Experience
 
+### Prerequisite
+
+- PHP >= 8.2
+
 ### Installation (Composer)
 
 You can include PHPDocument library in your project using Composer:
@@ -60,7 +64,7 @@ use Ucscode\PHPDocument\Enums\NodeNameEnum;
 $element = new ElementNode(NodeNameEnum::NODE_DIV);
 ```
 
-You can also create an eleemnt and set their attributes like so:
+You can also create an element and set their attributes at the point of instantiation:
 
 ```php
 $span = new ElementNode('span', [
@@ -70,14 +74,27 @@ $span = new ElementNode('span', [
 ]);
 ```
 
-You can use almost any existing node methods
+You can use many available methods to manipulate the DOM. 
+
+A summary of these methods are provided in the following sections:
+
+- [NodeInterface methods](#nodeinterface-methods)
+- [ElementInterface methods](#elementinterface-methods)
+- [TextNode methods](#textnode-methods)
 
 ```php
 $element->appendChild($span);
+```
 
+```php
 $element->getNextSibling();
+```
 
-$element->getChild(0)->setAttribute('data-name', 'Ucscode');
+```php
+$element->getChild(0)
+  ->setAttribute('data-name', 'Ucscode')
+  ->setAttribute('title', 'PHP Document')
+;
 ```
 
 ### Traversing Elements
@@ -157,17 +174,17 @@ $html = '<div class="container"><p>Hello, world!</p></div>';
 $htmlLoader = new HtmlLoader($html);
 
 // Access the root div element
-$rootElement = $htmlLoader->getNodeList()->get(0);
+$divElement = $htmlLoader->getNodeList()->get(0);
 
 // Set inner HTML of the root element
-$rootElement->setInnerHtml('<h1 class="heading">New Heading</h1>');
+$divElement->setInnerHtml('<br/><h1 class="heading">New Heading</h1>');
 
 // Query the first paragraph within the container
-$paragraph = $rootElement->querySelector('p'); // returns null
-$paragraph = $rootElement->querySelector('h1.heading'); // returns H1 ElementNode
+$paragraph = $divElement->querySelector('p'); // returns null
+$heading = $divElement->querySelector('h1.heading'); // returns H1 ElementNode
 
 // Accessing the number of direct child nodes
-echo $rootElement->getChildNodes()->count(); // 1 (the container div)
+echo $divElement->getChildNodes()->count(); // 2
 ```
 
 ### Render HTML
@@ -175,10 +192,10 @@ echo $rootElement->getChildNodes()->count(); // 1 (the container div)
 You can get or render the `ElementNode` as HTML using the `render()` method.
 
 ```php
-echo $rootElement->render();
+echo $divElement->render();
 ```
 
-#### Result
+### Output
 
 ```html
 <div class="container"><h1 class="heading">New Heading</h1></div>
@@ -187,10 +204,10 @@ echo $rootElement->render();
 If you want to indent the rendered output, pass an unsigned integer (initially zero) to the `render()` method
 
 ```php
-echo $rootElement->render(0);
+echo $divElement->render(0);
 ```
 
-#### Result
+### Output
 
 ```html
 <div class="container">
@@ -202,33 +219,41 @@ echo $rootElement->render(0);
 
 ### Element Render Visibility
 
-If you want an element not to be removed from the DOM tree but not part of the rendered output, set the element visibility to false
+To keep an element in the DOM tree but exclude it from the rendered output, set its visibility to `false`.
 
 ```php
-$rootElement->querySelector('.heading')->setVisible(false);
+$divElement->querySelector('.heading')->setVisible(false);
+```
 
-$rootElement->render(); // <div class="container"></div>
+```php
+$divElement->render(); // <div class="container"></div>
+```
 
-$rootElement->getChildren()->count(); // 1
+```php
+$divElement->getChildren()->first(); // H1 ElementNode
 ```
 
 ### Setting Void Item
 
-Some HTML elements do not have closing tags, examples include `br`, `img` etc.
+Some HTML elements, like `<br>` and `<img>`, do not have closing tags.  
 
-You can use the `setVoid()` method to indentify an element as void.\
-This allows the rendering machine to discard closing tag for that element
-This is useful when defining custom object
+The `setVoid()` method marks an element as void, ensuring the renderer omits its closing tag. This is especially helpful when defining custom elements.
 
 ```php
 $element = new Element('x-widget', [
   ':vue-binder' => 'project'
 ]);
+```
 
+```php
 $element->render(); // <x-widget :vue-binder="project"></x-widget>
+```
 
+```php
 $element->setVoid(true);
+```
 
+```php
 $element->render(); // <x-widget :vue-binder="project"/>
 ```
 ---
@@ -399,7 +424,7 @@ $element->render(); // <x-widget :vue-binder="project"/>
 
 ## ElementInterface methods
 
-All methods in `NodeInterface` plus
+All [NodeInterface methods](#nodeinterface-methods) and:
 
 <table>
   <thead>
@@ -520,7 +545,7 @@ All methods in `NodeInterface` plus
 
 ## TextNode methods
 
-All methods in `NodeInterface` plus:
+All [NodeInterface methods](#nodeinterface-methods) and:
 
 <table>
   <thead>
@@ -532,14 +557,14 @@ All methods in `NodeInterface` plus:
   </thead>
   <tbody>
     <tr>
-      <td><code>isWhiteSpaceInContent</code></td>
-      <td>Check if the content of the text node consists only of whitespace characters</td>
-      <td>boolean</td>
-    </tr>
-    <tr>
       <td><code>isContentWhiteSpace</code></td>
       <td>Check if the content of the text node is empty or contains only whitespace</td>
       <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>length</code></td>
+      <td>The length of the text data</td>
+      <td>integer</td>
     </tr>
   </tbody>
 </table>
@@ -566,6 +591,9 @@ All methods in `NodeInterface` plus:
 - **Transformer**: Encodes and decodes CSS selectors.  
 - **NodeSelector**: Finds descendants matching CSS selectors.  
 
+## Providing Support For:
+
+- **Combinators**: Use of combinator such as `>`, `+`, `~`, `$` are captured but not yet supported
 
 ## Contributing
 
