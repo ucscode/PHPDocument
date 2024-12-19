@@ -10,7 +10,7 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 
 /**
  * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {

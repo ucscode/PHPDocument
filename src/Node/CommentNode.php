@@ -6,7 +6,7 @@ use Ucscode\PHPDocument\Enums\NodeTypeEnum;
 use Ucscode\PHPDocument\Support\AbstractCharacterData;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class CommentNode extends AbstractCharacterData
 {

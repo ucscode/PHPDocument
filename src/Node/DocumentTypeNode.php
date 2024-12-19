@@ -6,7 +6,7 @@ use Ucscode\PHPDocument\Enums\NodeTypeEnum;
 use Ucscode\PHPDocument\Support\AbstractNode;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class DocumentTypeNode extends AbstractNode
 {

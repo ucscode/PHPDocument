@@ -12,6 +12,23 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 class NodeListMutable extends NodeList
 {
     /**
+     * Replace every node in the item list
+     *
+     * @param array $items
+     * @return static
+     */
+    public function replace(array $items): static
+    {
+        foreach ($items as $item) {
+            $this->validateItemType($item);
+        }
+
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
      * Insert the given node at a specific position within the list
      *
      * @param integer $index

@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Ucscode\PHPDocument\Contracts\NodeInterface;
 use Ucscode\PHPDocument\Enums\NodeNameEnum;
 use Ucscode\PHPDocument\Node\ElementNode;
+use Ucscode\PHPDocument\Test\Parser\Translator\HtmlLoaderTest;
 use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
 
 class ElementNodeTest extends TestCase
@@ -152,8 +153,24 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeBr(), $nodeBr);
     }
 
-    // public function testSetInnerHTML(): void
-    // {
+    public function testSetInnerHTML(): void
+    {
+        $this->getNodeA()->setInnerHtml(HtmlLoaderTest::BOOTSTRAP_MODAL_STR);
 
-    // }
+        $this->assertCount(1, $this->getNodeA()->getChildNodes());
+
+        /**
+         * @var ElementInterface $modalElement
+         */
+        $modalElement = $this->getNodeA()->getFirstChild();
+
+        $this->assertSame('modal', $modalElement->getAttribute('class'));
+    }
+
+    public function testElementVisibility(): void
+    {
+        $this->getNodeForm()->setVisible(false);
+        $this->assertNotNull($this->getNodeDiv()->querySelector('form'));
+        $this->assertStringNotContainsString('<form action', $this->getNodeDiv()->render());
+    }
 }

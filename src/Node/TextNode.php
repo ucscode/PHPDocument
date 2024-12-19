@@ -4,7 +4,6 @@ namespace Ucscode\PHPDocument\Node;
 
 use Ucscode\PHPDocument\Enums\NodeTypeEnum;
 use Ucscode\PHPDocument\Support\AbstractCharacterData;
-use Ucscode\PHPDocument\Support\AbstractNode;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

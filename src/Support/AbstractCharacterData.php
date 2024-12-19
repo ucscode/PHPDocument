@@ -3,7 +3,7 @@
 namespace Ucscode\PHPDocument\Support;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractCharacterData extends AbstractNode
 {

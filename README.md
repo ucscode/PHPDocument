@@ -1,18 +1,31 @@
-# UssElement 
+# PHP Document 
 
-A PHP Library for Effortless HTML Generation (Package From [User Synthetics](https://github.com/ucscode/user-synthetics))
+A simple, lightweight, standalone PHP library for programmatically creating and manipulating HTML elements. It simplifies the process of working with HTML structures and DOM elements, offering functionality similar to [DOMDocument](https://www.php.net/manual/en/class.domdocument.php) but with reduced boilerplate and enhanced ease of use.
 
-### Description:
+With UssElement, you can effortlessly create DOM nodes, set attributes, set innerHtml, use querySelector, modify element classlist etc, and generate (or render) HTML strings with ease. 
 
-UssElement is a powerful PHP library designed to simplify the process of building and manipulating HTML elements in your web applications. With UssElement, you can effortlessly create DOM nodes, set attributes, define content, and generate HTML strings with ease. Streamline your PHP-based web development workflow and save time when constructing dynamic and interactive web pages.
+### Why PHP Document?
+
+ElementNode is designed to simplify and streamline the process of working with HTML elements in PHP. If (like me), you've ever been frustrated by the complexity of PHP's `DOMDocument` or found yourself writing repetitive, cumbersome code just to manipulate HTML structures, ElementNode is the solution you’ve been waiting for.
+
+This standalone library takes care of the heavy lifting, reducing boilerplate code and eliminates the need for complex XPath queries, offering a simple, intuitive API for tasks like creating elements, setting inner HTML, and selecting elements using CSS selectors.
+
+The library is lightweight, fast, and easy to integrate into any project, making it perfect for both small and large-scale applications.
 
 ### Key Features:
 
 - Create HTML elements using PHP code.
+- More inspired by [Javascript DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) than PHP DOMDocument
 - Set element attributes, such as class names and IDs.
 - Define inner HTML content for elements.
-- Generate HTML strings with the `UssElement::getHTML()` method.
+- Generate or render HTML strings with the `UssElement::render()` method.
 - Boost your productivity by simplifying HTML generation in PHP.
+- Reducing Complexity
+- Providing an Intuitive API
+- Encouraging Dependency-Free Development
+- Efficiency in Common DOM Tasks
+- Flexibility and Extensibility
+- Improving Developer Experience
 
 ### Installation (Composer)
 
@@ -24,175 +37,203 @@ composer require ucscode/uss-element
 
 ### Getting Started:
 
-- Instantiate the UssElement class with the desired HTML element type (e.g., `UssElement::NODE_DIV`).
+- Instantiate the UssElement class with the desired HTML element type (e.g., `NodeNameEnum::NODE_DIV`).
 - Use UssElement methods to set attributes and content.
-- Generate HTML strings with `UssElement::getHTML()` for seamless integration into your web pages.
+- Generate HTML strings with `UssElement::render()` for seamless integration into your web pages.
 
-### Example:
+### Creating Elements
 
-```php
-use Ucscode\UssElement\UssElement;
-
-// Create Elements
-
-$div = new UssElement(UssElement::NODE_DIV);
-$span = new UssElement(UssElement::NODE_SPAN);
-
-// Modify Elements
-
-$div->setAttribute('class', 'container');
-$span->setAttribute('style', "color: red;");
-$span->setContent("Hello world!");
-
-// Organize Element
-
-$div->appendChild($span);
-
-// Generate and output HTML string
-
-echo $div->getHTML(true); // true to indent html output
-```
-
-## Inquiry
-
-But why use this over the default PHP `DOMDocument`? <br>
-
-UssElement not only provides out of the box methods and concept but is prepared for ultimate future increase. The default DOMDocument uses methods that are similar to that of Javascript and nothing more. There are also maximized limitation like being unable to directly insert `innerHTML` into your document context.
-
-With UssElement, you can do all that and even more. For example, you can set the visibility of an element to render with other element or not.
+You can create elements by instantiating the type of node
 
 ```php
-$div->appendChild($span);
-$span->setInvisible(true);
+$element = new ElementNode('div');
 ```
 
-In the above example, span is a child of div and always will be unless removed. However, when the content is rendered in HTML, the span element will be absent, giving you the ability to control the element visiblity without actually removing the element.
+You can also create an eleemnt and set their attributes like so:
 
-## Methods
+```php
+$span = new ElementNode('span', [
+  'id' => 'short-cut',
+  'class' => 'to set',
+  'data-what' => 'attributes'
+]);
+```
 
-<table>
-  <thead>
-    <tr>
-      <th>Method</th>
-      <th>Returns</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>isVoid()</code></td>
-      <td><code>bool</code></td>
-      <td>Indicates whether the element should have a closing tag or not (true means no closing tag).</td>
-    </tr>
-    <tr>
-      <td><code>hasAttribute($attr)</code></td>
-      <td><code>bool</code></td>
-      <td>Checks if an attribute exists on the element.</td>
-    </tr>
-    <tr>
-      <td><code>hasAttributeValue($attr, $value)</code></td>
-      <td><code>bool</code></td>
-      <td>Checks if an attribute has a particular value.</td>
-    </tr>
-    <tr>
-      <td><code>getAttribute($attr)</code></td>
-      <td><code>?string</code></td>
-      <td>Gets the value of an attribute.</td>
-    </tr>
-    <tr>
-      <td><code>addAttributeValue($attr, $value)</code></td>
-      <td><code>self</code></td>
-      <td>Appends a value to an attribute.</td>
-    </tr>
-    <tr>
-      <td><code>removeAttributeValue($attr, $value)</code></td>
-      <td><code>self</code></td>
-      <td>Removes a value from an attribute.</td>
-    </tr>
-    <tr>
-      <td><code>removeAttribute($attr)</code></td>
-      <td><code>self</code></td>
-      <td>Removes an attribute from the element.</td>
-    </tr>
-    <tr>
-      <td><code>setContent($content)</code></td>
-      <td><code>self</code></td>
-      <td>Sets the inner HTML content of the element.</td>
-    </tr>
-    <tr>
-      <td><code>hasContent()</code></td>
-      <td><code>bool</code></td>
-      <td>Checks if the element has inner HTML content.</td>
-    </tr>
-    <tr>
-      <td><code>getContent()</code></td>
-      <td><code>string</code></td>
-      <td>Gets the inner HTML content of the element.</td>
-    </tr>
-    <tr>
-      <td><code>appendChild($child)</code></td>
-      <td><code>void</code></td>
-      <td>Appends a child element to the current element.</td>
-    </tr>
-    <tr>
-      <td><code>prependChild($child)</code></td>
-      <td><code>void</code></td>
-      <td>Prepends a child element to the current element.</td>
-    </tr>
-    <tr>
-      <td><code>insertBefore($child, $refNode)</code></td>
-      <td><code>void</code></td>
-      <td>Inserts a child element before a specified reference element.</td>
-    </tr>
-    <tr>
-      <td><code>insertAfter($child, $refNode)</code></td>
-      <td><code>void</code></td>
-      <td>Inserts a child element after a specified reference element.</td>
-    </tr>
-    <tr>
-      <td><code>replaceChild($child, $refNode)</code></td>
-      <td><code>void</code></td>
-      <td>Replaces a child element with another element.</td>
-    </tr>
-    <tr>
-      <td><code>firstChild()</code></td>
-      <td><code>?UssElement</code></td>
-      <td>Returns the first child element of the current element.</td>
-    </tr>
-    <tr>
-      <td><code>lastChild()</code></td>
-      <td><code>?UssElement</code></td>
-      <td>Returns the last child element of the current element.</td>
-    </tr>
-    <tr>
-      <td><code>getChild($index)</code></td>
-      <td><code>?UssElement</code></td>
-      <td>Returns a child element at a specified index.</td>
-    </tr>
-    <tr>
-      <td><code>removeChild($child)</code></td>
-      <td><code>void</code></td>
-      <td>Removes a child element from the current element.</td>
-    </tr>
-    <tr>
-      <td><code>getHTML($indent = false)</code></td>
-      <td><code>string</code></td>
-      <td>Generates an HTML string representation of the element and its children.</td>
-    </tr>
-  </tbody>
-</table>
+You can use almost any existing node methods
+
+```php
+$element->appendChild($span);
+
+$element->getNextSibling();
+
+$element->getChild(0)->setAttribute('data-name', 'Ucscode');
+```
+
+### Traversing Elements
+
+Use the `querySelector()` or `querySelectorAll()` method to select elements based on CSS selectors:
+
+```php
+$element->querySelector('.to.set[data-what=attributes]'); // Returns the <span> element
+```
+
+You can also retrieve an element by other methods such as `getElementById`, `getElementsByClassName`, `getElementsByTagName`:
+
+```php
+$element->getElementById('short-cut'); // Returns the <span> element
+```
+
+### Inner HTML
+
+- You can easily set the inner HTML content of an element using the `setInnerHtml()` method:
+- You can also get inner HTML of an element using `getInnerHTML()` method:
+
+```php
+$element->setInnerHtml('<p>This is a paragraph inside a div.</p>');
+```
+
+### Loading HTML
+
+You can convert an HTML string to `NodeList` containing all elements using the `HtmlLoader` class:
+
+```php
+// An example HTML document:
+$html = <<< 'HERE'
+  <html>
+    <head>
+      <title>TEST</title>
+    </head>
+    <body id='foo'>
+      <h1>Hello World</h1>
+      <p>This is a test of the HTML5 parser.</p>
+    </body>
+  </html>
+HERE;
+
+$htmlLoader = new HtmlLoader($html);
+
+$htmlLoader->getNodeList()->count(); // Returns the number of direct nodes (1 in this case)
+$htmlLoader->getNodeList()->first; // HTML ElementNode
+```
+
+You can also load framents
+
+```php
+$html = <<< 'HERE'
+  <h1>Hi there</h1>
+  <p>Please enter your detail</p>
+  <form name="my-form>
+    <input name="username"/>
+  </form>
+HERE>>>
+
+$htmlLoader = new HtmlLoader($html);
+
+$htmlLoader->getNodeList()->count(); // Returns the number of direct nodes (3 in this case)
+
+$htmlLoader->getNodeList()->get(0); // H1 ElementNode
+$htmlLoader->getNodeList()->get(1); // P ElementNode
+$htmlLoader->getNodeList()->get(2); // FORM ElementNode
+```
+### Basic Example
+
+```php
+$html = '<div class="container"><p>Hello, world!</p></div>';
+$htmlLoader = new HtmlLoader($html);
+
+// Access the root div element
+$rootElement = $htmlLoader->getNodeList()->get(0);
+
+// Set inner HTML of the root element
+$rootElement->setInnerHtml('<h1 class="heading">New Heading</h1>');
+
+// Query the first paragraph within the container
+$paragraph = $rootElement->querySelector('p'); // returns null
+$paragraph = $rootElement->querySelector('h1.heading'); // returns H1 ElementNode
+
+// Accessing the number of direct child nodes
+echo $rootElement->getChildNodes()->count(); // 1 (the container div)
+```
+
+### Render HTML
+
+You can get or render the ElementNode as HTML using the `render()` method.
+
+```php
+echo $rootElement->render();
+```
+
+#### Result
+
+```html
+<div class="container"><h1 class="heading">New Heading</h1></div>
+```
+
+If you want to indent the rendered output, pass an unsigned integer (initially zero) to the `render()` method
+
+```php
+echo $rootElement->render(0);
+```
+
+#### Result
+
+```html
+<div class="container">
+    <h1 class="heading">
+        New Heading
+    </h1>
+</div>
+```
+
+### Element Render Visibility
+
+If you want an element not to be removed from the DOM tree but not part of the rendered output, set the element visibility to false
+
+```php
+$rootElement->querySelector('.heading')->setVisible(false);
+
+$rootElement->render(); // <div class="container"></div>
+
+$rootElement->getChildren()->count(); // 1
+```
+
+### Setting Void Item
+
+Some HTML elements do not have closing tags, examples include `br`, `img` etc.
+
+You can use the `setVoid()` method to indentify an element as void.\
+This allows the rendering machine to discard closing tag for that element
+This is useful when defining custom object
+
+```php
+$element = new Element('x-widget', [
+  ':vue-binder' => 'project'
+]);
+
+$element->render(); // <x-widget :vue-binder="project"></x-widget>
+
+$element->setVoid(true);
+
+$element->render(); // <x-widget :vue-binder="project"/>
+```
+---
+
+### Wiki Documentation Coming Soon
 
 ---
 
-## 💖 Support
+## Contributing
 
-If you find UssElement helpful and would like to support its development and maintenance, you can make a donation. <br>
-Your contribution helps ensure the continued improvement and sustainability of this project.
+Feel free to open issues or submit pull requests. We welcome contributions to improve the library.
 
-### Ways to Donate
+### How to Contribute
 
-- **Bitcoin**: You can also contribute with Bitcoin by sending to our Bitcoin wallet address: `bc1q22zymcsq9t7m9fdwau3dqcpme2szvgnzkqyjza`.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-xyz`).
+3. Commit your changes (`git commit -am 'Add feature xyz'`).
+4. Push to the branch (`git push origin feature-xyz`).
+5. Create a new pull request.
 
----
+## License
 
-**Note:** UssElement is an open-source project, and contributions are voluntary. Donations are not tax-deductible.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

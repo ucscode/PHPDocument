@@ -19,7 +19,7 @@ use Ucscode\PHPDocument\Node\ElementNode;
 use Ucscode\PHPDocument\Node\TextNode;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class HtmlLoader
 {

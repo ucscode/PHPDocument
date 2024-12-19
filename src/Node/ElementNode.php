@@ -14,6 +14,7 @@ use Ucscode\PHPDocument\Parser\Engine\Matcher;
 use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
 use Ucscode\PHPDocument\Parser\Engine\Transformer;
 use Ucscode\PHPDocument\Parser\NodeSelector;
+use Ucscode\PHPDocument\Parser\Translator\HtmlLoader;
 use Ucscode\PHPDocument\Support\AbstractNode;
 
 /**
@@ -56,13 +57,15 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function setInnerHtml(string $html): static
     {
+        $this->childNodes->replace((new HtmlLoader($html))->getNodeList()->toArray());
+
         return $this;
     }
 
     public function getInnerHtml(?int $indent = null): string
     {
         return implode(array_map(
-            fn (NodeInterface $node) => $node->render($indent === null ? null : max(0, $indent) + 1),
+            fn (NodeInterface $node) => $node->isVisible() ? $node->render($indent === null ? null : max(0, $indent) + 1) : '',
             $this->childNodes->toArray()
         ));
     }
