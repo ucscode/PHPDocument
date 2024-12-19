@@ -105,10 +105,13 @@ Use the `querySelector()` or `querySelectorAll()` method to select elements base
 $element->querySelector('.to.set[data-what=attributes]'); // Returns the <span> element
 ```
 
-You can also retrieve an element by other methods such as `getElementById`, `getElementsByClassName`, `getElementsByTagName`:
+You can also retrieve an element by other methods such as:
+
+- `getElementsByClassName`
+- `getElementsByTagName`
 
 ```php
-$element->getElementById('short-cut'); // Returns the <span> element
+$element->getElementsByClassName('.set'); // Returns the <span> element
 ```
 
 ### Inner HTML
@@ -177,14 +180,14 @@ $htmlLoader = new HtmlLoader($html);
 $divElement = $htmlLoader->getNodeList()->get(0);
 
 // Set inner HTML of the root element
-$divElement->setInnerHtml('<br/><h1 class="heading">New Heading</h1>');
+$divElement->setInnerHtml('<i class="fas fa-user"></i><h1 class="heading">New Heading</h1><br/>');
 
 // Query the first paragraph within the container
 $paragraph = $divElement->querySelector('p'); // returns null
 $heading = $divElement->querySelector('h1.heading'); // returns H1 ElementNode
 
 // Accessing the number of direct child nodes
-echo $divElement->getChildNodes()->count(); // 2
+echo $divElement->getChildNodes()->count(); // 3
 ```
 
 ### Render HTML
@@ -198,7 +201,7 @@ echo $divElement->render();
 ### Output
 
 ```html
-<div class="container"><h1 class="heading">New Heading</h1></div>
+<div class="container"><i class="fas fa-user"></i><h1 class="heading">New Heading</h1><br/></div>
 ```
 
 If you want to indent the rendered output, pass an unsigned integer (initially zero) to the `render()` method
@@ -211,9 +214,11 @@ echo $divElement->render(0);
 
 ```html
 <div class="container">
+    <i class="fas fa-user"></i>
     <h1 class="heading">
         New Heading
     </h1>
+    <br/>
 </div>
 ```
 
