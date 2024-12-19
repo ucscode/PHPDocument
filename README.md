@@ -249,7 +249,7 @@ $divElement->getChildren()->count(); // 3
 
 Some HTML elements, like `<br>` and `<img>`, do not have closing tags.  
 
-The `setVoid()` method marks an element as void, ensuring the renderer omits its closing tag. This is especially helpful when defining custom elements.
+The `setVoid()` method marks an element as void, ensuring that it is rendered without a closing tag. This is especially helpful when defining custom elements.
 
 ```php
 $element = new Element('x-widget', [
