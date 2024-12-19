@@ -7,7 +7,7 @@ use Ucscode\PHPDocument\Contracts\NodeInterface;
 /**
  * A mutable version of nodelist
  *
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class NodeListMutable extends NodeList
 {

@@ -6,6 +6,9 @@ use Ucscode\PHPDocument\Collection\Attributes;
 use Ucscode\PHPDocument\Collection\HtmlCollection;
 use Ucscode\PHPDocument\Collection\ClassList;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 interface ElementInterface extends NodeInterface
 {
     public function setInnerHtml(string $innerHTML): static;

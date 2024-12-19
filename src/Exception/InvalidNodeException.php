@@ -2,6 +2,9 @@
 
 namespace Ucscode\PHPDocument\Exception;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class InvalidNodeException extends \InvalidArgumentException
 {
     public const NODE_LIST_EXCEPTION = 'All NodeList item must be instance of %s, found %s';

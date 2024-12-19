@@ -3,7 +3,7 @@
 namespace Ucscode\PHPDocument\Parser\Exception;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class InvalidParserComponentException extends \InvalidArgumentException
 {

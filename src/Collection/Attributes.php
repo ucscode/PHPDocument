@@ -8,6 +8,7 @@ use Ucscode\PHPDocument\Support\AbstractCollection;
 /**
  * @template T
  * @implements IteratorAggregate<string, string>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Attributes extends AbstractCollection implements \Stringable
 {

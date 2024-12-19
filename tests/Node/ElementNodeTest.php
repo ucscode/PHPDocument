@@ -150,5 +150,7 @@ class ElementNodeTest extends TestCase
         $nodeBr = $this->getNodeDiv()->querySelector('br');
 
         $this->assertSame($this->getNodeBr(), $nodeBr);
+
+        // echo $this->getNodeBody()->render(0);
     }
 }

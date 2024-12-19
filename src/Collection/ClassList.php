@@ -5,6 +5,9 @@ namespace Ucscode\PHPDocument\Collection;
 use Ucscode\PHPDocument\Exception\InvalidAttributeException;
 use Ucscode\PHPDocument\Support\AbstractCollection;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class ClassList extends AbstractCollection implements \Stringable
 {
     public function __toString(): string

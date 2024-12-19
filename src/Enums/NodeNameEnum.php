@@ -2,6 +2,9 @@
 
 namespace Ucscode\PHPDocument\Enums;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 enum NodeNameEnum: string
 {
     case NODE_A = 'A';

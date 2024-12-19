@@ -27,7 +27,7 @@ trait NodeHelperTrait
         $this->nodeList = new NodeList([
             new ElementNode(NodeNameEnum::NODE_BODY, [
                 'class' => 'body',
-                'id' => 'body case-2',
+                'id' => 'body',
             ]),
             new ElementNode(NodeNameEnum::NODE_DIV, [
                 'class' => 'position-relative case-1',

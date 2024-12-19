@@ -4,6 +4,9 @@ namespace Ucscode\PHPDocument\Support;
 
 use Ucscode\PHPDocument\Contracts\CollectionInterface;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 abstract class AbstractCollection implements CollectionInterface
 {
     /**

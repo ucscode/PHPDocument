@@ -9,6 +9,13 @@ use Ucscode\PHPDocument\Parser\Engine\Matcher;
 use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
 use Ucscode\PHPDocument\Parser\Engine\Transformer;
 
+/**
+ * Selector Abstract Syntax Tree
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors#terms
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class NodeSelector
 {
     // Abstract Syntax Tree

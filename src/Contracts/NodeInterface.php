@@ -3,7 +3,12 @@
 namespace Ucscode\PHPDocument\Contracts;
 
 use Ucscode\PHPDocument\Collection\NodeList;
+use Ucscode\PHPDocument\Support\Collection;
 
+/**
+ * @property Collection $temp To store temporary data and discarded after use.
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 interface NodeInterface
 {
     /**
@@ -42,7 +47,7 @@ interface NodeInterface
      *
      * @return string
      */
-    public function render(): string;
+    public function render(?int $indent): string;
 
     /**
      * Returns an Element that is the parent of this node.

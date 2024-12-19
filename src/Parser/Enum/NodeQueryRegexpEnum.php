@@ -3,7 +3,7 @@
 namespace Ucscode\PHPDocument\Parser\Enum;
 
 /**
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 enum NodeQueryRegexpEnum: string
 {

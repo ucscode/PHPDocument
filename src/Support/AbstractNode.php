@@ -33,11 +33,12 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         $this->nodeName = strtoupper($nodeName);
         $this->childNodes = new NodeListMutable();
+        $this->temp = new Collection();
     }
 
     public function __toString(): string
     {
-        return $this->render();
+        return $this->render(null);
     }
 
     public function getNodeName(): string
@@ -282,5 +283,18 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         }
 
         return null;
+    }
+
+    /**
+     * Helper method to generate indented values
+     *
+     * @param string|null $value The value to render
+     * @param integer $tab The number of indentations
+     * @param boolean $newline Whether to add new line after the content
+     * @return string The indented value
+     */
+    protected function indent(?string $value, int $tab, bool $newline = true): string
+    {
+        return sprintf('%s%s%s', str_repeat("\t", $tab), $value ?? '', $newline ? "\n" : '');
     }
 }

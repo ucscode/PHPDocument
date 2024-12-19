@@ -5,7 +5,7 @@ namespace Ucscode\PHPDocument\Collection;
 /**
  * A mutable version of attributes
  *
- * @author Name <email@email.com>
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class AttributesMutable extends Attributes
 {

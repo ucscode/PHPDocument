@@ -16,6 +16,9 @@ use Ucscode\PHPDocument\Parser\Engine\Transformer;
 use Ucscode\PHPDocument\Parser\NodeSelector;
 use Ucscode\PHPDocument\Support\AbstractNode;
 
+/**
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class ElementNode extends AbstractNode implements ElementInterface
 {
     protected ClassList $classList;
@@ -40,9 +43,15 @@ class ElementNode extends AbstractNode implements ElementInterface
         return NodeTypeEnum::NODE_ELEMENT->value;
     }
 
-    public function render(): string
+    public function render(?int $indent = null): string
     {
-        return sprintf('%s%s%s', $this->getOpenTag(), $this->getInnerHtml(), $this->getCloseTag());
+        $innerHtml = $this->getInnerHtml($indent);
+        $level = max(0, $indent === null ? 0 : $indent);
+        $isBlank = empty(trim($innerHtml));
+        $openTag = $this->indent($this->getOpenTag(), $level, $indent === null ? false : !$isBlank);
+        $closeTag = $this->indent($this->getCloseTag(), $isBlank ? 0 : $level, $indent !== null);
+
+        return sprintf('%s%s%s', $openTag, $innerHtml, $closeTag);
     }
 
     public function setInnerHtml(string $html): static
@@ -50,14 +59,12 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this;
     }
 
-    public function getInnerHtml(): string
+    public function getInnerHtml(?int $indent = null): string
     {
-        $renderedNodes = array_map(
-            fn (NodeInterface $node) => $node->render(),
+        return implode(array_map(
+            fn (NodeInterface $node) => $node->render($indent === null ? null : max(0, $indent) + 1),
             $this->childNodes->toArray()
-        );
-
-        return implode($renderedNodes);
+        ));
     }
 
     public function setVoid(bool $void): static
@@ -74,7 +81,11 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function getOpenTag(): string
     {
-        return sprintf("<%s %s%s>", strtolower($this->nodeName), $this->attributes->render(), $this->isVoid() ? '/' : '');
+        if (!$this->attributes->isEmpty()) {
+            $attributes = sprintf(' %s', $this->attributes);
+        }
+
+        return sprintf("<%s%s%s>", strtolower($this->nodeName), $attributes ?? '', $this->isVoid() ? '/' : '');
     }
 
     public function getCloseTag(): ?string

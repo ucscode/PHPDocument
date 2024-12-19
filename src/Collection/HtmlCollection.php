@@ -9,6 +9,7 @@ use Ucscode\PHPDocument\Exception\InvalidNodeException;
  * @template T
  * @implements IteratorAggregate<int, ElementInterface>
  * @property ElementInterface[] $items
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class HtmlCollection extends NodeList
 {

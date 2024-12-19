@@ -10,6 +10,7 @@ use Ucscode\PHPDocument\Support\AbstractCollection;
  * @template T
  * @implements IteratorAggregate<int, NodeInterface>
  * @property NodeInterface[] $items
+ * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class NodeList extends AbstractCollection
 {
