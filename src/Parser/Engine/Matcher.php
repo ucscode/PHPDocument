@@ -48,7 +48,10 @@ class Matcher
 
     public function matchesNode(): bool
     {
-        return $this->node instanceof ElementInterface && !in_array(false, $this->matches, true);
+        return $this->node instanceof ElementInterface &&
+            !in_array(false, $this->matches, true) &&
+            in_array(true, $this->matches, true)
+        ;
     }
 
     protected function validateNodeAgainstTokenizer(): void

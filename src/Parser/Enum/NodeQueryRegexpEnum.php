@@ -30,7 +30,7 @@ enum NodeQueryRegexpEnum: string
      *
      * For best performance, encode attributes
      */
-    case REGEXP_ATTRIBUTES = '/\[([^\]]+)\]/';
+    case REGEXP_ATTRIBUTES = '/(?<!\()\[([^\]]+)\]/';
 
     /**
      * Match classes in selector

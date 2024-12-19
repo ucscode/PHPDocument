@@ -30,7 +30,7 @@ trait NodeHelperTrait
                 'id' => 'body',
             ]),
             new ElementNode(NodeNameEnum::NODE_DIV, [
-                'class' => 'position-relative',
+                'class' => 'position-relative case-1',
                 'data-theme' =>  'dark',
             ]),
             new ElementNode(NodeNameEnum::NODE_H1),
@@ -42,6 +42,7 @@ trait NodeHelperTrait
                 'name' => 'username',
                 'value' => '224',
                 'type' => 'text',
+                'class' => 'case-1',
             ]),
             new ElementNode(NodeNameEnum::NODE_A, [
                 'href' => 'https://example.com',
@@ -55,7 +56,7 @@ trait NodeHelperTrait
             ]),
             new ElementNode(NodeNameEnum::NODE_IMG, [
                 'src' => 'https://dummyimage.com/300x500/fff',
-                'class' => 'img-fluid',
+                'class' => 'img-fluid case-1',
                 'id' => 'factor',
             ]),
             new TextNode('This is a text'),

@@ -20,25 +20,53 @@ class MatcherTest extends TestCase
                 true,
             ],
             '[name=\'username\'][value=][type="text"]' => [
-                $this->getNodeDiv(),
+                $this->getNodeInput(),
                 true,
             ],
             '[name=\'username\'][value=][type=""]' => [
-                $this->getNodeDiv(),
+                $this->getNodeInput(),
                 false,
             ],
             '[name][value="224"][type=]' => [
-                $this->getNodeDiv(),
+                $this->getNodeInput(),
                 true,
             ],
             '[name][value="224"][type=text]' => [
-                $this->getNodeDiv(),
+                $this->getNodeInput(),
                 true,
             ],
             '[name][value="224"][type=tex]' => [
-                $this->getNodeDiv(),
+                $this->getNodeInput(),
                 false,
-            ]
+            ],
+            '[href$=.com][error=3]' => [
+                $this->getNodeA(),
+                true,
+            ],
+            '[href^=https][error=3]' => [
+                $this->getNodeA(),
+                true,
+            ],
+            '[src=300]#factor.img-fluid' => [
+                $this->getNodeImg(),
+                false
+            ],
+            '[src*=300]#factor.img-fluid' => [
+                $this->getNodeImg(),
+                true
+            ],
+            '[src$=/FFF]#factor.img-fluid' => [
+                $this->getNodeImg(),
+                false
+            ],
+            '[src$=/FFF i]#factor.img-fluid' => [
+                $this->getNodeImg(),
+                true
+            ],
+            'img[src$="/FFF" i].img-fluid#factor' => [
+                $this->getNodeImg(),
+                true
+            ],
         ];
     }
 
@@ -56,9 +84,10 @@ class MatcherTest extends TestCase
             );
 
             $message = sprintf(
-                'Failure at index %s that %s matches %s',
+                'Failure at index %s that %s %s %s',
                 $index,
                 $selector,
+                $context[1] ? 'matches' : 'does not match',
                 $context[0]->getOpenTag(),
             );
 
