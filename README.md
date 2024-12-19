@@ -180,11 +180,11 @@ $htmlLoader = new HtmlLoader($html);
 $divElement = $htmlLoader->getNodeList()->get(0);
 
 // Set inner HTML of the root element
-$divElement->setInnerHtml('<i class="fas fa-user"></i><h1 class="heading">New Heading</h1><br/>');
+$divElement->setInnerHtml('<i class="fa-icon"></i><h1 class="heading">New Heading</h1><br/>');
 
 // Query the first paragraph within the container
-$paragraph = $divElement->querySelector('p'); // returns null
-$heading = $divElement->querySelector('h1.heading'); // returns H1 ElementNode
+$paragraph = $divElement->querySelector('p'); // null
+$heading = $divElement->querySelector('h1.heading'); // H1 ElementNode
 
 // Accessing the number of direct child nodes
 echo $divElement->getChildNodes()->count(); // 3
@@ -201,7 +201,7 @@ echo $divElement->render();
 ### Output
 
 ```html
-<div class="container"><i class="fas fa-user"></i><h1 class="heading">New Heading</h1><br/></div>
+<div class="container"><i class="fa-icon"></i><h1 class="heading">New Heading</h1><br/></div>
 ```
 
 If you want to indent the rendered output, pass an unsigned integer (initially zero) to the `render()` method
@@ -214,7 +214,7 @@ echo $divElement->render(0);
 
 ```html
 <div class="container">
-    <i class="fas fa-user"></i>
+    <i class="fa-icon"></i>
     <h1 class="heading">
         New Heading
     </h1>
@@ -231,11 +231,18 @@ $divElement->querySelector('.heading')->setVisible(false);
 ```
 
 ```php
-$divElement->render(); // <div class="container"></div>
+$divElement->render(0);
+```
+
+```html
+<div class="container">
+    <i class="fa-icon"></i>
+    <br/>
+</div>
 ```
 
 ```php
-$divElement->getChildren()->first(); // H1 ElementNode
+$divElement->getChildren()->count(); // 3
 ```
 
 ### Setting Void Item
