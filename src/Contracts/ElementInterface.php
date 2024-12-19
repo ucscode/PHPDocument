@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Contracts;
+namespace Ucscode\UssElement\Contracts;
 
-use Ucscode\PHPDocument\Collection\Attributes;
-use Ucscode\PHPDocument\Collection\HtmlCollection;
-use Ucscode\PHPDocument\Collection\ClassList;
+use Ucscode\UssElement\Collection\Attributes;
+use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Collection\ClassList;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

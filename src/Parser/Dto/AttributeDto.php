@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Dto;
+namespace Ucscode\UssElement\Parser\Dto;
 
-use Ucscode\PHPDocument\Parser\Engine\Transformer;
+use Ucscode\UssElement\Parser\Engine\Transformer;
 
 /**
  * A data transfer object for attributes parsed from selector

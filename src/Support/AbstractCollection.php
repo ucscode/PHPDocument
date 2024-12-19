@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Support;
+namespace Ucscode\UssElement\Support;
 
-use Ucscode\PHPDocument\Contracts\CollectionInterface;
+use Ucscode\UssElement\Contracts\CollectionInterface;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

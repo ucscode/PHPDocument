@@ -1,11 +1,11 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Translator;
+namespace Ucscode\UssElement\Test\Parser\Translator;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\Translator\HtmlLoader;
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Node\TextNode;
+use Ucscode\UssElement\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Node\TextNode;
 
 class HtmlLoaderTest extends TestCase
 {

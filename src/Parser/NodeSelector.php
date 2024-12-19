@@ -1,13 +1,13 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser;
+namespace Ucscode\UssElement\Parser;
 
-use Ucscode\PHPDocument\Collection\HtmlCollection;
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Parser\Engine\Matcher;
-use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
-use Ucscode\PHPDocument\Parser\Engine\Transformer;
+use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Parser\Engine\Matcher;
+use Ucscode\UssElement\Parser\Engine\Tokenizer;
+use Ucscode\UssElement\Parser\Engine\Transformer;
 
 /**
  * Selector Abstract Syntax Tree

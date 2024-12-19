@@ -1,12 +1,12 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Engine;
+namespace Ucscode\UssElement\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
-use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
-use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
-use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
+use Ucscode\UssElement\Parser\Collection\AttributeDtoCollection;
+use Ucscode\UssElement\Parser\Dto\AttributeDto;
+use Ucscode\UssElement\Parser\Engine\Tokenizer;
+use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
 
 class TokenizerTest extends TestCase
 {

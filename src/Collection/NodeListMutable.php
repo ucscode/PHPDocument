@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
-use Ucscode\PHPDocument\Contracts\NodeInterface;
+use Ucscode\UssElement\Contracts\NodeInterface;
 
 /**
  * A mutable version of nodelist

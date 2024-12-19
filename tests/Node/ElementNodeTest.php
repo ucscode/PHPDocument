@@ -1,13 +1,13 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Node;
+namespace Ucscode\UssElement\Test\Node;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
-use Ucscode\PHPDocument\Node\ElementNode;
-use Ucscode\PHPDocument\Test\Parser\Translator\HtmlLoaderTest;
-use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeNameEnum;
+use Ucscode\UssElement\Node\ElementNode;
+use Ucscode\UssElement\Test\Parser\Translator\HtmlLoaderTest;
+use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
 
 class ElementNodeTest extends TestCase
 {

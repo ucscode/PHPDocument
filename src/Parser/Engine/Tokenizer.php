@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Engine;
+namespace Ucscode\UssElement\Parser\Engine;
 
-use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
-use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
-use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
+use Ucscode\UssElement\Parser\Collection\AttributeDtoCollection;
+use Ucscode\UssElement\Parser\Dto\AttributeDto;
+use Ucscode\UssElement\Parser\Enum\NodeQueryRegexpEnum;
 
 /**
  * Tokenize a (non-recursive) selector

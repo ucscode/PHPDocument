@@ -1,12 +1,12 @@
-# PHP Document 
+# Uss Element 
 
 A simple, lightweight, standalone PHP library for programmatically creating and manipulating HTML elements. It simplifies the process of working with HTML structures and DOM elements, offering functionality similar to [DOMDocument](https://www.php.net/manual/en/class.domdocument.php) but with reduced boilerplate and enhanced ease of use.
 
-With PHPDocument, you can effortlessly create DOM nodes, set attributes, set innerHtml, use querySelector, modify element classlist etc, and generate (or render) HTML strings with ease. 
+With UssElement, you can effortlessly create DOM nodes, set attributes, set innerHtml, use querySelector, modify element classlist etc, and generate (or render) HTML strings with ease. 
 
-### Why PHP Document?
+### Why Uss Element?
 
-PHPDocument is designed to simplify and streamline the process of working with HTML elements in PHP. If (like me), you've ever been frustrated by the complexity of PHP's `DOMDocument` or found yourself writing repetitive, cumbersome code just to manipulate HTML structures, PHPDocument is the solution you’ve been waiting for.
+UssElement is designed to simplify and streamline the process of working with HTML elements in PHP. If (like me), you've ever been frustrated by the complexity of PHP's `DOMDocument` or found yourself writing repetitive, cumbersome code just to manipulate HTML structures, UssElement is the solution you’ve been waiting for.
 
 This standalone library takes care of the heavy lifting, reducing boilerplate code and eliminates the need for complex XPath queries, offering a simple, intuitive API for tasks like creating elements, setting inner HTML, and selecting elements using CSS selectors.
 
@@ -33,7 +33,7 @@ The library is lightweight, fast, and easy to integrate into any project, making
 
 ### Installation (Composer)
 
-You can include PHPDocument library in your project using Composer:
+You can include UssElement library in your project using Composer:
 
 ```bash
 composer require ucscode/uss-element
@@ -41,8 +41,8 @@ composer require ucscode/uss-element
 
 ### Getting Started:
 
-- Instantiate the PHPDocument class with the desired HTML element type (e.g., `NodeNameEnum::NODE_DIV`).
-- Use PHPDocument methods to set attributes and content.
+- Instantiate the UssElement class with the desired HTML element type (e.g., `NodeNameEnum::NODE_DIV`).
+- Use UssElement methods to set attributes and content.
 - Generate HTML strings with `NodeInterface::render()` for seamless integration into your web pages.
 
 ### Creating Elements
@@ -50,7 +50,7 @@ composer require ucscode/uss-element
 You can create elements by instantiating the type of node
 
 ```php
-use Ucscode\PHPDocument\Node\ElementNode;
+use Ucscode\UssElement\Node\ElementNode;
 
 $element = new ElementNode('div');
 ```
@@ -58,8 +58,8 @@ $element = new ElementNode('div');
 If you prefer, you can use the `NodeNameEnum` enum
 
 ```php
-use Ucscode\PHPDocument\Node\ElementNode;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
+use Ucscode\UssElement\Node\ElementNode;
+use Ucscode\UssElement\Enums\NodeNameEnum;
 
 $element = new ElementNode(NodeNameEnum::NODE_DIV);
 ```
@@ -93,7 +93,7 @@ $element->getNextSibling();
 ```php
 $element->getChild(0)
   ->setAttribute('data-name', 'Ucscode')
-  ->setAttribute('title', 'PHP Document')
+  ->setAttribute('title', 'Uss Element')
 ;
 ```
 
@@ -128,7 +128,7 @@ $element->setInnerHtml('<p>This is a paragraph inside a div.</p>');
 You can convert an HTML string to `NodeList` containing all elements using the `HtmlLoader` class:
 
 ```php
-use Ucscode\PHPDocument\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Parser\Translator\HtmlLoader;
 
 // An example HTML document:
 $html = <<< 'HERE'
@@ -152,7 +152,7 @@ $htmlLoader->getNodeList()->first; // HTML ElementNode
 You can also load framents
 
 ```php
-use Ucscode\PHPDocument\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Parser\Translator\HtmlLoader;
 
 $html = <<< 'HERE'
   <h1>Hi there</h1>

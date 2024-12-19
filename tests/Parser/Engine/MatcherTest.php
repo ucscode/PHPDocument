@@ -1,12 +1,12 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Engine;
+namespace Ucscode\UssElement\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\Engine\Matcher;
-use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
-use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
-use Ucscode\PHPDocument\Contracts\ElementInterface;
+use Ucscode\UssElement\Parser\Engine\Matcher;
+use Ucscode\UssElement\Parser\Engine\Tokenizer;
+use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
+use Ucscode\UssElement\Contracts\ElementInterface;
 
 class MatcherTest extends TestCase
 {

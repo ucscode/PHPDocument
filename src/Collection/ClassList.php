@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
-use Ucscode\PHPDocument\Exception\InvalidAttributeException;
-use Ucscode\PHPDocument\Support\AbstractCollection;
+use Ucscode\UssElement\Exception\InvalidAttributeException;
+use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Exception\InvalidNodeException;
-use Ucscode\PHPDocument\Support\AbstractCollection;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Exception\InvalidNodeException;
+use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
  * @template T

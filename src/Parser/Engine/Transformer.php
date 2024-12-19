@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Engine;
+namespace Ucscode\UssElement\Parser\Engine;
 
-use Ucscode\PHPDocument\Parser\Enum\NodeQueryRegexpEnum;
+use Ucscode\UssElement\Parser\Enum\NodeQueryRegexpEnum;
 
 /**
  * A transformer class that encode and decode css selector for several use cases

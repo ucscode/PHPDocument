@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser\Engine;
+namespace Ucscode\UssElement\Test\Parser\Engine;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
+use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
 
 class TransformerTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
 /**
  * A mutable version of attributes

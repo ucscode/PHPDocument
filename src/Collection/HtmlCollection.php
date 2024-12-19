@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Exception\InvalidNodeException;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Exception\InvalidNodeException;
 
 /**
  * @template T

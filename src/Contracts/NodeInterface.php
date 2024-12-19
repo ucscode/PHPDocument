@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Contracts;
+namespace Ucscode\UssElement\Contracts;
 
-use Ucscode\PHPDocument\Collection\NodeList;
+use Ucscode\UssElement\Collection\NodeList;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

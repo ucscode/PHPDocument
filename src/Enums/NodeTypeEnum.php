@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Enums;
+namespace Ucscode\UssElement\Enums;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

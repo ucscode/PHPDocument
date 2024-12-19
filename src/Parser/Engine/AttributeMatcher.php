@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Engine;
+namespace Ucscode\UssElement\Parser\Engine;
 
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Parser\Collection\AttributeDtoCollection;
-use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Parser\Collection\AttributeDtoCollection;
+use Ucscode\UssElement\Parser\Dto\AttributeDto;
 
 /**
  * Compare selector attributes against a node to verify if the node attribute matches the attributes in the selector

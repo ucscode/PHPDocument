@@ -1,21 +1,21 @@
 <?php
 
-namespace Ucscode\PHPDocument\Node;
+namespace Ucscode\UssElement\Node;
 
-use Ucscode\PHPDocument\Collection\Attributes;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
-use Ucscode\PHPDocument\Collection\AttributesMutable;
-use Ucscode\PHPDocument\Collection\ClassList;
-use Ucscode\PHPDocument\Collection\HtmlCollection;
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeTypeEnum;
-use Ucscode\PHPDocument\Parser\Engine\Matcher;
-use Ucscode\PHPDocument\Parser\Engine\Tokenizer;
-use Ucscode\PHPDocument\Parser\Engine\Transformer;
-use Ucscode\PHPDocument\Parser\NodeSelector;
-use Ucscode\PHPDocument\Parser\Translator\HtmlLoader;
-use Ucscode\PHPDocument\Support\AbstractNode;
+use Ucscode\UssElement\Collection\Attributes;
+use Ucscode\UssElement\Enums\NodeNameEnum;
+use Ucscode\UssElement\Collection\AttributesMutable;
+use Ucscode\UssElement\Collection\ClassList;
+use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
+use Ucscode\UssElement\Parser\Engine\Matcher;
+use Ucscode\UssElement\Parser\Engine\Tokenizer;
+use Ucscode\UssElement\Parser\Engine\Transformer;
+use Ucscode\UssElement\Parser\NodeSelector;
+use Ucscode\UssElement\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Support\AbstractNode;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

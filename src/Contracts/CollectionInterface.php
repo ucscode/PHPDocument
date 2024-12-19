@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Contracts;
+namespace Ucscode\UssElement\Contracts;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

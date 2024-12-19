@@ -1,6 +1,6 @@
 {
     "name": "ucscode/uss-element",
-    "description": "UssElement (now PHPDocument) is a PHP library for building and manipulating HTML elements programmatically.",
+    "description": "UssElement is a PHP library for building and manipulating HTML elements programmatically.",
     "keywords": ["php", "html", "dom", "element", "library"],
     "type": "library",
     "license": "MIT",
@@ -15,8 +15,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ucscode\\PHPDocument\\": "src/",
-            "Ucscode\\PHPDocument\\Test\\": "tests/"
+            "Ucscode\\UssElement\\": "src/",
+            "Ucscode\\UssElement\\Test\\": "tests/"
         }
     },
     "minimum-stability": "RC",

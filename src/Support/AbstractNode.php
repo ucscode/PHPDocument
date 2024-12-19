@@ -1,12 +1,12 @@
 <?php
 
-namespace Ucscode\PHPDocument\Support;
+namespace Ucscode\UssElement\Support;
 
-use Ucscode\PHPDocument\Collection\NodeListMutable;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
-use Ucscode\PHPDocument\Collection\NodeList;
-use Ucscode\PHPDocument\Contracts\ElementInterface;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
+use Ucscode\UssElement\Collection\NodeListMutable;
+use Ucscode\UssElement\Enums\NodeNameEnum;
+use Ucscode\UssElement\Collection\NodeList;
+use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Contracts\NodeInterface;
 
 /**
  * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.

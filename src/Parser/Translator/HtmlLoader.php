@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Translator;
+namespace Ucscode\UssElement\Parser\Translator;
 
 use DOMAttr;
 use DOMComment;
@@ -9,14 +9,14 @@ use DOMDocumentType;
 use DOMElement;
 use DOMNode;
 use DOMText;
-use Ucscode\PHPDocument\Collection\NodeList;
-use Ucscode\PHPDocument\Collection\NodeListMutable;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeTypeEnum;
-use Ucscode\PHPDocument\Node\CommentNode;
-use Ucscode\PHPDocument\Node\DocumentTypeNode;
-use Ucscode\PHPDocument\Node\ElementNode;
-use Ucscode\PHPDocument\Node\TextNode;
+use Ucscode\UssElement\Collection\NodeList;
+use Ucscode\UssElement\Collection\NodeListMutable;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
+use Ucscode\UssElement\Node\CommentNode;
+use Ucscode\UssElement\Node\DocumentTypeNode;
+use Ucscode\UssElement\Node\ElementNode;
+use Ucscode\UssElement\Node\TextNode;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ucscode\PHPDocument\Support;
+namespace Ucscode\UssElement\Support;
 
-use Ucscode\PHPDocument\Support\AbstractCollection;
+use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

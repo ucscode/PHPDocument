@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Collection;
+namespace Ucscode\UssElement\Collection;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

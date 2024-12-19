@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Support;
+namespace Ucscode\UssElement\Support;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

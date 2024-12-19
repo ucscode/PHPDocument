@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Node;
+namespace Ucscode\UssElement\Node;
 
-use Ucscode\PHPDocument\Enums\NodeTypeEnum;
-use Ucscode\PHPDocument\Support\AbstractNode;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
+use Ucscode\UssElement\Support\AbstractNode;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

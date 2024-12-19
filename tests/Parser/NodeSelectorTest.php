@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Parser;
+namespace Ucscode\UssElement\Test\Parser;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Parser\NodeSelector;
-use Ucscode\PHPDocument\Test\Traits\NodeHelperTrait;
+use Ucscode\UssElement\Parser\NodeSelector;
+use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
 
 class NodeSelectorTest extends TestCase
 {

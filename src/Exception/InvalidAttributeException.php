@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Exception;
+namespace Ucscode\UssElement\Exception;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

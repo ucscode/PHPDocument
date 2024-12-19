@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Enum;
+namespace Ucscode\UssElement\Parser\Enum;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

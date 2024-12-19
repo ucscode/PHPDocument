@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Node;
+namespace Ucscode\UssElement\Test\Node;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Collection\AttributesMutable;
+use Ucscode\UssElement\Collection\AttributesMutable;
 
 final class AttributesTest extends TestCase
 {

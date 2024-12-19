@@ -1,9 +1,9 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Collection;
+namespace Ucscode\UssElement\Test\Collection;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\PHPDocument\Collection\ClassList;
+use Ucscode\UssElement\Collection\ClassList;
 
 class ClassListTest extends TestCase
 {

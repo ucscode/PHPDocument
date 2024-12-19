@@ -1,10 +1,10 @@
 <?php
 
-namespace Ucscode\PHPDocument\Parser\Collection;
+namespace Ucscode\UssElement\Parser\Collection;
 
-use Ucscode\PHPDocument\Parser\Dto\AttributeDto;
-use Ucscode\PHPDocument\Parser\Exception\InvalidParserComponentException;
-use Ucscode\PHPDocument\Support\AbstractCollection;
+use Ucscode\UssElement\Parser\Dto\AttributeDto;
+use Ucscode\UssElement\Parser\Exception\InvalidParserComponentException;
+use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
  * A collection of AttributoDto

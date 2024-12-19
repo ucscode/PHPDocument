@@ -1,13 +1,13 @@
 <?php
 
-namespace Ucscode\PHPDocument\Test\Traits;
+namespace Ucscode\UssElement\Test\Traits;
 
-use Ucscode\PHPDocument\Collection\NodeList;
-use Ucscode\PHPDocument\Contracts\NodeInterface;
-use Ucscode\PHPDocument\Enums\NodeNameEnum;
-use Ucscode\PHPDocument\Node\ElementNode;
-use Ucscode\PHPDocument\Node\TextNode;
-use Ucscode\PHPDocument\Parser\Engine\Transformer;
+use Ucscode\UssElement\Collection\NodeList;
+use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeNameEnum;
+use Ucscode\UssElement\Node\ElementNode;
+use Ucscode\UssElement\Node\TextNode;
+use Ucscode\UssElement\Parser\Engine\Transformer;
 
 trait NodeHelperTrait
 {
