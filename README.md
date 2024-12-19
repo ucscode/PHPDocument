@@ -233,9 +233,339 @@ $element->render(); // <x-widget :vue-binder="project"/>
 ```
 ---
 
-### Wiki Documentation Coming Soon
+## NodeInterface methods
 
----
+<table border="1">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>getNodeName</code></td>
+      <td>Return the name of the current node</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><code>getNodeType</code></td>
+      <td>Return the node identifier</td>
+      <td>integer</td>
+    </tr>
+    <tr>
+      <td><code>setVisible</code></td>
+      <td>Set the visibility status of a node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>isVisible</code></td>
+      <td>Verify the node visibility status</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>render</code></td>
+      <td>Convert the node to string (OuterHtml)</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><code>getParentElement</code></td>
+      <td>Returns an Element that is the parent of this node</td>
+      <td>ElementInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>getParentNode</code></td>
+      <td>Returns a Node that is the parent of this node</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>getChildNodes</code></td>
+      <td>Returns a NodeList containing all the children of this node</td>
+      <td>NodeList</td>
+    </tr>
+    <tr>
+      <td><code>appendChild</code></td>
+      <td>Adds the specified childNode argument as the last child to the current node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>prependChild</code></td>
+      <td>Adds the specified childNode argument as the first child to the current node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>getFirstChild</code></td>
+      <td>Returns a Node representing the first direct child node of the node</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>isFirstChild</code></td>
+      <td>Verify that the specified node is first in the list</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>getLastChild</code></td>
+      <td>Returns a Node representing the last direct child node of the node</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>isLastChild</code></td>
+      <td>Verify that the specified node is last in the list</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>getNextSibling</code></td>
+      <td>Returns a Node representing the next node in the tree</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>getPreviousSibling</code></td>
+      <td>Returns a Node representing the previous node in the tree</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>insertBefore</code></td>
+      <td>Inserts a Node before the reference node as a child of a specified parent node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>insertAfter</code></td>
+      <td>Inserts a Node after the reference node as a child of a specified parent node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>insertAdjacentNode</code></td>
+      <td>Inserts a Node at a specific position relative to other child nodes</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>hasChild</code></td>
+      <td>Verify that a node has the provided child node</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>getChild</code></td>
+      <td>Get a child node from the Nodelist</td>
+      <td>NodeInterface|null</td>
+    </tr>
+    <tr>
+      <td><code>removeChild</code></td>
+      <td>Removes a child node from the current element</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>replaceChild</code></td>
+      <td>Replaces one child Node of the current one with the second one given in parameter</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>cloneNode</code></td>
+      <td>Clone a Node, and optionally, all of its contents</td>
+      <td>NodeInterface</td>
+    </tr>
+    <tr>
+      <td><code>sortChildNodes</code></td>
+      <td>Reorder the child nodes of a specified parent node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>moveBefore</code></td>
+      <td>Move the current node before a sibling node within the same parent node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>moveAfter</code></td>
+      <td>Move the current node after a sibling node within the same parent node</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>moveToFirst</code></td>
+      <td>Move the current node to the first position of its relative sibling nodes</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>moveToLast</code></td>
+      <td>Move the current node to the last position of its relative sibling nodes</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>moveToIndex</code></td>
+      <td>Move the current node to a specific position within its sibling nodes</td>
+      <td>static</td>
+    </tr>
+  </tbody>
+</table>
+
+## ElementInterface methods
+
+All methods in `NodeInterface` plus
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>getTagName</code></td>
+      <td>Return the tag name of the current element</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><code>setInnerHtml</code></td>
+      <td>Set the inner HTML of the element</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>getInnerHtml</code></td>
+      <td>Get the inner HTML of the element</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><code>setVoid</code></td>
+      <td>Set whether the element is void (no closing tag)</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>isVoid</code></td>
+      <td>Verify if the element is void, meaning it has no closing tag</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>getOpenTag</code></td>
+      <td>Get the opening tag of the element</td>
+      <td>string</td>
+    </tr>
+    <tr>
+      <td><code>getCloseTag</code></td>
+      <td>Get the closing tag of the element (if any)</td>
+      <td>?string</td>
+    </tr>
+    <tr>
+      <td><code>getChildren</code></td>
+      <td>Get a collection of the element's children</td>
+      <td>HtmlCollection</td>
+    </tr>
+    <tr>
+      <td><code>getAttribute</code></td>
+      <td>Get the value of a specific attribute by name</td>
+      <td>?string</td>
+    </tr>
+    <tr>
+      <td><code>getAttributes</code></td>
+      <td>Get a collection of all attributes of the element</td>
+      <td>Attributes</td>
+    </tr>
+    <tr>
+      <td><code>getAttributeNames</code></td>
+      <td>Get a list of all attribute names of the element</td>
+      <td>array</td>
+    </tr>
+    <tr>
+      <td><code>hasAttribute</code></td>
+      <td>Check if the element has a specific attribute</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>hasAttributes</code></td>
+      <td>Check if the element has any attributes</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>setAttribute</code></td>
+      <td>Set the value of a specific attribute</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>removeAttribute</code></td>
+      <td>Remove a specific attribute from the element</td>
+      <td>static</td>
+    </tr>
+    <tr>
+      <td><code>querySelector</code></td>
+      <td>Find and return the first matching element by the given CSS selector</td>
+      <td>?ElementInterface</td>
+    </tr>
+    <tr>
+      <td><code>querySelectorAll</code></td>
+      <td>Find and return all matching elements by the given CSS selector</td>
+      <td>HtmlCollection</td>
+    </tr>
+    <tr>
+      <td><code>getClassList</code></td>
+      <td>Get the list of classes of the element</td>
+      <td>ClassList</td>
+    </tr>
+    <tr>
+      <td><code>matches</code></td>
+      <td>Check if the element matches the given CSS selector</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>getElementsByClassName</code></td>
+      <td>Get all elements with the specified class name</td>
+      <td>HtmlCollection</td>
+    </tr>
+    <tr>
+      <td><code>getElementsByTagName</code></td>
+      <td>Get all elements with the specified tag name</td>
+      <td>HtmlCollection</td>
+    </tr>
+  </tbody>
+</table>
+
+## TextNode methods
+
+All methods in `NodeInterface` plus:
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>isWhiteSpaceInContent</code></td>
+      <td>Check if the content of the text node consists only of whitespace characters</td>
+      <td>boolean</td>
+    </tr>
+    <tr>
+      <td><code>isContentWhiteSpace</code></td>
+      <td>Check if the content of the text node is empty or contains only whitespace</td>
+      <td>boolean</td>
+    </tr>
+  </tbody>
+</table>
+
+## Collection Objects  
+
+- **Attributes**: Manages attributes of an element.  
+- **ClassList**: Handles class names for an element.  
+- **HtmlCollection**: A collection of `ElementNode` types.  
+- **NodeList**: A collection of any node types.  
+
+## Node Objects  
+
+- **CommentNode**: Represents HTML comments.  
+- **DocumentTypeNode**: Represents the `<!DOCTYPE>` declaration.  
+- **ElementNode**: Represents HTML elements.  
+- **TextNode**: Represents textual content.  
+
+### Parser Objects  
+
+- **HtmlLoader**: Parses an HTML string into nodes.  
+- **Matcher**: Matches nodes against CSS selectors.  
+- **Tokenizer**: Breaks down CSS selectors into tokens.  
+- **Transformer**: Encodes and decodes CSS selectors.  
+- **NodeSelector**: Finds descendants matching CSS selectors.  
+
 
 ## Contributing
 
