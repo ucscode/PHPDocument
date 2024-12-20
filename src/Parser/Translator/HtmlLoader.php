@@ -10,7 +10,6 @@ use DOMElement;
 use DOMNode;
 use DOMText;
 use Ucscode\UssElement\Collection\NodeList;
-use Ucscode\UssElement\Collection\NodeListMutable;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Node\CommentNode;
@@ -23,7 +22,7 @@ use Ucscode\UssElement\Node\TextNode;
  */
 class HtmlLoader
 {
-    protected NodeListMutable $nodeListMutable;
+    protected NodeList $nodeList;
 
     /**
      * @param string $html5
@@ -43,7 +42,7 @@ class HtmlLoader
 
     public function getNodeList(): NodeList
     {
-        return new NodeList($this->nodeListMutable->toArray());
+        return $this->nodeList;
     }
 
     /**
@@ -59,7 +58,7 @@ class HtmlLoader
             };
         }
 
-        $this->nodeListMutable = new NodeListMutable($collection);
+        $this->nodeList = new NodeList($collection);
     }
 
     /**

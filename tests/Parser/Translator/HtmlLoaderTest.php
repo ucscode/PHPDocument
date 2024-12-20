@@ -78,6 +78,7 @@ class HtmlLoaderTest extends TestCase
          */
         $htmlElement = $htmlLoader->getNodeList()->get(1);
 
+        $this->assertNotNull($htmlElement);
         $this->assertCount(2, $htmlElement->querySelectorAll('meta'));
     }
 }

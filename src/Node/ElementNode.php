@@ -4,7 +4,6 @@ namespace Ucscode\UssElement\Node;
 
 use Ucscode\UssElement\Collection\Attributes;
 use Ucscode\UssElement\Enums\NodeNameEnum;
-use Ucscode\UssElement\Collection\AttributesMutable;
 use Ucscode\UssElement\Collection\ClassList;
 use Ucscode\UssElement\Collection\HtmlCollection;
 use Ucscode\UssElement\Contracts\ElementInterface;
@@ -16,16 +15,17 @@ use Ucscode\UssElement\Parser\Engine\Transformer;
 use Ucscode\UssElement\Parser\NodeSelector;
 use Ucscode\UssElement\Parser\Translator\HtmlLoader;
 use Ucscode\UssElement\Support\AbstractNode;
+use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    protected ClassList $classList;
-    protected AttributesMutable $attributes;
-    protected bool $void;
+    protected readonly ClassList $classList;
     protected string $tagName;
+    protected bool $void;
+    protected Attributes $attributes;
 
     public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
     {
@@ -44,6 +44,11 @@ class ElementNode extends AbstractNode implements ElementInterface
         return NodeTypeEnum::NODE_ELEMENT->value;
     }
 
+    public function getClassList(): ClassList
+    {
+        return $this->classList;
+    }
+
     public function render(?int $indent = null): string
     {
         $innerHtml = $this->getInnerHtml($indent);
@@ -54,7 +59,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         if ($indent !== null) {
             $indentation = max(0, $indent); // set min indentation to "0"
             $htmlIsBlank = trim($innerHtml) === '';
-            
+
             $openTag = $this->indent($openTag, $indentation, !$htmlIsBlank);
             $closeTag = $this->indent($closeTag, $htmlIsBlank ? 0 : $indentation);
         }
@@ -64,7 +69,9 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function setInnerHtml(string $html): static
     {
-        $this->childNodes->replace((new HtmlLoader($html))->getNodeList()->toArray());
+        $loadedNodes = (new HtmlLoader($html))->getNodeList()->toArray();
+
+        (new ObjectReflector($this->childNodes))->invokeMethod('replace', $loadedNodes);
 
         return $this;
     }
@@ -132,11 +139,6 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->attributes->has($name);
     }
 
-    public function getClassList(): ClassList
-    {
-        return $this->classList;
-    }
-
     public function getAttributeNames(): array
     {
         return $this->attributes->getNames();
@@ -152,7 +154,7 @@ class ElementNode extends AbstractNode implements ElementInterface
             }
         }
 
-        $this->attributes->set($name, $value);
+        (new ObjectReflector($this->attributes))->invokeMethod('set', $name, $value);
 
         return $this;
     }
@@ -164,7 +166,7 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function removeAttribute(string $name): static
     {
-        $this->attributes->remove($name);
+        (new ObjectReflector($this->attributes))->invokeMethod('remove', $name);
 
         return $this;
     }
@@ -203,7 +205,7 @@ class ElementNode extends AbstractNode implements ElementInterface
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
-        $this->attributes = new AttributesMutable();
+        $this->attributes = new Attributes();
         $this->classList = new ClassList();
 
         foreach ($attributes as $name => $value) {

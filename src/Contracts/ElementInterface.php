@@ -7,6 +7,7 @@ use Ucscode\UssElement\Collection\HtmlCollection;
 use Ucscode\UssElement\Collection\ClassList;
 
 /**
+ * @method ElementInterface getParentNode()
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface ElementInterface extends NodeInterface

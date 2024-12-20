@@ -169,6 +169,8 @@ interface NodeInterface
     /**
      * Verify that a node has the provided child node
      *
+     * Similar to JavaScript's Node.contains()
+     *
      * @param NodeInterface $node
      * @return boolean
      */

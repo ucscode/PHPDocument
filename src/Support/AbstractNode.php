@@ -2,12 +2,12 @@
 
 namespace Ucscode\UssElement\Support;
 
-use Ucscode\UssElement\Collection\NodeListMutable;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
+use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
  * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
@@ -21,12 +21,13 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected bool $visible = true;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
-    private ?int $nodeId = null;
 
     /**
-     * @var NodeListMutable<int, NodeInterface>
+     * @var NodeList<int, NodeInterface>
      */
-    protected NodeListMutable $childNodes;
+    protected NodeList $childNodes;
+    private ?int $nodeId = null;
+
 
     public function __construct(string|NodeNameEnum $nodeName)
     {
@@ -35,7 +36,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         }
 
         $this->nodeName = strtoupper($nodeName);
-        $this->childNodes = new NodeListMutable();
+        $this->childNodes = new NodeList();
     }
 
     public function __toString(): string
@@ -81,7 +82,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function getChildNodes(): NodeList
     {
-        return new NodeList($this->childNodes->toArray());
+        return $this->childNodes;
     }
 
     public function getNextSibling(): ?NodeInterface
@@ -119,7 +120,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function prependChild(NodeInterface $node): static
     {
-        $this->childNodes->prepend($node);
+        (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
+
         $node->setParentNode($this);
 
         return $this;
@@ -130,7 +132,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function appendChild(NodeInterface $node): static
     {
-        $this->childNodes->append($node);
+        (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
+
         $node->setParentNode($this);
 
         return $this;
@@ -141,7 +144,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function insertAdjacentNode(int $offset, NodeInterface $node): static
     {
-        $this->childNodes->insertAt($offset, $node);
+        (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
+
         $node->setParentNode($this);
 
         return $this;
@@ -152,7 +156,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function removeChild(NodeInterface $node): static
     {
-        $this->childNodes->remove($node);
+        (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
+
         $node->setParentNode(null);
 
         return $this;
