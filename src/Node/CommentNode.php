@@ -24,6 +24,8 @@ class CommentNode extends AbstractCharacterData
 
     public function render(?int $indent = null): string
     {
-        return $this->indent(sprintf('<!--%s-->', $this->data), max(0, $indent === null ? 0 : $indent), (bool) $indent);
+        $comment = sprintf('<!--%s-->', $this->data);
+
+        return $indent === null ? $comment : $this->indent($comment, max(0, abs($indent)), (bool) $indent);
     }
 }

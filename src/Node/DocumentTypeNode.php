@@ -17,6 +17,8 @@ class DocumentTypeNode extends AbstractNode
 
     public function render(?int $indent = null): string
     {
-        return sprintf('<!DOCTYPE %s>%s', $this->nodeName, $indent !== null ? "\n" : '');
+        $doctype = sprintf('<!DOCTYPE %s>', $this->nodeName);
+        
+        return $indent === null ? $doctype : $this->indent($doctype, max(0, abs($indent)), (bool) $indent);
     }
 }

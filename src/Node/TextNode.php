@@ -19,13 +19,7 @@ class TextNode extends AbstractCharacterData
 
     public function render(?int $indent = null): string
     {
-        $text = $this->data;
-
-        if ($indent !== null) {
-            $text = $this->indent($this->data, max(0, $indent));
-        }
-
-        return $text;
+        return $indent === null ? $this->data : $this->indent($this->data, max(0, abs($indent)));
     }
 
     public function getNodeType(): int

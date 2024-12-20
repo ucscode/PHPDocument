@@ -6,7 +6,7 @@ With UssElement, you can effortlessly create DOM nodes, set attributes, set inne
 
 ### Why Uss Element?
 
-UssElement is designed to simplify and streamline the process of working with HTML elements in PHP. If (like me), you've ever been frustrated by the complexity of PHP's `DOMDocument` or found yourself writing repetitive, cumbersome code just to manipulate HTML structures, UssElement is the solution you’ve been waiting for.
+UssElement is designed to simplify and streamline the process of working with HTML elements in PHP. If (like me) you've ever been frustrated by the complexity of PHP's `DOMDocument` or found yourself writing repetitive, cumbersome code just to manipulate HTML structures, UssElement is the solution you’ve been waiting for.
 
 This standalone library takes care of the heavy lifting, reducing boilerplate code and eliminates the need for complex XPath queries, offering a simple, intuitive API for tasks like creating elements, setting inner HTML, and selecting elements using CSS selectors.
 

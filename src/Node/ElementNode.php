@@ -47,10 +47,17 @@ class ElementNode extends AbstractNode implements ElementInterface
     public function render(?int $indent = null): string
     {
         $innerHtml = $this->getInnerHtml($indent);
-        $level = max(0, $indent === null ? 0 : $indent);
-        $isBlank = empty(trim($innerHtml));
-        $openTag = $this->indent($this->getOpenTag(), $level, $indent === null ? false : !$isBlank);
-        $closeTag = $this->indent($this->getCloseTag(), $isBlank ? 0 : $level, $indent !== null);
+
+        $openTag = $this->getOpenTag();
+        $closeTag = $this->getCloseTag();
+
+        if ($indent !== null) {
+            $indentation = max(0, $indent); // set min indentation to "0"
+            $htmlIsBlank = trim($innerHtml) === '';
+            
+            $openTag = $this->indent($openTag, $indentation, !$htmlIsBlank);
+            $closeTag = $this->indent($closeTag, $htmlIsBlank ? 0 : $indentation);
+        }
 
         return sprintf('%s%s%s', $openTag, $innerHtml, $closeTag);
     }
@@ -64,10 +71,12 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function getInnerHtml(?int $indent = null): string
     {
-        return implode(array_map(
-            fn (NodeInterface $node) => $node->isVisible() ? $node->render($indent === null ? null : max(0, $indent) + 1) : '',
+        $render = array_map(
+            fn (NodeInterface $node) => !$node->isVisible() ? '' : $node->render($indent === null ? null : max(0, $indent) + 1),
             $this->childNodes->toArray()
-        ));
+        );
+
+        return implode($render);
     }
 
     public function setVoid(bool $void): static
