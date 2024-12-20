@@ -7,6 +7,7 @@ use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
 
 /**
  * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
@@ -20,6 +21,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected bool $visible = true;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
+    private ?int $nodeId = null;
 
     /**
      * @var NodeListMutable<int, NodeInterface>
@@ -39,6 +41,15 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function __toString(): string
     {
         return $this->render(null);
+    }
+
+    final public function getNodeId(): int
+    {
+        if ($this->nodeId === null) {
+            $this->nodeId = NodeSingleton::getInstance()->getNextId();
+        };
+
+        return $this->nodeId;
     }
 
     public function getNodeName(): string
@@ -253,6 +264,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         $this->parentNode?->insertAdjacentNode($index, $this);
 
         return $this;
+    }
+
+    public function toJson(): string
+    {
+        return new NodeJsonEncoder($this);
     }
 
     /**

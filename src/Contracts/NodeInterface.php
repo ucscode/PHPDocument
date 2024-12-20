@@ -10,6 +10,13 @@ use Ucscode\UssElement\Collection\NodeList;
 interface NodeInterface
 {
     /**
+     * Return the unique id of this node
+     *
+     * @return integer
+     */
+    public function getNodeId(): int;
+
+    /**
      * Return the name of the current node
      *
      * @return string
@@ -250,4 +257,11 @@ interface NodeInterface
      * @return static
      */
     public function moveToIndex(int $index): static;
+
+    /**
+     * Convert node to json enabling seemless data transfer
+     *
+     * @return string
+     */
+    public function toJson(): string;
 }

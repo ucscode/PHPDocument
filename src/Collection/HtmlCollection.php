@@ -9,6 +9,9 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
  * @template T
  * @implements IteratorAggregate<int, ElementInterface>
  * @property ElementInterface[] $items
+ * @method ?ElementInterface get(int $index)
+ * @method ?ElementInterface first()
+ * @method ?ElementInterface last()
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class HtmlCollection extends NodeList

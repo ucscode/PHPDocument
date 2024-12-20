@@ -26,6 +26,8 @@ The library is lightweight, fast, and easy to integrate into any project, making
 - Efficiency in Common DOM Tasks
 - Flexibility and Extensibility
 - Improving Developer Experience
+- Encoding element to Json format
+- Decoding element from json format
 
 ### Prerequisite
 
@@ -270,6 +272,44 @@ $element->render(); // <x-widget :vue-binder="project"/>
 ```
 ---
 
+## Encoding and Decoding Nodes
+
+This library provides methods for encoding a node into JSON format and decoding it back to its original structure.\
+This is useful for transferring nodes between systems or storing them in a format that can be easily reconstructed.
+
+### Encoding a Node
+
+To encode a node into JSON format, the `toJson()` method is used.
+
+```php
+$node->toJson(); // Node to JSON Serialization
+```
+
+The `toJson()` method internally uses an instance of the `NodeJsonEncoder`, which is the actual encoder responsible for serializing the node.
+
+```php
+(new NodeJsonEncoder($node))->encode();
+```
+
+### Decoding a Node
+
+To decode a JSON string back into a node, use the `NodeJsonDecoder` class.
+
+```php
+(new NodeJsonDecoder($json))->decode(); // JSON to Node Deserilization
+```
+
+The decoding process restores the full structure of the original node, including its attributes, child nodes, and content.
+
+### Normalization
+
+Both the `NodeJsonEncoder` and `NodeJsonDecoder` provide a `normalize` method to convert the input into an array.
+
+```php
+(new NodeJsonEncoder($node))->normalize(); // to array
+(new NodeJsonDecoder($json))->normalize(); // to array
+```
+
 ## NodeInterface methods
 
 <table>
@@ -431,6 +471,11 @@ $element->render(); // <x-widget :vue-binder="project"/>
       <td>Move the current node to a specific position within its sibling nodes</td>
       <td>static</td>
     </tr>
+    <tr>
+      <td><code>toJson</code></td>
+      <td> Converts the node and its descendants into a JSON-encoded string</td>
+      <td>string</td>
+    </tr>
   </tbody>
 </table>
 
@@ -573,14 +618,19 @@ Includes:
   </thead>
   <tbody>
     <tr>
-      <td><code>isContentWhiteSpace</code></td>
-      <td>Check if the content of the text node is empty or contains only whitespace</td>
-      <td>boolean</td>
+      <td><code>getData</code></td>
+      <td>Get the text data</td>
+      <td>string</td>
     </tr>
     <tr>
       <td><code>length</code></td>
       <td>The length of the text data</td>
       <td>integer</td>
+    </tr>
+    <tr>
+      <td><code>isContentWhiteSpace</code></td>
+      <td>Check if the content of the text node is empty or contains only whitespace</td>
+      <td>boolean</td>
     </tr>
   </tbody>
 </table>
@@ -672,6 +722,14 @@ Includes:
     <tr>
       <td><code>NodeSelector</code></td>
       <td>Finds descendants matching CSS selectors.</td>
+    </tr>
+    <tr>
+      <td><code>NodeJsonEncoder</code></td>
+      <td>Encodes a node and its descendants into json</td>
+    </tr>
+    <tr>
+      <td><code>NodeJsonDecoder</code></td>
+      <td>Decodes a node json back to node instance.</td>
     </tr>
   </tbody>
 </table>

@@ -13,4 +13,9 @@ abstract class AbstractCharacterData extends AbstractNode
     {
         return strlen($this->data);
     }
+
+    public function getData(): string
+    {
+        return $this->data;
+    }
 }
