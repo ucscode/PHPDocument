@@ -532,7 +532,7 @@ Includes:
     <tr>
       <td><code>getChildren</code></td>
       <td>Get a collection of the element's children</td>
-      <td>HtmlCollection</td>
+      <td>ElementList</td>
     </tr>
     <tr>
       <td><code>getAttribute</code></td>
@@ -577,7 +577,7 @@ Includes:
     <tr>
       <td><code>querySelectorAll</code></td>
       <td>Find and return all matching elements by the given CSS selector</td>
-      <td>HtmlCollection</td>
+      <td>ElementList</td>
     </tr>
     <tr>
       <td><code>getClassList</code></td>
@@ -592,12 +592,12 @@ Includes:
     <tr>
       <td><code>getElementsByClassName</code></td>
       <td>Get all elements with the specified class name</td>
-      <td>HtmlCollection</td>
+      <td>ElementList</td>
     </tr>
     <tr>
       <td><code>getElementsByTagName</code></td>
       <td>Get all elements with the specified tag name</td>
-      <td>HtmlCollection</td>
+      <td>ElementList</td>
     </tr>
   </tbody>
 </table>
@@ -654,7 +654,7 @@ Includes:
       <td>Handles class names for an element.</td>
     </tr>
     <tr>
-      <td><code>HtmlCollection</code></td>
+      <td><code>ElementList</code></td>
       <td>A collection of <code>ElementNode</code> types.</td>
     </tr>
     <tr>
