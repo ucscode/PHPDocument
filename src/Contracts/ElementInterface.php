@@ -3,10 +3,12 @@
 namespace Ucscode\UssElement\Contracts;
 
 use Ucscode\UssElement\Collection\Attributes;
-use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Collection\ElementList;
 use Ucscode\UssElement\Collection\ClassList;
 
 /**
+ * The base inteface for all element nodes
+ *
  * @method ElementInterface getParentNode()
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
@@ -66,9 +68,9 @@ interface ElementInterface extends NodeInterface
     /**
      * Gets a collection of child elements.
      *
-     * @return HtmlCollection The collection of child elements.
+     * @return ElementList The collection of child elements.
      */
-    public function getChildren(): HtmlCollection;
+    public function getChildren(): ElementList;
 
     /**
      * Gets the value of a specific attribute.
@@ -136,9 +138,9 @@ interface ElementInterface extends NodeInterface
      * Finds all elements matching a CSS selector.
      *
      * @param string $selector The CSS selector.
-     * @return HtmlCollection The collection of matching elements.
+     * @return ElementList The collection of matching elements.
      */
-    public function querySelectorAll(string $selector): HtmlCollection;
+    public function querySelectorAll(string $selector): ElementList;
 
     /**
      * Gets the class list of the element.
@@ -159,15 +161,15 @@ interface ElementInterface extends NodeInterface
      * Finds all elements with specific class names.
      *
      * @param string $names The class names, separated by spaces.
-     * @return HtmlCollection The collection of matching elements.
+     * @return ElementList The collection of matching elements.
      */
-    public function getElementsByClassName(string $names): HtmlCollection;
+    public function getElementsByClassName(string $names): ElementList;
 
     /**
      * Finds all elements with a specific tag name.
      *
      * @param string $name The tag name.
-     * @return HtmlCollection The collection of matching elements.
+     * @return ElementList The collection of matching elements.
      */
-    public function getElementsByTagName(string $name): HtmlCollection;
+    public function getElementsByTagName(string $name): ElementList;
 }

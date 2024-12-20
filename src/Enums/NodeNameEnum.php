@@ -3,6 +3,8 @@
 namespace Ucscode\UssElement\Enums;
 
 /**
+ * An enum of all recognized HTML tag names
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 enum NodeNameEnum: string

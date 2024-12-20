@@ -6,6 +6,8 @@ use Ucscode\UssElement\Exception\InvalidAttributeException;
 use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
+ * An instance of this class contains a list of class names for an element
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class ClassList extends AbstractCollection implements \Stringable

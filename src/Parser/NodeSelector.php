@@ -2,7 +2,7 @@
 
 namespace Ucscode\UssElement\Parser;
 
-use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Collection\ElementList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Parser\Engine\Matcher;
@@ -10,7 +10,9 @@ use Ucscode\UssElement\Parser\Engine\Tokenizer;
 use Ucscode\UssElement\Parser\Engine\Transformer;
 
 /**
- * Selector Abstract Syntax Tree
+ * A parser that matches css rules against an element
+ *
+ * This parser is utilized by the `ElementInterface::querySelectorAll()` method
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors#terms
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
@@ -31,9 +33,9 @@ class NodeSelector
         }
     }
 
-    public function getResult(): HtmlCollection
+    public function getResult(): ElementList
     {
-        return new HtmlCollection($this->elementList);
+        return new ElementList($this->elementList);
     }
 
     /**
@@ -60,10 +62,10 @@ class NodeSelector
     /**
      * Recursively find every child that matches the last selector in the sequence
      *
-     * @param HtmlCollection $children  Collection of children to test for matches
+     * @param ElementList $children  Collection of children to test for matches
      * @param string[] $selectors       Chunk of selectors
      */
-    protected function branchElementTraversal(HtmlCollection $children, array $selectors): void
+    protected function branchElementTraversal(ElementList $children, array $selectors): void
     {
         /**
          * @var ElementInterface $node

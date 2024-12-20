@@ -18,6 +18,8 @@ use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Node\TextNode;
 
 /**
+ * A parser that converts HTML string into NodeInterface
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class HtmlLoader

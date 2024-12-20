@@ -6,6 +6,8 @@ use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Support\AbstractCharacterData;
 
 /**
+ * An object oriented representation of HTML comment
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class CommentNode extends AbstractCharacterData

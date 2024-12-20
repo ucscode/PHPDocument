@@ -7,7 +7,7 @@ use Ucscode\UssElement\Parser\Exception\InvalidParserComponentException;
 use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
- * A collection of AttributoDto
+ * An instance of this class holds a list of AttributoDto
  *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

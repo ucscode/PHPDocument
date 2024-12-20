@@ -6,6 +6,8 @@ use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Support\AbstractNode;
 
 /**
+ * An object oriented representation of HTML doctype
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class DocumentTypeNode extends AbstractNode

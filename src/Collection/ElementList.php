@@ -6,6 +6,8 @@ use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Exception\InvalidNodeException;
 
 /**
+ * An instance of this class contains items that implement the ElementInterface
+ *
  * @template T
  * @implements IteratorAggregate<int, ElementInterface>
  * @property ElementInterface[] $items
@@ -14,7 +16,7 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
  * @method ?ElementInterface last()
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
-class HtmlCollection extends NodeList
+class ElementList extends NodeList
 {
     protected function validateItemType(mixed $item): void
     {

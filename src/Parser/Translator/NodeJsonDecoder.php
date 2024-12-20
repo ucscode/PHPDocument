@@ -9,6 +9,11 @@ use Ucscode\UssElement\Node\DocumentTypeNode;
 use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Node\TextNode;
 
+/**
+ * A parser that converts JSON string into `NodeInterface` instance
+ *
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class NodeJsonDecoder
 {
     public function __construct(protected string $json)

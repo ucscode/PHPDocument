@@ -7,6 +7,8 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
 use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
+ * An instance of this class contains items that implement the NodeInterface
+ *
  * @template T
  * @implements IteratorAggregate<int, NodeInterface>
  * @property NodeInterface[] $items

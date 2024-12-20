@@ -5,7 +5,7 @@ namespace Ucscode\UssElement\Parser\Dto;
 use Ucscode\UssElement\Parser\Engine\Transformer;
 
 /**
- * A data transfer object for attributes parsed from selector
+ * A data transfer object for attributes parsed from a selector
  *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

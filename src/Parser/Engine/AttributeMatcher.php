@@ -7,10 +7,10 @@ use Ucscode\UssElement\Parser\Collection\AttributeDtoCollection;
 use Ucscode\UssElement\Parser\Dto\AttributeDto;
 
 /**
- * Compare selector attributes against a node to verify if the node attribute matches the attributes in the selector
+ * This class compares the selector's attributes with those of a node to verify if the node's attributes match the selector's
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
- * @internal Used internally by Matcher
+ * @internal
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class AttributeMatcher

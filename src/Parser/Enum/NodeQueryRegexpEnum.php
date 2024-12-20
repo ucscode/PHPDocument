@@ -3,6 +3,8 @@
 namespace Ucscode\UssElement\Parser\Enum;
 
 /**
+ * An enum containing a list of regular expressions used by several parsers
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 enum NodeQueryRegexpEnum: string

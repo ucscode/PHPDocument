@@ -5,7 +5,7 @@ namespace Ucscode\UssElement\Node;
 use Ucscode\UssElement\Collection\Attributes;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\ClassList;
-use Ucscode\UssElement\Collection\HtmlCollection;
+use Ucscode\UssElement\Collection\ElementList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
@@ -18,6 +18,8 @@ use Ucscode\UssElement\Support\AbstractNode;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
+ * An object oriented representation of HTML element
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class ElementNode extends AbstractNode implements ElementInterface
@@ -112,14 +114,14 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->isVoid() ? null : sprintf('</%s>', strtolower($this->nodeName));
     }
 
-    public function getChildren(): HtmlCollection
+    public function getChildren(): ElementList
     {
         $filter = array_filter(
             $this->childNodes->toArray(),
             fn (NodeInterface $node) => $node->getNodeType() === NodeTypeEnum::NODE_ELEMENT->value
         );
 
-        return new HtmlCollection($filter);
+        return new ElementList($filter);
     }
 
     public function getAttribute(string $name, \Stringable|string|null $default = null): ?string
@@ -171,7 +173,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this;
     }
 
-    public function querySelectorAll(string $selector): HtmlCollection
+    public function querySelectorAll(string $selector): ElementList
     {
         return (new NodeSelector($this, $selector))->getResult();
     }
@@ -190,14 +192,14 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $matcher->matchesNode();
     }
 
-    public function getElementsByClassName(string $names): HtmlCollection
+    public function getElementsByClassName(string $names): ElementList
     {
         $classes = implode('.', array_map('trim', explode(' ', $names)));
 
         return $this->querySelectorAll(".{$classes}");
     }
 
-    public function getElementsByTagName(string $name): HtmlCollection
+    public function getElementsByTagName(string $name): ElementList
     {
         return $this->querySelectorAll($name);
     }

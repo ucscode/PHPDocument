@@ -6,7 +6,7 @@ use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 
 /**
- * Compare a css selector against a node to verify that the node attributes matches the selector
+ * This class compares a CSS selector with a node to verify that the node's attributes match the selector's criteria
  *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

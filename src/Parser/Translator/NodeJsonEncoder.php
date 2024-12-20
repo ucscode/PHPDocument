@@ -7,6 +7,11 @@ use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Support\AbstractCharacterData;
 
+/**
+ * A parser that converts `NodeInteface` instance into JSON string
+ *
+ * @author Uchenna Ajah <uche23mail@gmail.com>
+ */
 class NodeJsonEncoder implements \Stringable
 {
     public function __construct(protected NodeInterface $node)
