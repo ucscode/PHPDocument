@@ -333,52 +333,52 @@ Both the `NodeJsonEncoder` and `NodeJsonDecoder` provide a `normalize` method to
     </tr>
     <tr>
       <td><code>setVisible</code></td>
-      <td>Set the visibility status of a node</td>
+      <td>Set the visibility state of a node when rendered</td>
       <td><code>static</code></td>
     </tr>
     <tr>
       <td><code>isVisible</code></td>
-      <td>Verify the node visibility status</td>
+      <td>Verify the visibility state of a node when rendered</td>
       <td><code>boolean</code></td>
     </tr>
     <tr>
       <td><code>render</code></td>
-      <td>Convert the node to string (OuterHtml)</td>
+      <td>Convert the node to string (OuterHTML)</td>
       <td><code>string</code></td>
     </tr>
     <tr>
       <td><code>getParentElement</code></td>
-      <td>Returns an Element that is the parent of this node</td>
+      <td>Returns an Element that is the parent of the current node</td>
       <td><code>ElementInterface|null</code></td>
     </tr>
     <tr>
       <td><code>getParentNode</code></td>
-      <td>Returns a Node that is the parent of this node</td>
+      <td>Returns a Node that is the parent of the current node</td>
       <td><code>NodeInterface|null</code></td>
     </tr>
     <tr>
       <td><code>getChildNodes</code></td>
-      <td>Returns a NodeList containing all the children of this node</td>
+      <td>Returns a NodeList containing all the children of the current node</td>
       <td><code>NodeList</code></td>
     </tr>
     <tr>
       <td><code>appendChild</code></td>
-      <td>Adds the specified childNode argument as the last child to the current node</td>
+      <td>Adds the specified Node argument as the last child to the current node</td>
       <td><code>static</code></td>
     </tr>
     <tr>
       <td><code>prependChild</code></td>
-      <td>Adds the specified childNode argument as the first child to the current node</td>
+      <td>Adds the specified Node argument as the first child to the current node</td>
       <td><code>static</code></td>
     </tr>
     <tr>
       <td><code>getFirstChild</code></td>
-      <td>Returns a Node representing the first direct child node of the node</td>
+      <td>Returns a Node representing the last direct child node of the current node</td>
       <td><code>NodeInterface|null</code></td>
     </tr>
     <tr>
       <td><code>isFirstChild</code></td>
-      <td>Verify that the specified node is first in the list</td>
+      <td>Verify that the specified Node argument is first in the NodeList</td>
       <td><code>boolean</code></td>
     </tr>
     <tr>
@@ -388,7 +388,7 @@ Both the `NodeJsonEncoder` and `NodeJsonDecoder` provide a `normalize` method to
     </tr>
     <tr>
       <td><code>isLastChild</code></td>
-      <td>Verify that the specified node is last in the list</td>
+      <td>Verify that the specified Node argument is last in the NodeList</td>
       <td><code>boolean</code></td>
     </tr>
     <tr>
@@ -527,7 +527,7 @@ Includes:
     <tr>
       <td><code>getCloseTag</code></td>
       <td>Get the closing tag of the element (if any)</td>
-      <td><code>?string</code></td>
+      <td><code>string|null</code></td>
     </tr>
     <tr>
       <td><code>getChildren</code></td>
@@ -537,7 +537,7 @@ Includes:
     <tr>
       <td><code>getAttribute</code></td>
       <td>Get the value of a specific attribute by name</td>
-      <td><code>?string</code></td>
+      <td><code>string|null</code></td>
     </tr>
     <tr>
       <td><code>getAttributes</code></td>
@@ -572,7 +572,7 @@ Includes:
     <tr>
       <td><code>querySelector</code></td>
       <td>Find and return the first matching element by the given CSS selector</td>
-      <td><code>?ElementInterface</code></td>
+      <td><code>ElementInterface|null</code></td>
     </tr>
     <tr>
       <td><code>querySelectorAll</code></td>
@@ -581,12 +581,12 @@ Includes:
     </tr>
     <tr>
       <td><code>getClassList</code></td>
-      <td>Get the list of classes of the element</td>
+      <td>Get a collection of classes of the element</td>
       <td><code>ClassList</code></td>
     </tr>
     <tr>
       <td><code>matches</code></td>
-      <td>Check if the element matches the given CSS selector</td>
+      <td>Check if the current element matches the given CSS selector</td>
       <td><code>boolean</code></td>
     </tr>
     <tr>
@@ -655,7 +655,7 @@ Includes:
     </tr>
     <tr>
       <td><code>ElementList</code></td>
-      <td>A collection of <code>ElementNode</code> types.</td>
+      <td>A collection of <code>ElementInterface</code> types.</td>
     </tr>
     <tr>
       <td><code>NodeList</code></td>
@@ -725,11 +725,11 @@ Includes:
     </tr>
     <tr>
       <td><code>NodeJsonEncoder</code></td>
-      <td>Encodes a node and its descendants into json</td>
+      <td>Encodes a node and its descendants into JSON format</td>
     </tr>
     <tr>
       <td><code>NodeJsonDecoder</code></td>
-      <td>Decodes a node json back to node instance.</td>
+      <td>Decodes a node JSON back into a node instance.</td>
     </tr>
   </tbody>
 </table>

@@ -143,14 +143,14 @@ interface ElementInterface extends NodeInterface
     public function querySelectorAll(string $selector): ElementList;
 
     /**
-     * Gets the class list of the element.
+     * Gets a collection of class list of the element.
      *
      * @return ClassList The class list of the element.
      */
     public function getClassList(): ClassList;
 
     /**
-     * Checks if the element matches a CSS selector.
+     * Checks if the current element matches a CSS selector.
      *
      * @param string $selector The CSS selector.
      * @return bool True if the element matches, otherwise false.

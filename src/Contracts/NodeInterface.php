@@ -33,7 +33,7 @@ interface NodeInterface
     public function getNodeType(): int;
 
     /**
-     * Set the visibility status of a node
+     * Set the visibility state of a node when rendered
      *
      * If the node visibility is set to `false`, it will not be attached as member of the node when converted to HTML
      *
@@ -43,7 +43,7 @@ interface NodeInterface
     public function setVisible(bool $visible): static;
 
     /**
-     * Verify the node visibility status
+     * Verify the visibility state of a node when rendered
      *
      * @return boolean
      */
@@ -82,7 +82,7 @@ interface NodeInterface
     public function getChildNodes(): NodeList;
 
     /**
-     * Adds the specified childNode argument as the last child to the current node.
+     * Adds the specified Node argument as the last child to the current node.
      *
      * @param NodeInterface $node
      * @return static
@@ -90,7 +90,7 @@ interface NodeInterface
     public function appendChild(NodeInterface $node): static;
 
     /**
-     * Adds the specified childNode argument as the first child to the current node.
+     * Adds the specified Node argument as the first child to the current node.
      *
      * @param NodeInterface $node
      * @return static
@@ -98,14 +98,14 @@ interface NodeInterface
     public function prependChild(NodeInterface $node): static;
 
     /**
-     * Returns a Node representing the first direct child node of the node, or null if the node has no child.
+     * Returns a Node representing the first direct child node of the current node, or null if the node has no child.
      *
      * @return NodeInterface|null
      */
     public function getFirstChild(): ?NodeInterface;
 
     /**
-     * Verify that the specified node is first in the list
+     * Verify that the specified Node argument is first in the NodeList
      *
      * @param NodeInterface $node
      * @return boolean
@@ -113,14 +113,14 @@ interface NodeInterface
     public function isFirstChild(NodeInterface $node): bool;
 
     /**
-     * Returns a Node representing the last direct child node of the node, or null if the node has no child.
+     * Returns a Node representing the last direct child node of the current node, or null if the node has no child.
      *
      * @return NodeInterface|null
      */
     public function getLastChild(): ?NodeInterface;
 
     /**
-     * Verify that the specified node is last in the list
+     * Verify that the specified Node argument is last in the NodeList
      *
      * @param NodeInterface $node
      * @return boolean
