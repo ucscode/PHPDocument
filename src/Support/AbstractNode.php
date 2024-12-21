@@ -17,15 +17,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 {
     abstract public function getNodeType(): int;
 
-    private ?int $nodeId = null;
+    private int $nodeId;
     protected string $nodeName;
     protected bool $visible = true;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
-
-    /**
-     * @var NodeList<int, NodeInterface>
-     */
     protected NodeList $childNodes;
 
 
@@ -47,14 +43,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     final public function getNodeId(): int
     {
-        if ($this->nodeId === null) {
-            $this->nodeId = NodeSingleton::getInstance()->getNextId();
-        };
-
         return $this->nodeId;
     }
 
-    public function getNodeName(): string
+    final public function getNodeName(): string
     {
         return $this->nodeName;
     }

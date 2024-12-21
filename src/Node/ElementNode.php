@@ -36,7 +36,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         $this->nodePresets($attributes);
     }
 
-    public function getTagName(): string
+    final public function getTagName(): string
     {
         return $this->nodeName;
     }
