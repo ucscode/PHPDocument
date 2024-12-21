@@ -23,6 +23,7 @@ class NodeJsonEncoderTest extends TestCase
         $this->assertSame(NodeNameEnum::NODE_BODY->value, $normalize['nodeName']);
         $this->assertNotNull($normalize['childNodes'][0]['attributes']);
         $this->assertSame('dark', $normalize['childNodes'][0]['attributes']['data-theme'] ?? null);
+        $this->assertSame($normalize['nodeId'], $normalize['childNodes'][0]['parentId']);
 
         return $encoder->encode();
     }
@@ -47,8 +48,12 @@ class NodeJsonEncoderTest extends TestCase
         $this->assertSame('BODY', $element->getNodeName());
         $this->assertNotNull($element->getChildren()->first());
         $this->assertSame('position-relative case-1', $element->getChildren()->first()->getAttribute('class'));
-
         $this->assertSame($this->getNodeBody()->render(), $element->render());
-        $this->assertSame($this->getNodeBody()->toJson(), $nodeJson);
+        $this->assertSame($this->jsonWithoutId($nodeJson), $this->jsonWithoutId($this->getNodeBody()->toJson()));
+    }
+
+    private function jsonWithoutId(string $json): string
+    {
+        return preg_replace('/"(?:nodeId|parentId)":\d+,/', '', $json);
     }
 }

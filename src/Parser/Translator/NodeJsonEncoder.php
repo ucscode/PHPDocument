@@ -2,6 +2,7 @@
 
 namespace Ucscode\UssElement\Parser\Translator;
 
+use Ucscode\UssElement\Collection\Attributes;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
@@ -60,9 +61,11 @@ class NodeJsonEncoder implements \Stringable
     private function createElementArray(NodeInterface $node, ?NodeInterface $parent): array
     {
         return [
+            'nodeId' => $node->getNodeId(),
             'nodeType' => $node->getNodeType(),
             'nodeName' => $node->getNodeName(),
-            'attributes' => $node instanceof ElementInterface ? $node->getAttributes()->toArray() : null,
+            'parentId' => $parent?->getNodeId(),
+            'attributes' => $this->normalizeAttributes($node),
             'void' => $node instanceof ElementInterface ? $node->isVoid() : null,
             'visible' => $node->isVisible(),
             'meta' => match($node->getNodeType()) {
@@ -88,5 +91,20 @@ class NodeJsonEncoder implements \Stringable
         return [
             'data' => $node->getData(),
         ];
+    }
+
+    /**
+     * Normalize element attributes to array
+     *
+     * @param NodeInterface $node
+     * @return array
+     */
+    private function normalizeAttributes(NodeInterface $node): ?array
+    {
+        if (!$node instanceof ElementInterface) {
+            return null;
+        }
+
+        return array_map(fn (string $value) => $value, $node->getAttributes()->toArray());
     }
 }
