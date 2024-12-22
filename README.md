@@ -362,6 +362,11 @@ Both the `NodeJsonEncoder` and `NodeJsonDecoder` provide a `normalize` method to
       <td><code>NodeList</code></td>
     </tr>
     <tr>
+      <td><code>clearChildNodes</code></td>
+      <td>Remove all the child Nodes from the current element</td>
+      <td><code>static</code></td>
+    </tr>
+    <tr>
       <td><code>appendChild</code></td>
       <td>Adds the specified Node argument as the last child to the current node</td>
       <td><code>static</code></td>
