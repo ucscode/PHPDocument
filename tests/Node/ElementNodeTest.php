@@ -3,7 +3,6 @@
 namespace Ucscode\UssElement\Test\Node;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Test\Parser\Translator\HtmlLoaderTest;
@@ -47,6 +46,7 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeA()->getFirstChild(), $this->getNodeImg());
         $this->assertSame($this->getNodeA()->getLastChild(), $this->getNodeImg());
         $this->assertCount(3, $this->getNodeForm()->getChildNodes());
+        $this->assertSame($this->getNodeA()->getParentElement(), $this->getNodeBody());
 
         $this->getNodeForm()->insertAdjacentNode(1, $this->getNodeImg());
         $this->assertCount(0, $this->getNodeA()->getChildNodes());
@@ -61,8 +61,11 @@ class ElementNodeTest extends TestCase
         $this->getNodeForm()->insertAfter($this->getNodeH1(), $this->getNodeButton());
 
         $this->assertSame($this->getNodeForm()->getChildNodes()->get(1), $this->getNodeH1());
+        $this->assertSame($this->getNodeButton()->getNextSibling(), $this->getNodeH1());
+        $this->assertSame($this->getNodeH1()->getPreviousSibling(), $this->getNodeButton());
         $this->assertCount(5, $this->getNodeForm()->getChildNodes());
         $this->assertCount(1, $this->getNodeDiv()->getChildNodes());
+        $this->assertSame($this->getNodeForm(), $this->getNodeDiv()->getFirstChild());
 
         $this->assertTrue($this->getNodeForm()->hasChild($this->getNodeH1()));
 
@@ -172,5 +175,14 @@ class ElementNodeTest extends TestCase
         $this->getNodeForm()->setVisible(false);
         $this->assertNotNull($this->getNodeDiv()->querySelector('form'));
         $this->assertStringNotContainsString('<form action', $this->getNodeDiv()->render());
+    }
+
+    public function testClearChildNodes(): void
+    {
+        $this->assertSame($this->getNodeButton()->getParentElement(), $this->getNodeForm());
+        $this->getNodeForm()->clearChildNodes();
+        $this->assertCount(0, $this->getNodeForm()->getChildNodes());
+        $this->assertNull($this->getNodeButton()->getParentNode());
+        $this->assertNull($this->getNodeButton()->getParentElement());
     }
 }

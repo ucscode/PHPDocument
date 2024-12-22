@@ -95,7 +95,7 @@ class NodeList extends AbstractCollection
      */
     protected function insertAt(int $index, NodeInterface $node): static
     {
-        if ($this->mutateNode($node)) {
+        if ($this->removeParentNode($node)) {
             array_splice($this->items, $index, 0, [$node]);
         }
 
@@ -110,7 +110,7 @@ class NodeList extends AbstractCollection
      */
     protected function prepend(NodeInterface $node): static
     {
-        if ($this->mutateNode($node)) {
+        if ($this->removeParentNode($node)) {
             array_unshift($this->items, $node);
         }
 
@@ -125,7 +125,7 @@ class NodeList extends AbstractCollection
      */
     protected function append(NodeInterface $node): static
     {
-        if ($this->mutateNode($node)) {
+        if ($this->removeParentNode($node)) {
             array_push($this->items, $node);
         }
 
@@ -140,7 +140,7 @@ class NodeList extends AbstractCollection
      */
     protected function remove(NodeInterface $node): static
     {
-        if (false !== $key = array_search($node, $this->items)) {
+        if (false !== $key = $this->indexOf($node)) {
             unset($this->items[$key]);
 
             $this->items = array_values($this->items);
@@ -158,7 +158,13 @@ class NodeList extends AbstractCollection
         }
     }
 
-    private function mutateNode(NodeInterface $node): bool
+    /**
+     * This method ensures the node is not its own parent before removing the parent
+     *
+     * @param NodeInterface $node
+     * @return boolean
+     */
+    private function removeParentNode(NodeInterface $node): bool
     {
         if ($node->getParentElement() !== $node) {
             $node->getParentElement()?->removeChild($node);

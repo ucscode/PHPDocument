@@ -59,7 +59,7 @@ interface NodeInterface
     /**
      * Returns an Element that is the parent of this node.
      *
-     * If the node has no parent, or if that parent is not an Element, this property returns null.
+     * If the node has no parent, or if that parent is not an Element, this method returns null.
      *
      * @return ElementInterface|null
      */
@@ -68,7 +68,7 @@ interface NodeInterface
     /**
      * Returns a Node that is the parent of this node.
      *
-     * If there is no such node, like if this node is the top of the tree or if doesn't participate in a tree, this property returns null.
+     * If there is no such node, like if this node is the top of the tree or if doesn't participate in a tree, this method returns null.
      *
      * @return NodeInterface|null
      */
@@ -80,6 +80,13 @@ interface NodeInterface
      * @return NodeList<NodeInterface>
      */
     public function getChildNodes(): NodeList;
+
+    /**
+     * Remove all the child Nodes from the current element
+     *
+     * @return static
+     */
+    public function clearChildNodes(): static;
 
     /**
      * Adds the specified Node argument as the last child to the current node.

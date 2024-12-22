@@ -110,6 +110,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     /**
      * @param static $node
+     * @see Ucscode\UssElement\Collection\NodeList::prepend()
      */
     public function prependChild(NodeInterface $node): static
     {
@@ -122,6 +123,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     /**
      * @param static $node
+     * @see Ucscode\UssElement\Collection\NodeList::append()
      */
     public function appendChild(NodeInterface $node): static
     {
@@ -134,6 +136,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     /**
      * @param static $node
+     * @see Ucscode\UssElement\Collection\NodeList::insertAt()
      */
     public function insertAdjacentNode(int $offset, NodeInterface $node): static
     {
@@ -146,12 +149,15 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     /**
      * @param static $node
+     * @see Ucscode\UssElement\Collection\NodeList::remove()
      */
     public function removeChild(NodeInterface $node): static
     {
-        (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
+        if ($this->hasChild($node)) {
+            (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
 
-        $node->setParentNode(null);
+            $node->setParentNode(null);
+        }
 
         return $this;
     }
@@ -172,7 +178,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
         if ($this->hasChild($referenceNode)) {
-            $this->removeChild($newNode); // reset the node keys
+            // detach the new Node from its previous parent
+            $newNode->getParentElement()?->removeChild($newNode);
             $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
@@ -185,7 +192,8 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
         if ($this->hasChild($referenceNode)) {
-            $this->removeChild($newNode); // reset the node keys
+            // detach the new Node from its previous parent
+            $newNode->getParentNode()?->removeChild($newNode);
             $key = $this->childNodes->indexOf($referenceNode);
             $this->insertAdjacentNode($key + 1, $newNode);
         }
@@ -195,8 +203,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): static
     {
-        $this->insertBefore($newNode, $oldNode);
-        $this->removeChild($oldNode);
+        if ($this->hasChild($oldNode)) {
+            $this->insertBefore($newNode, $oldNode);
+            $this->removeChild($oldNode);
+        }
 
         return $this;
     }
@@ -204,6 +214,18 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function sortChildNodes(callable $func): static
     {
         $this->childNodes->sort($func);
+
+        return $this;
+    }
+
+    public function clearChildNodes(): static
+    {
+        /**
+         * @var static $node
+         */
+        foreach ($this->getChildNodes()->toArray() as $node) {
+            $this->removeChild($node);
+        }
 
         return $this;
     }
@@ -264,9 +286,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this;
     }
 
-    public function toJson(): string
+    public function toJson(bool $prettyPrint = false): string
     {
-        return new NodeJsonEncoder($this);
+        return (new NodeJsonEncoder($this))->encode($prettyPrint);
     }
 
     /**
@@ -277,7 +299,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         $this->parentNode = $parentNode;
 
-        if ($parentNode instanceof ElementInterface) {
+        if ($parentNode instanceof ElementInterface || $parentNode === null) {
             $this->parentElement = $parentNode;
         }
     }
