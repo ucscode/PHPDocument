@@ -4,36 +4,27 @@ namespace Ucscode\UssElement\Support;
 
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\NodeList;
-use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
+use Ucscode\UssElement\Support\Internal\NodeReadonly;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
- * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
-    abstract public function getNodeType(): int;
-
-    private int $nodeId;
-    protected string $nodeName;
+    public readonly string $nodeName;
+    public readonly int $nodeType;
+    public readonly int $nodeId;
     protected bool $visible = true;
-    protected ?NodeInterface $parentNode = null;
-    protected ?ElementInterface $parentElement = null;
-    protected NodeList $childNodes;
-
+    protected NodeReadonly $readonly;
 
     public function __construct(string|NodeNameEnum $nodeName)
     {
-        if ($nodeName instanceof NodeNameEnum) {
-            $nodeName = $nodeName->value;
-        }
-
-        $this->nodeName = strtoupper($nodeName);
-        $this->childNodes = new NodeList();
+        $this->nodeName = strtoupper($nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName);
         $this->nodeId = NodeSingleton::getInstance()->getNextId();
+        $this->readonly = new NodeReadonly(new NodeList());
     }
 
     public function __toString(): string
@@ -41,24 +32,15 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->render(null);
     }
 
-    final public function getNodeId(): int
+    public function __get(string $name): mixed
     {
-        return $this->nodeId;
-    }
+        $method = sprintf('get%s', ucfirst($name));
 
-    final public function getNodeName(): string
-    {
-        return $this->nodeName;
-    }
+        if (!method_exists($this->readonly, $method)) {
+            throw new \ErrorException("Undefined property: " . __CLASS__ . "::\$$name");
+        }
 
-    public function getParentNode(): ?NodeInterface
-    {
-        return $this->parentNode;
-    }
-
-    public function getParentElement(): ?ElementInterface
-    {
-        return $this->parentElement;
+        return $this->readonly->{$method}($this);
     }
 
     public function setVisible(bool $visible): static
@@ -73,34 +55,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->visible;
     }
 
-    public function getChildNodes(): NodeList
-    {
-        return $this->childNodes;
-    }
-
-    public function getNextSibling(): ?NodeInterface
-    {
-        return $this->getSibling(1);
-    }
-
-    public function getPreviousSibling(): ?NodeInterface
-    {
-        return $this->getSibling(-1);
-    }
-
-    public function getFirstChild(): ?NodeInterface
-    {
-        return $this->childNodes->first();
-    }
-
     public function isFirstChild(NodeInterface $node): bool
     {
         return $this->childNodes->first() === $node;
-    }
-
-    public function getLastChild(): ?NodeInterface
-    {
-        return $this->childNodes->last();
     }
 
     public function isLastChild(NodeInterface $node): bool
@@ -116,7 +73,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
 
-        $node->setParentNode($this);
+        $this->setParentNode($node, $this);
 
         return $this;
     }
@@ -129,7 +86,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
 
-        $node->setParentNode($this);
+        $this->setParentNode($node, $this);
 
         return $this;
     }
@@ -142,7 +99,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
 
-        $node->setParentNode($this);
+        $this->setParentNode($node, $this);
 
         return $this;
     }
@@ -156,7 +113,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         if ($this->hasChild($node)) {
             (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
 
-            $node->setParentNode(null);
+            $this->setParentNode($node, null);
         }
 
         return $this;
@@ -179,7 +136,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
-            $newNode->getParentElement()?->removeChild($newNode);
+            $newNode->getParentElement?->removeChild($newNode);
             $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
@@ -193,7 +150,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
-            $newNode->getParentNode()?->removeChild($newNode);
+            $newNode->getParentNode?->removeChild($newNode);
             $key = $this->childNodes->indexOf($referenceNode);
             $this->insertAdjacentNode($key + 1, $newNode);
         }
@@ -213,7 +170,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function sortChildNodes(callable $func): static
     {
-        $this->childNodes->sort($func);
+        (new ObjectReflector($this->childNodes))->invokeMethod('sort', $func);
 
         return $this;
     }
@@ -223,7 +180,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         /**
          * @var static $node
          */
-        foreach ($this->getChildNodes()->toArray() as $node) {
+        foreach ($this->childNodes->toArray() as $node) {
             $this->removeChild($node);
         }
 
@@ -249,7 +206,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveBefore(NodeInterface $siblingNode): static
     {
-        if ($siblingNode->getParentNode() === $this->parentNode) {
+        if ($siblingNode->getParentNode === $this->parentNode) {
             $this->parentNode->insertBefore($this, $siblingNode);
         }
 
@@ -258,7 +215,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveAfter(NodeInterface $siblingNode): static
     {
-        if ($siblingNode->getParentNode() === $this->parentNode) {
+        if ($siblingNode->getParentNode === $this->parentNode) {
             $this->parentNode->insertAfter($this, $siblingNode);
         }
 
@@ -292,36 +249,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param NodeInterface $parentNode
-     * @return void
-     */
-    protected function setParentNode(?NodeInterface $parentNode): void
-    {
-        $this->parentNode = $parentNode;
-
-        if ($parentNode instanceof ElementInterface || $parentNode === null) {
-            $this->parentElement = $parentNode;
-        }
-    }
-
-    /**
-     * @param integer $index Unsigned
-     * @return NodeInterface|null
-     */
-    private function getSibling(int $index): ?NodeInterface
-    {
-        if ($this->parentNode) {
-            $parentNodelist = $this->parentNode->getChildNodes();
-
-            if (false !== $key = $parentNodelist->indexOf($this)) {
-                return $parentNodelist->get($key + $index);
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Helper method to generate indented values
      *
      * @param string|null $value The value to render
@@ -332,5 +259,22 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected function indent(?string $value, int $tab, bool $newline = true): string
     {
         return sprintf('%s%s%s', str_repeat("\t", $tab), $value ?? '', $newline ? "\n" : '');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param NodeInterface $node   The child node
+     * @param NodeInterface|null $parentNode    The new parent node
+     * @return void
+     */
+    private function setParentNode(NodeInterface $node, ?NodeInterface $parentNode): void
+    {
+        /**
+         * Access protected readonly property of Node
+         * @var NodeReadonly $readonly
+         */ 
+        $readonly = (new ObjectReflector($node))->getProperty('readonly');
+        $readonly->setParentNode($parentNode);
     }
 }

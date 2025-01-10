@@ -106,6 +106,11 @@ class ClassList extends AbstractCollection implements \Stringable
         return $this;
     }
 
+    public function clear(): static
+    {
+        return parent::clear();
+    }
+
     protected function validateItemType(mixed $item)
     {
         if (!$this->canBeString($item)) {

@@ -118,7 +118,7 @@ class ElementNode extends AbstractNode implements ElementInterface
     {
         $filter = array_filter(
             $this->childNodes->toArray(),
-            fn (NodeInterface $node) => $node->getNodeType() === NodeTypeEnum::NODE_ELEMENT->value
+            fn (NodeInterface $node) => $node->nodeType === NodeTypeEnum::NODE_ELEMENT->value
         );
 
         return new ElementList($filter);

@@ -166,8 +166,8 @@ class NodeList extends AbstractCollection
      */
     private function removeParentNode(NodeInterface $node): bool
     {
-        if ($node->getParentElement() !== $node) {
-            $node->getParentElement()?->removeChild($node);
+        if ($node->parentElement !== $node) {
+            $node->parentElement?->removeChild($node);
             return true;
         }
 

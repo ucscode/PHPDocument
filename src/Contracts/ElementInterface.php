@@ -9,7 +9,6 @@ use Ucscode\UssElement\Collection\ClassList;
 /**
  * The base inteface for all element nodes
  *
- * @method ElementInterface getParentNode()
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface ElementInterface extends NodeInterface

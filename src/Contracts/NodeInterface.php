@@ -6,32 +6,22 @@ use Ucscode\UssElement\Collection\NodeList;
 
 /**
  * The base interface for all nodes
- *
+ * 
+ * @property NodeList $childNodes A NodeList collection containing all the child Nodes
+ * @property ?NodeInterface $firstChild The first direct child node of the current node
+ * @property ?NodeInterface $lastChild The last direct child node of the current node
+ * @property ?NodeInterface $nextSibling The node after the current node
+ * @property ?NodeInterface $previousSibling The node before the current node 
+ * @property ?NodeInterface $parentNode The parent Node or null
+ * @property ?ElementInterface $parentElement The parent Element or null.
+ * @property string $nodeName The node name
+ * @property int $nodeType An integer representing the node type
+ * @property int $nodeId A unique id assigned to the node
+ * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface NodeInterface
 {
-    /**
-     * Return the unique id of this node
-     *
-     * @return integer
-     */
-    public function getNodeId(): int;
-
-    /**
-     * Return the name of the current node
-     *
-     * @return string
-     */
-    public function getNodeName(): string;
-
-    /**
-     * Return the node identifier
-     *
-     * @return integer
-     */
-    public function getNodeType(): int;
-
     /**
      * Set the visibility state of a node when rendered
      *
@@ -57,31 +47,6 @@ interface NodeInterface
     public function render(?int $indent = null): string;
 
     /**
-     * Returns an Element that is the parent of this node.
-     *
-     * If the node has no parent, or if that parent is not an Element, this method returns null.
-     *
-     * @return ElementInterface|null
-     */
-    public function getParentElement(): ?ElementInterface;
-
-    /**
-     * Returns a Node that is the parent of this node.
-     *
-     * If there is no such node, like if this node is the top of the tree or if doesn't participate in a tree, this method returns null.
-     *
-     * @return NodeInterface|null
-     */
-    public function getParentNode(): ?NodeInterface;
-
-    /**
-     * Returns a NodeList containing all the children of this node (including elements, text and comments).
-     *
-     * @return NodeList<NodeInterface>
-     */
-    public function getChildNodes(): NodeList;
-
-    /**
      * Remove all the child Nodes from the current element
      *
      * @return static
@@ -105,13 +70,6 @@ interface NodeInterface
     public function prependChild(NodeInterface $node): static;
 
     /**
-     * Returns a Node representing the first direct child node of the current node, or null if the node has no child.
-     *
-     * @return NodeInterface|null
-     */
-    public function getFirstChild(): ?NodeInterface;
-
-    /**
      * Verify that the specified Node argument is first in the NodeList
      *
      * @param NodeInterface $node
@@ -120,33 +78,12 @@ interface NodeInterface
     public function isFirstChild(NodeInterface $node): bool;
 
     /**
-     * Returns a Node representing the last direct child node of the current node, or null if the node has no child.
-     *
-     * @return NodeInterface|null
-     */
-    public function getLastChild(): ?NodeInterface;
-
-    /**
      * Verify that the specified Node argument is last in the NodeList
      *
      * @param NodeInterface $node
      * @return boolean
      */
     public function isLastChild(NodeInterface $node): bool;
-
-    /**
-     * Returns a Node representing the next node in the tree, or null if there isn't such node.
-     *
-     * @return NodeInterface|null
-     */
-    public function getNextSibling(): ?NodeInterface;
-
-    /**
-     * Returns a Node representing the previous node in the tree, or null if there isn't such node.
-     *
-     * @return NodeInterface|null
-     */
-    public function getPreviousSibling(): ?NodeInterface;
 
     /**
      * Inserts a Node before the reference node as a child of a specified parent node.

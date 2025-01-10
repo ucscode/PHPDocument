@@ -39,18 +39,6 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Clear the entire items of the collection
-     *
-     * @return static
-     */
-    public function clear(): static
-    {
-        $this->items = [];
-
-        return $this;
-    }
-
-    /**
      * Returns a boolean indicating whether the items is empty or not
      *
      * @return boolean
@@ -71,33 +59,23 @@ abstract class AbstractCollection implements CollectionInterface
      * @param callable $callback
      * @return static
      */
-    public function sort(callable $callback): static
+    protected function sort(callable $callback): static
     {
         usort($this->items, $callback);
 
         return $this;
     }
 
-    public function offsetExists(mixed $offset): bool
+    /**
+     * Clear the entire items of the collection
+     *
+     * @return static
+     */
+    protected function clear(): static
     {
-        return array_key_exists($offset, $this->items);
-    }
+        $this->items = [];
 
-    public function offsetUnset(mixed $offset): void
-    {
-        if (array_keys($offset, $this->items)) {
-            unset($this->items[$offset]);
-        }
-    }
-
-    public function offsetGet(mixed $offset): mixed
-    {
-        return $this->items[$offset] ?? null;
-    }
-
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        $this->items[$offset] = $value;
+        return $this;
     }
 
     protected function canBeString(mixed $item): bool
