@@ -9,8 +9,8 @@ use Ucscode\UssElement\Enums\NodeTypeEnum;
 
 class NodeReadonly
 {
-    private ?NodeInterface $parentNode = null;
-    private ?ElementInterface $parentElement = null;
+    protected ?NodeInterface $parentNode = null;
+    protected ?ElementInterface $parentElement = null;
 
     public function __construct(protected NodeList $nodeList, protected NodeTypeEnum $nodeType)
     {
@@ -71,7 +71,7 @@ class NodeReadonly
     }
 
     /**
-     * @param integer $index Unsigned
+     * @param integer $index
      * @param NodeInterface $self
      * @return NodeInterface|null
      */
@@ -87,5 +87,4 @@ class NodeReadonly
 
         return null;
     }
-
 }

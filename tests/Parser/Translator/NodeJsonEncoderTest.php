@@ -46,8 +46,8 @@ class NodeJsonEncoderTest extends TestCase
 
         $this->assertInstanceOf(ElementInterface::class, $element);
         $this->assertSame('BODY', $element->nodeName);
-        $this->assertNotNull($element->getChildren()->first());
-        $this->assertSame('position-relative case-1', $element->getChildren()->first()->getAttribute('class'));
+        $this->assertNotNull($element->children->first());
+        $this->assertSame('position-relative case-1', $element->children->first()->getAttribute('class'));
         $this->assertSame($this->getNodeBody()->render(), $element->render());
         $this->assertSame($this->jsonWithoutId($nodeJson), $this->jsonWithoutId($this->getNodeBody()->toJson()));
     }

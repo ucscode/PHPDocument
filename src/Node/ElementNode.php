@@ -35,7 +35,7 @@ class ElementNode extends AbstractNode implements ElementInterface
     {
         parent::__construct($nodeName);
         
-        $this->nodePresets($attributes);
+        $this->configureElementProperties($attributes);
     }
     
     public function render(?int $indent = null): string
@@ -99,16 +99,6 @@ class ElementNode extends AbstractNode implements ElementInterface
     public function getCloseTag(): ?string
     {
         return $this->isVoid() ? null : sprintf('</%s>', strtolower($this->nodeName));
-    }
-
-    public function getChildren(): ElementList
-    {
-        $filter = array_filter(
-            $this->childNodes->toArray(),
-            fn (NodeInterface $node) => $node->nodeType === NodeTypeEnum::NODE_ELEMENT->value
-        );
-
-        return new ElementList($filter);
     }
 
     public function getAttribute(string $name, \Stringable|string|null $default = null): ?string
@@ -196,7 +186,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         return NodeTypeEnum::NODE_ELEMENT;
     }
 
-    private function nodePresets(array $attributes): void
+    private function configureElementProperties(array $attributes): void
     {
         $this->tagName = $this->nodeName;
         $this->attributes = new Attributes();

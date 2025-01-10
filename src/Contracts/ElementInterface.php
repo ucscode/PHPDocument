@@ -9,7 +9,7 @@ use Ucscode\UssElement\Collection\ClassList;
 /**
  * The base inteface for all element nodes
  *
- * @property ElementList $children
+ * @property ElementList $children (readonly) A collection of child elements.
  * @property ClassList $classList
  * @property ?ElementInterface $firstElementChild
  * @property ?ElementInterface $lastElementChild
@@ -62,13 +62,6 @@ interface ElementInterface extends NodeInterface
      * @return string|null The closing tag, or null if the element is void.
      */
     public function getCloseTag(): ?string;
-
-    /**
-     * Gets a collection of child elements.
-     *
-     * @return ElementList The collection of child elements.
-     */
-    public function getChildren(): ElementList;
 
     /**
      * Gets the value of a specific attribute.

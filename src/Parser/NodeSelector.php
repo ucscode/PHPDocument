@@ -55,7 +55,7 @@ class NodeSelector
         );
 
         foreach ($selectorChunks as $hierarchicalSelector) {
-            $this->branchElementTraversal($this->node->getChildren(), $hierarchicalSelector);
+            $this->branchElementTraversal($this->node->children, $hierarchicalSelector);
         };
     }
 
@@ -71,8 +71,8 @@ class NodeSelector
          * @var ElementInterface $node
          */
         foreach ($children as $node) {
-            if ($node->getChildren()->count()) {
-                $this->branchElementTraversal($node->getChildren(), $selectors);
+            if ($node->children->count()) {
+                $this->branchElementTraversal($node->children, $selectors);
             }
 
             /**

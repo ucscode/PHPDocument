@@ -244,7 +244,7 @@ $divElement->render(0);
 ```
 
 ```php
-$divElement->getChildren()->count(); // 3
+$divElement->children->count(); // 3
 ```
 
 ### Setting Void Item

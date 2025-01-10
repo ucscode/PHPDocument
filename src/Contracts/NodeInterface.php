@@ -7,16 +7,16 @@ use Ucscode\UssElement\Collection\NodeList;
 /**
  * The base interface for all nodes
  * 
- * @property NodeList $childNodes A NodeList collection containing all the child Nodes
- * @property ?NodeInterface $firstChild The first direct child node of the current node
- * @property ?NodeInterface $lastChild The last direct child node of the current node
- * @property ?NodeInterface $nextSibling The node after the current node
- * @property ?NodeInterface $previousSibling The node before the current node 
- * @property ?NodeInterface $parentNode The parent Node or null
- * @property ?ElementInterface $parentElement The parent Element or null.
- * @property string $nodeName The node name
- * @property int $nodeType An integer representing the node type
- * @property int $nodeId A unique id assigned to the node
+ * @property NodeList $childNodes (readonly) A NodeList containing all the child Nodes
+ * @property ?NodeInterface $firstChild (readonly) The first direct child node of the current node
+ * @property ?NodeInterface $lastChild (readonly) The last direct child node of the current node
+ * @property ?NodeInterface $nextSibling (readonly) The node after the current node
+ * @property ?NodeInterface $previousSibling (readonly) The node before the current node 
+ * @property ?NodeInterface $parentNode (readonly) The parent Node or null
+ * @property ?ElementInterface $parentElement (readonly) The parent Element or null.
+ * @property string $nodeName (readonly) The node name
+ * @property int $nodeType (readonly) An integer representing the node type
+ * @property int $nodeId (readonly) A unique id assigned to the node
  * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
