@@ -61,7 +61,7 @@ class Matcher
         }
 
         if ($tag = $this->tokenizer->getTag()) {
-            $this->matches['tag'] = $this->node->getNodeName() === strtoupper($tag) || $tag === '*';
+            $this->matches['tag'] = $this->node->nodeName === strtoupper($tag) || $tag === '*';
         }
 
         if ($id = $this->tokenizer->getId()) {
@@ -70,7 +70,7 @@ class Matcher
 
         if (!empty($this->tokenizer->getClasses())) {
             // ensure all class in the tokenizer also exist on the node
-            $classDifference = array_diff($this->tokenizer->getClasses(), $this->node->getClassList()->toArray());
+            $classDifference = array_diff($this->tokenizer->getClasses(), $this->node->classList->toArray());
 
             $this->matches['classes'] = empty($classDifference);
         }

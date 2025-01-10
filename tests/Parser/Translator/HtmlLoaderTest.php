@@ -59,14 +59,14 @@ class HtmlLoaderTest extends TestCase
         $modalElement = $htmlLoader->getNodeList()->first();
 
         $this->assertCount(1, $htmlLoader->getNodeList());
-        $this->assertSame('modal', (string) $modalElement->getClassList());
+        $this->assertSame('modal', (string) $modalElement->classList);
 
         $pElement = $modalElement->querySelector('p');
 
-        $this->assertSame('P', $pElement->getTagName());
-        $this->assertCount(1, $pElement->getChildNodes());
+        $this->assertSame('P', $pElement->tagName);
+        $this->assertCount(1, $pElement->childNodes);
 
-        $this->assertInstanceOf(TextNode::class, $pElement->getFirstChild());
+        $this->assertInstanceOf(TextNode::class, $pElement->firstChild);
     }
 
     public function testDocumentHtmlLoader(): void

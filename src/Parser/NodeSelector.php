@@ -113,7 +113,7 @@ class NodeSelector
          * If [the selectors is not empty and] the parent node is empty or the current node is
          * same as the [root] node that is being queried, the algorithm has failed!
          */
-        if (!$node->getParentElement() || $node === $this->node) {
+        if (!$node->parentElement || $node === $this->node) {
             return;
         }
 
@@ -122,11 +122,11 @@ class NodeSelector
          * And instantiate the matcher using the tokenizer
          */
         $tokenizer = new Tokenizer(end($selectors));
-        $parentMatcher = new Matcher($node->getParentElement(), $tokenizer);
+        $parentMatcher = new Matcher($node->parentElement, $tokenizer);
 
         if (!$parentMatcher->matchesNode()) {
             // Keep traversing until a match is found
-            $this->parentElementTraversal($node->getParentElement(), $selectors, $target);
+            $this->parentElementTraversal($node->parentElement, $selectors, $target);
 
             return;
         }
@@ -135,6 +135,6 @@ class NodeSelector
          * Remove the last value in the selector sequence and continue searching for parent
          * nodes that matches the remaining values in the sequence
          */
-        $this->parentElementTraversal($node->getParentElement(), array_slice($selectors, 0, -1), $target);
+        $this->parentElementTraversal($node->parentElement, array_slice($selectors, 0, -1), $target);
     }
 }

@@ -14,23 +14,23 @@ class ElementNodeTest extends TestCase
 
     public function testInitialValues(): void
     {
-        $this->assertSame($this->getNodeBody()->getNodeName(), NodeNameEnum::NODE_BODY->value);
+        $this->assertSame($this->getNodeBody()->nodeName, NodeNameEnum::NODE_BODY->value);
         $this->assertTrue($this->getNodeImg()->isVoid());
         $this->assertFalse($this->getNodeButton()->isVoid());
         $this->assertCount(1, $this->getNodeBody()->getChildren());
-        $this->assertNotNull($this->getNodeDiv()->getParentNode());
-        $this->assertNotNull($this->getNodeDiv()->getParentElement());
-        $this->assertSame($this->getNodeForm(), $this->getNodeInput()->getParentElement());
-        $this->assertNull($this->getNodeBody()->getParentNode());
+        $this->assertNotNull($this->getNodeDiv()->parentNode);
+        $this->assertNotNull($this->getNodeDiv()->parentElement);
+        $this->assertSame($this->getNodeForm(), $this->getNodeInput()->parentElement);
+        $this->assertNull($this->getNodeBody()->parentNode);
         $this->assertTrue($this->getNodeButton()->hasChild($this->getNodeText()));
-        $this->assertSame($this->getNodeBr()->getPreviousSibling(), $this->getNodeInput());
-        $this->assertSame($this->getNodeBr()->getNextSibling(), $this->getNodeButton());
-        $this->assertNull($this->getNodeButton()->getNextSibling());
-        $this->assertNull($this->getNodeH1()->getPreviousSibling());
-        $this->assertSame($this->getNodeForm()->getFirstChild(), $this->getNodeInput());
-        $this->assertSame($this->getNodeForm()->getLastChild(), $this->getNodeButton());
-        $this->assertCount(3, $this->getNodeForm()->getChildNodes());
-        $this->assertCount(1, $this->getNodeButton()->getChildNodes());
+        $this->assertSame($this->getNodeBr()->previousSibling, $this->getNodeInput());
+        $this->assertSame($this->getNodeBr()->nextSibling, $this->getNodeButton());
+        $this->assertNull($this->getNodeButton()->nextSibling);
+        $this->assertNull($this->getNodeH1()->previousSibling);
+        $this->assertSame($this->getNodeForm()->firstChild, $this->getNodeInput());
+        $this->assertSame($this->getNodeForm()->lastChild, $this->getNodeButton());
+        $this->assertCount(3, $this->getNodeForm()->childNodes);
+        $this->assertCount(1, $this->getNodeButton()->childNodes);
         $this->assertCount(0, $this->getNodeButton()->getChildren());
     }
 
@@ -38,34 +38,34 @@ class ElementNodeTest extends TestCase
     {
         $this->getNodeBody()->prependChild($this->getNodeA());
 
-        $this->assertCount(2, $this->getNodeBody()->getChildNodes());
-        $this->assertCount(2, $this->getNodeDiv()->getChildNodes());
-        $this->assertSame($this->getNodeBody()->getFirstChild(), $this->getNodeA());
-        $this->assertSame($this->getNodeBody()->getLastChild(), $this->getNodeDiv());
-        $this->assertSame($this->getNodeBody()->getChildNodes()->get(1), $this->getNodeDiv());
-        $this->assertSame($this->getNodeA()->getFirstChild(), $this->getNodeImg());
-        $this->assertSame($this->getNodeA()->getLastChild(), $this->getNodeImg());
-        $this->assertCount(3, $this->getNodeForm()->getChildNodes());
-        $this->assertSame($this->getNodeA()->getParentElement(), $this->getNodeBody());
+        $this->assertCount(2, $this->getNodeBody()->childNodes);
+        $this->assertCount(2, $this->getNodeDiv()->childNodes);
+        $this->assertSame($this->getNodeBody()->firstChild, $this->getNodeA());
+        $this->assertSame($this->getNodeBody()->lastChild, $this->getNodeDiv());
+        $this->assertSame($this->getNodeBody()->childNodes->get(1), $this->getNodeDiv());
+        $this->assertSame($this->getNodeA()->firstChild, $this->getNodeImg());
+        $this->assertSame($this->getNodeA()->lastChild, $this->getNodeImg());
+        $this->assertCount(3, $this->getNodeForm()->childNodes);
+        $this->assertSame($this->getNodeA()->parentElement, $this->getNodeBody());
 
         $this->getNodeForm()->insertAdjacentNode(1, $this->getNodeImg());
-        $this->assertCount(0, $this->getNodeA()->getChildNodes());
-        $this->assertCount(4, $this->getNodeForm()->getChildNodes());
+        $this->assertCount(0, $this->getNodeA()->childNodes);
+        $this->assertCount(4, $this->getNodeForm()->childNodes);
 
         $this->getNodeForm()->insertBefore($this->getNodeButton(), $this->getNodeInput());
 
-        $this->assertSame($this->getNodeForm()->getFirstChild(), $this->getNodeButton());
-        $this->assertSame($this->getNodeForm()->getLastChild(), $this->getNodeBr());
-        $this->assertSame($this->getNodeForm()->getChildNodes()->get(2), $this->getNodeImg());
+        $this->assertSame($this->getNodeForm()->firstChild, $this->getNodeButton());
+        $this->assertSame($this->getNodeForm()->lastChild, $this->getNodeBr());
+        $this->assertSame($this->getNodeForm()->childNodes->get(2), $this->getNodeImg());
 
         $this->getNodeForm()->insertAfter($this->getNodeH1(), $this->getNodeButton());
 
-        $this->assertSame($this->getNodeForm()->getChildNodes()->get(1), $this->getNodeH1());
-        $this->assertSame($this->getNodeButton()->getNextSibling(), $this->getNodeH1());
-        $this->assertSame($this->getNodeH1()->getPreviousSibling(), $this->getNodeButton());
-        $this->assertCount(5, $this->getNodeForm()->getChildNodes());
-        $this->assertCount(1, $this->getNodeDiv()->getChildNodes());
-        $this->assertSame($this->getNodeForm(), $this->getNodeDiv()->getFirstChild());
+        $this->assertSame($this->getNodeForm()->childNodes->get(1), $this->getNodeH1());
+        $this->assertSame($this->getNodeButton()->nextSibling, $this->getNodeH1());
+        $this->assertSame($this->getNodeH1()->previousSibling, $this->getNodeButton());
+        $this->assertCount(5, $this->getNodeForm()->childNodes);
+        $this->assertCount(1, $this->getNodeDiv()->childNodes);
+        $this->assertSame($this->getNodeForm(), $this->getNodeDiv()->firstChild);
 
         $this->assertTrue($this->getNodeForm()->hasChild($this->getNodeH1()));
 
@@ -75,38 +75,38 @@ class ElementNodeTest extends TestCase
 
         $this->assertFalse($this->getNodeForm()->hasChild($this->getNodeH1()));
         $this->assertTrue($this->getNodeForm()->hasChild($selectNode));
-        $this->assertCount(5, $this->getNodeForm()->getChildNodes());
-        $this->assertSame($selectNode->getPreviousSibling(), $this->getNodeButton());
+        $this->assertCount(5, $this->getNodeForm()->childNodes);
+        $this->assertSame($selectNode->previousSibling, $this->getNodeButton());
 
         $selectNode->moveToFirst();
 
-        $this->assertSame($this->getNodeForm()->getFirstChild(), $selectNode);
+        $this->assertSame($this->getNodeForm()->firstChild, $selectNode);
 
         $selectNode->moveToLast();
 
-        $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
+        $this->assertSame($this->getNodeForm()->lastChild, $selectNode);
 
         $selectNode->moveToIndex(3);
 
-        $this->assertSame($this->getNodeForm()->getChildNodes()->get(3), $selectNode);
+        $this->assertSame($this->getNodeForm()->childNodes->get(3), $selectNode);
 
         $selectNode->moveBefore($this->getNodeImg());
 
-        $this->assertSame($selectNode->getNextSibling(), $this->getNodeImg());
+        $this->assertSame($selectNode->nextSibling, $this->getNodeImg());
 
         $selectNode->moveAfter($this->getNodeImg());
 
-        $this->assertSame($selectNode->getPreviousSibling(), $this->getNodeImg());
+        $this->assertSame($selectNode->previousSibling, $this->getNodeImg());
 
         $this->getNodeForm()->sortChildNodes(function ($a, $b) {
-            return strcmp($a->getNodeName(), $b->getNodeName());
+            return strcmp($a->nodeName, $b->nodeName);
         });
 
-        $this->assertSame($this->getNodeForm()->getFirstChild(), $this->getNodeBr());
+        $this->assertSame($this->getNodeForm()->firstChild, $this->getNodeBr());
         $this->assertSame($this->getNodeForm()->getChild(1), $this->getNodeButton());
         $this->assertSame($this->getNodeForm()->getChild(2), $this->getNodeImg());
         $this->assertSame($this->getNodeForm()->getChild(3), $this->getNodeInput());
-        $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
+        $this->assertSame($this->getNodeForm()->lastChild, $selectNode);
 
         foreach ($this->getNodeForm()->getChildren() as $kid) {
 
@@ -116,15 +116,15 @@ class ElementNodeTest extends TestCase
     public function testElementAttributes(): void
     {
         $this->assertTrue($this->getNodeBody()->hasAttribute('id'));
-        $this->getNodeBody()->getClassList()->add('super legis supreme');
+        $this->getNodeBody()->classList->add('super legis supreme');
         $this->assertStringContainsString('super', $this->getNodeBody()->getAttribute('class'));
-        $this->assertCount(4, $this->getNodeBody()->getClassList());
+        $this->assertCount(4, $this->getNodeBody()->classList);
         $this->getNodeBody()->setAttribute('class', 'puma');
-        $this->assertCount(1, $this->getNodeBody()->getClassList());
+        $this->assertCount(1, $this->getNodeBody()->classList);
         $this->getNodeBody()->setAttribute('class', null);
-        $this->assertCount(0, $this->getNodeBody()->getClassList());
+        $this->assertCount(0, $this->getNodeBody()->classList);
         $this->getNodeBody()->setAttribute('class', 'model-22_g and coperate');
-        $this->assertCount(3, $this->getNodeBody()->getClassList());
+        $this->assertCount(3, $this->getNodeBody()->classList);
     }
 
     public function testElementParser(): void
@@ -160,12 +160,12 @@ class ElementNodeTest extends TestCase
     {
         $this->getNodeA()->setInnerHtml(HtmlLoaderTest::BOOTSTRAP_MODAL_STR);
 
-        $this->assertCount(1, $this->getNodeA()->getChildNodes());
+        $this->assertCount(1, $this->getNodeA()->childNodes);
 
         /**
          * @var ElementInterface $modalElement
          */
-        $modalElement = $this->getNodeA()->getFirstChild();
+        $modalElement = $this->getNodeA()->firstChild;
 
         $this->assertSame('modal', $modalElement->getAttribute('class'));
     }
@@ -179,10 +179,10 @@ class ElementNodeTest extends TestCase
 
     public function testClearChildNodes(): void
     {
-        $this->assertSame($this->getNodeButton()->getParentElement(), $this->getNodeForm());
+        $this->assertSame($this->getNodeButton()->parentElement, $this->getNodeForm());
         $this->getNodeForm()->clearChildNodes();
-        $this->assertCount(0, $this->getNodeForm()->getChildNodes());
-        $this->assertNull($this->getNodeButton()->getParentNode());
-        $this->assertNull($this->getNodeButton()->getParentElement());
+        $this->assertCount(0, $this->getNodeForm()->childNodes);
+        $this->assertNull($this->getNodeButton()->parentNode);
+        $this->assertNull($this->getNodeButton()->parentElement);
     }
 }

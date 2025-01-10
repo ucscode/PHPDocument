@@ -5,15 +5,21 @@ namespace Ucscode\UssElement\Support\Internal;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
 
-final class NodeReadonly
+class NodeReadonly
 {
     private ?NodeInterface $parentNode = null;
     private ?ElementInterface $parentElement = null;
 
-    public function __construct(protected NodeList $nodeList)
+    public function __construct(protected NodeList $nodeList, protected NodeTypeEnum $nodeType)
     {
         
+    }
+
+    public function getNodeType(): int
+    {
+        return $this->nodeType->value;
     }
 
     public function getChildNodes(): NodeList
@@ -41,7 +47,7 @@ final class NodeReadonly
         return $this->getSibling(-1, $node);
     }
 
-    public function getParentNode(): NodeInterface
+    public function getParentNode(): ?NodeInterface
     {
         return $this->parentNode;
     }
@@ -73,7 +79,7 @@ final class NodeReadonly
     {
         if ($this->parentNode) {
             $parentNodelist = $this->parentNode->childNodes;
-            
+
             if (false !== $key = $parentNodelist->indexOf($self)) {
                 return $parentNodelist->get($key + $index);
             }

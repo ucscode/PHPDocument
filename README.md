@@ -89,7 +89,7 @@ $element->appendChild($span);
 ```
 
 ```php
-$element->getNextSibling();
+$element->nextSibling;
 ```
 
 ```php
@@ -189,7 +189,7 @@ $paragraph = $divElement->querySelector('p'); // null
 $heading = $divElement->querySelector('h1.heading'); // H1 ElementNode
 
 // Accessing the number of direct child nodes
-echo $divElement->getChildNodes()->count(); // 3
+echo $divElement->childNodes->count(); // 3
 ```
 
 ### Render HTML
@@ -500,7 +500,7 @@ Includes:
   </thead>
   <tbody>
     <tr>
-      <td><code>getTagName</code></td>
+      <td><code>tagName</code></td>
       <td>Return the tag name of the current element</td>
       <td><code>string</code></td>
     </tr>
@@ -585,7 +585,7 @@ Includes:
       <td><code>ElementList</code></td>
     </tr>
     <tr>
-      <td><code>getClassList</code></td>
+      <td><code>classList</code></td>
       <td>Get a collection of classes of the element</td>
       <td><code>ClassList</code></td>
     </tr>

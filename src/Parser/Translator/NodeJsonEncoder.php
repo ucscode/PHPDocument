@@ -61,21 +61,21 @@ class NodeJsonEncoder implements \Stringable
     private function createElementArray(NodeInterface $node, ?NodeInterface $parent): array
     {
         return [
-            'nodeId' => $node->getNodeId(),
-            'nodeType' => $node->getNodeType(),
-            'nodeName' => $node->getNodeName(),
-            'parentId' => $parent?->getNodeId(),
+            'nodeId' => $node->nodeId,
+            'nodeType' => $node->nodeType,
+            'nodeName' => $node->nodeName,
+            'parentId' => $parent?->nodeId,
             'attributes' => $this->normalizeAttributes($node),
             'void' => $node instanceof ElementInterface ? $node->isVoid() : null,
             'visible' => $node->isVisible(),
-            'meta' => match($node->getNodeType()) {
+            'meta' => match($node->nodeType) {
                 NodeTypeEnum::NODE_TEXT->value => $this->getCharacterDataMeta($node),
                 NodeTypeEnum::NODE_COMMENT->value => $this->getCharacterDataMeta($node),
                 default => [],
             },
             'childNodes' => array_map(
                 fn (NodeInterface $childNode) => $this->createElementArray($childNode, $node),
-                $node->getChildNodes()->toArray()
+                $node->childNodes->toArray()
             ),
         ];
     }

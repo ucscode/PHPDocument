@@ -9,17 +9,16 @@ use Ucscode\UssElement\Collection\ClassList;
 /**
  * The base inteface for all element nodes
  *
+ * @property ElementList $children
+ * @property ClassList $classList
+ * @property ?ElementInterface $firstElementChild
+ * @property ?ElementInterface $lastElementChild
+ * @property ?ElementInterface $nextElementSibling
+ * @property ?ElementInterface $previousElementSibling
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface ElementInterface extends NodeInterface
 {
-    /**
-     * Gets the tag name of the element.
-     *
-     * @return string The tag name of the element.
-     */
-    public function getTagName(): string;
-
     /**
      * Sets the inner HTML content of the element.
      *
@@ -140,14 +139,7 @@ interface ElementInterface extends NodeInterface
      * @return ElementList The collection of matching elements.
      */
     public function querySelectorAll(string $selector): ElementList;
-
-    /**
-     * Gets a collection of class list of the element.
-     *
-     * @return ClassList The class list of the element.
-     */
-    public function getClassList(): ClassList;
-
+    
     /**
      * Checks if the current element matches a CSS selector.
      *

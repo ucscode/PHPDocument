@@ -5,6 +5,7 @@ namespace Ucscode\UssElement\Support;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
 use Ucscode\UssElement\Support\Internal\NodeReadonly;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
@@ -14,17 +15,18 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
+    abstract protected function getNodeType(): NodeTypeEnum;
+
     public readonly string $nodeName;
-    public readonly int $nodeType;
     public readonly int $nodeId;
     protected bool $visible = true;
-    protected NodeReadonly $readonly;
+    protected NodeReadonly $readonlyProperties;
 
     public function __construct(string|NodeNameEnum $nodeName)
     {
         $this->nodeName = strtoupper($nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName);
         $this->nodeId = NodeSingleton::getInstance()->getNextId();
-        $this->readonly = new NodeReadonly(new NodeList());
+        $this->readonlyProperties = new NodeReadonly(new NodeList(), $this->getNodeType());
     }
 
     public function __toString(): string
@@ -35,12 +37,12 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function __get(string $name): mixed
     {
         $method = sprintf('get%s', ucfirst($name));
-
-        if (!method_exists($this->readonly, $method)) {
+        
+        if (!method_exists($this->readonlyProperties, $method)) {
             throw new \ErrorException("Undefined property: " . __CLASS__ . "::\$$name");
         }
 
-        return $this->readonly->{$method}($this);
+        return $this->readonlyProperties->{$method}($this);
     }
 
     public function setVisible(bool $visible): static
@@ -136,7 +138,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
-            $newNode->getParentElement?->removeChild($newNode);
+            $newNode->parentElement?->removeChild($newNode);
             $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
@@ -150,7 +152,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
-            $newNode->getParentNode?->removeChild($newNode);
+            $newNode->parentNode?->removeChild($newNode);
             $key = $this->childNodes->indexOf($referenceNode);
             $this->insertAdjacentNode($key + 1, $newNode);
         }
@@ -206,7 +208,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveBefore(NodeInterface $siblingNode): static
     {
-        if ($siblingNode->getParentNode === $this->parentNode) {
+        if ($siblingNode->parentNode === $this->parentNode) {
             $this->parentNode->insertBefore($this, $siblingNode);
         }
 
@@ -215,7 +217,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveAfter(NodeInterface $siblingNode): static
     {
-        if ($siblingNode->getParentNode === $this->parentNode) {
+        if ($siblingNode->parentNode === $this->parentNode) {
             $this->parentNode->insertAfter($this, $siblingNode);
         }
 
@@ -274,7 +276,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
          * Access protected readonly property of Node
          * @var NodeReadonly $readonly
          */ 
-        $readonly = (new ObjectReflector($node))->getProperty('readonly');
+        $readonly = (new ObjectReflector($node))->getProperty('readonlyProperties');
         $readonly->setParentNode($parentNode);
     }
 }

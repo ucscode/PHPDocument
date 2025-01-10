@@ -6,6 +6,7 @@ use Ucscode\UssElement\Collection\Attributes;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\ClassList;
 use Ucscode\UssElement\Collection\ElementList;
+use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
@@ -15,6 +16,7 @@ use Ucscode\UssElement\Parser\Engine\Transformer;
 use Ucscode\UssElement\Parser\NodeSelector;
 use Ucscode\UssElement\Parser\Translator\HtmlLoader;
 use Ucscode\UssElement\Support\AbstractNode;
+use Ucscode\UssElement\Support\Internal\ElementReadonly;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
@@ -24,33 +26,18 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    protected readonly ClassList $classList;
-    protected string $tagName;
+    public readonly ClassList $classList;
+    public readonly string $tagName;
     protected bool $void;
     protected Attributes $attributes;
 
     public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
     {
         parent::__construct($nodeName);
-
+        
         $this->nodePresets($attributes);
     }
-
-    final public function getTagName(): string
-    {
-        return $this->nodeName;
-    }
-
-    public function getNodeType(): int
-    {
-        return NodeTypeEnum::NODE_ELEMENT->value;
-    }
-
-    public function getClassList(): ClassList
-    {
-        return $this->classList;
-    }
-
+    
     public function render(?int $indent = null): string
     {
         $innerHtml = $this->getInnerHtml($indent);
@@ -204,11 +191,17 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->querySelectorAll($name);
     }
 
+    protected function getNodeType(): NodeTypeEnum
+    {
+        return NodeTypeEnum::NODE_ELEMENT;
+    }
+
     private function nodePresets(array $attributes): void
     {
         $this->tagName = $this->nodeName;
         $this->attributes = new Attributes();
         $this->classList = new ClassList();
+        $this->readonlyProperties = new ElementReadonly(new NodeList(), $this->getNodeType());
 
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);

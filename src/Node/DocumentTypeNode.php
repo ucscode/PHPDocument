@@ -12,9 +12,9 @@ use Ucscode\UssElement\Support\AbstractNode;
  */
 class DocumentTypeNode extends AbstractNode
 {
-    public function getNodeType(): int
+    protected function getNodeType(): NodeTypeEnum
     {
-        return NodeTypeEnum::NODE_DOCUMENT_TYPE->value;
+        return NodeTypeEnum::NODE_DOCUMENT_TYPE;
     }
 
     public function render(?int $indent = null): string

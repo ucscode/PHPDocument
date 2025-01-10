@@ -24,9 +24,9 @@ class TextNode extends AbstractCharacterData
         return $indent === null ? $this->data : $this->indent($this->data, max(0, abs($indent)));
     }
 
-    public function getNodeType(): int
+    protected function getNodeType(): NodeTypeEnum
     {
-        return NodeTypeEnum::NODE_TEXT->value;
+        return NodeTypeEnum::NODE_TEXT;
     }
 
     public function isContentWhiteSpace(): bool
