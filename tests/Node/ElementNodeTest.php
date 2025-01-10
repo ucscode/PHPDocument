@@ -49,8 +49,8 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeA()->parentElement, $this->getNodeBody());
         $this->assertSame($this->getNodeForm()->firstElementChild, $this->getNodeInput());
         $this->assertSame($this->getNodeForm()->lastElementChild, $this->getNodeButton());
-        $this->assertSame($this->getNodeA()->nextElementSibling, $this->getNodeForm());
-        $this->assertSame($this->getNodeA()->previousElementSibling, $this->getNodeH1());
+        $this->assertSame($this->getNodeA()->nextElementSibling, $this->getNodeDiv());
+        $this->assertSame($this->getNodeA()->previousElementSibling, null);
         $this->assertNull($this->getNodeButton()->firstElementChild);
         $this->assertNull($this->getNodeButton()->lastElementChild);
         $this->assertNull($this->getNodeBr()->lastElementChild);

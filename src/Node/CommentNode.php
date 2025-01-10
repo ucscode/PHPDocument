@@ -19,7 +19,7 @@ class CommentNode extends AbstractCharacterData
         $this->data = $data;
     }
 
-    protected function getNodeType(): NodeTypeEnum
+    protected function getNodeTypeEnum(): NodeTypeEnum
     {
         return NodeTypeEnum::NODE_COMMENT;
     }

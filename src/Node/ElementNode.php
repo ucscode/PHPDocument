@@ -181,7 +181,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->querySelectorAll($name);
     }
 
-    protected function getNodeType(): NodeTypeEnum
+    protected function getNodeTypeEnum(): NodeTypeEnum
     {
         return NodeTypeEnum::NODE_ELEMENT;
     }
@@ -191,7 +191,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         $this->tagName = $this->nodeName;
         $this->attributes = new Attributes();
         $this->classList = new ClassList();
-        $this->readonlyProperties = new ElementReadonly(new NodeList(), $this->getNodeType());
+        $this->readonlyProperties = new ElementReadonly(new NodeList(), $this->getNodeTypeEnum());
 
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);

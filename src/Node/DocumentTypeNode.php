@@ -12,7 +12,7 @@ use Ucscode\UssElement\Support\AbstractNode;
  */
 class DocumentTypeNode extends AbstractNode
 {
-    protected function getNodeType(): NodeTypeEnum
+    protected function getNodeTypeEnum(): NodeTypeEnum
     {
         return NodeTypeEnum::NODE_DOCUMENT_TYPE;
     }

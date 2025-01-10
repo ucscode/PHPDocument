@@ -39,12 +39,12 @@ class NodeReadonly
 
     public function getNextSibling(NodeInterface $node): ?NodeInterface
     {
-        return $this->getSibling(1, $node);
+        return $this->getSibling($node, 1);
     }
 
     public function getPreviousSibling(NodeInterface $node): ?NodeInterface
     {
-        return $this->getSibling(-1, $node);
+        return $this->getSibling($node, -1);
     }
 
     public function getParentNode(): ?NodeInterface
@@ -55,6 +55,17 @@ class NodeReadonly
     public function getParentElement(): ?ElementInterface
     {
         return $this->parentElement;
+    }
+
+    public function invokeGetter__(string $name, NodeInterface $node): mixed
+    {
+        $method = sprintf('get%s', ucfirst($name));
+                
+        if (!method_exists($this, $method)) {
+            throw new \ErrorException("Undefined property: " . __CLASS__ . "::\$$name");
+        }
+
+        return $this->{$method}($node);
     }
 
     /**
@@ -71,17 +82,17 @@ class NodeReadonly
     }
 
     /**
-     * @param integer $index
-     * @param NodeInterface $self
+     * @param NodeInterface $node The node whose sibling should be gotten
+     * @param int $index    The index of the sibling (next = 1, previous = -1)
      * @return NodeInterface|null
      */
-    protected function getSibling(int $index, NodeInterface $self): ?NodeInterface
+    protected function getSibling(NodeInterface $node, int $index): ?NodeInterface
     {
         if ($this->parentNode) {
-            $parentNodelist = $this->parentNode->childNodes;
+            $siblings = $this->parentNode->childNodes;
 
-            if (false !== $key = $parentNodelist->indexOf($self)) {
-                return $parentNodelist->get($key + $index);
+            if (false !== $key = $siblings->indexOf($node)) {
+                return $siblings->get($key + $index);
             }
         }
 

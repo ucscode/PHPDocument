@@ -15,7 +15,7 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
-    abstract protected function getNodeType(): NodeTypeEnum;
+    abstract protected function getNodeTypeEnum(): NodeTypeEnum;
 
     public readonly string $nodeName;
     public readonly int $nodeId;
@@ -26,7 +26,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         $this->nodeName = strtoupper($nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName);
         $this->nodeId = NodeSingleton::getInstance()->getNextId();
-        $this->readonlyProperties = new NodeReadonly(new NodeList(), $this->getNodeType());
+        $this->readonlyProperties = new NodeReadonly(new NodeList(), $this->getNodeTypeEnum());
     }
 
     public function __toString(): string
@@ -36,13 +36,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function __get(string $name): mixed
     {
-        $method = sprintf('get%s', ucfirst($name));
-        
-        if (!method_exists($this->readonlyProperties, $method)) {
-            throw new \ErrorException("Undefined property: " . __CLASS__ . "::\$$name");
-        }
-
-        return $this->readonlyProperties->{$method}($this);
+        return $this->readonlyProperties->invokeGetter__($name, $this);
     }
 
     public function setVisible(bool $visible): static

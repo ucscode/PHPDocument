@@ -31,26 +31,26 @@ class ElementReadonly extends NodeReadonly
 
     public function getNextElementSibling($node): ?ElementInterface
     {
-        return $this->getElementSibling(1, $node);
+        return $this->getElementSibling($node, 1);
     }
 
     public function getPreviousElementSibling($node): ?ElementInterface
     {
-        return $this->getElementSibling(-1, $node);
+        return $this->getElementSibling($node, -1);
     }    
     
     /**
-    * @param integer $index
-    * @param NodeInterface $self
+    * @param NodeInterface $node    The node whose sibling should be gotten
+    * @param int $index  The index of sibling (next = 1, previous = -1)
     * @return NodeInterface|null
     */
-   protected function getElementSibling(int $index, NodeInterface $self): ?NodeInterface
+   protected function getElementSibling(NodeInterface $node, int $index): ?ElementInterface
    {
        if ($this->parentElement) {
-           $parentElementList = $this->parentElement->children;
+           $siblings = $this->parentElement->children;
 
-           if (false !== $key = $parentElementList->indexOf($self)) {
-               return $parentElementList->get($key + $index);
+           if (false !== $key = $siblings->indexOf($node)) {
+               return $siblings->get($key + $index);
            }
        }
 
