@@ -9,12 +9,16 @@ use Ucscode\UssElement\Collection\ClassList;
 /**
  * The base inteface for all element nodes
  *
- * @property ElementList $children (readonly) A collection of child elements.
- * @property ClassList $classList
- * @property ?ElementInterface $firstElementChild
- * @property ?ElementInterface $lastElementChild
- * @property ?ElementInterface $nextElementSibling
- * @property ?ElementInterface $previousElementSibling
+ * @property-read ElementList $children (readonly) A collection of child elements.
+ * @property-read ClassList $classList
+ * @property-read ?ElementInterface $firstElementChild
+ * @property-read ?ElementInterface $lastElementChild
+ * @property-read ?ElementInterface $nextElementSibling
+ * @property-read ?ElementInterface $previousElementSibling
+ * @property string $className
+ * @property string $innerHTML
+ * @method ElementInterface cloneNode()
+ * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface ElementInterface extends NodeInterface

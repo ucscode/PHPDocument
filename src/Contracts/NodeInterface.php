@@ -7,16 +7,16 @@ use Ucscode\UssElement\Collection\NodeList;
 /**
  * The base interface for all nodes
  * 
- * @property NodeList $childNodes (readonly) A NodeList containing all the child Nodes
- * @property ?NodeInterface $firstChild (readonly) The first direct child node of the current node
- * @property ?NodeInterface $lastChild (readonly) The last direct child node of the current node
- * @property ?NodeInterface $nextSibling (readonly) The node after the current node
- * @property ?NodeInterface $previousSibling (readonly) The node before the current node 
- * @property ?NodeInterface $parentNode (readonly) The parent Node or null
- * @property ?ElementInterface $parentElement (readonly) The parent Element or null.
- * @property string $nodeName (readonly) The node name
- * @property int $nodeType (readonly) An integer representing the node type
- * @property int $nodeId (readonly) A unique id assigned to the node
+ * @property-read NodeList $childNodes (readonly) A NodeList containing all the child Nodes
+ * @property-read ?NodeInterface $firstChild (readonly) The first direct child node of the current node
+ * @property-read ?NodeInterface $lastChild (readonly) The last direct child node of the current node
+ * @property-read ?NodeInterface $nextSibling (readonly) The node after the current node
+ * @property-read ?NodeInterface $previousSibling (readonly) The node before the current node 
+ * @property-read ?NodeInterface $parentNode (readonly) The parent Node or null
+ * @property-read ?ElementInterface $parentElement (readonly) The parent Element or null.
+ * @property-read string $nodeName (readonly) The node name
+ * @property-read int $nodeType (readonly) An integer representing the node type
+ * @property-read int $nodeId (readonly) A unique id assigned to the node
  * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

@@ -193,4 +193,17 @@ class ElementNodeTest extends TestCase
         $this->assertNull($this->getNodeButton()->parentNode);
         $this->assertNull($this->getNodeButton()->parentElement);
     }
+
+    public function testCloneNode(): void
+    {
+        $divClone = $this->getNodeDiv()->cloneNode();
+
+        $this->assertSame($divClone->getAttribute('class'), 'position-relative case-1');
+        $this->assertSame($divClone->getAttribute('data-theme'), 'dark');
+        $this->assertTrue($divClone->children->isEmpty());
+
+        $divDeepClone = $this->getNodeDiv()->cloneNode(true);
+
+        $this->assertSame($this->getNodeDiv()->render(0), $divDeepClone->render(0));
+    }
 }

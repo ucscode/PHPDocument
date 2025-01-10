@@ -2,13 +2,29 @@
 
 namespace Ucscode\UssElement\Support\Internal;
 
+use Ucscode\UssElement\Collection\ClassList;
 use Ucscode\UssElement\Collection\ElementList;
+use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
 
 class ElementReadonly extends NodeReadonly
 {
+    protected ClassList $classList;
+
+    public function __construct(NodeList $nodeList, NodeTypeEnum $nodeTypeEnum)
+    {
+        parent::__construct($nodeList, $nodeTypeEnum);
+        
+        $this->classList = new ClassList();
+    }
+
+    public function getClassList(): ClassList
+    {
+        return $this->classList;
+    }
+
     public function getChildren(): ElementList
     {
         $filter = array_filter(

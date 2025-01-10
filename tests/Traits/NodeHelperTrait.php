@@ -4,6 +4,7 @@ namespace Ucscode\UssElement\Test\Traits;
 
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Node\TextNode;
@@ -11,15 +12,9 @@ use Ucscode\UssElement\Parser\Engine\Transformer;
 
 trait NodeHelperTrait
 {
-    /**
-     * @return ElementNode
-     */
     protected NodeList $nodeList;
     protected Transformer $transformer;
 
-    /**
-     * @return ElementNode
-     */
     protected function setUp(): void
     {
         $this->transformer = new Transformer();
@@ -66,7 +61,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeBody(): NodeInterface
     {
@@ -74,7 +69,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeDiv(): NodeInterface
     {
@@ -82,7 +77,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeH1(): NodeInterface
     {
@@ -90,7 +85,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeForm(): NodeInterface
     {
@@ -98,7 +93,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeInput(): NodeInterface
     {
@@ -106,7 +101,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeA(): NodeInterface
     {
@@ -114,7 +109,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeBr(): NodeInterface
     {
@@ -122,7 +117,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeButton(): NodeInterface
     {
@@ -130,7 +125,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeImg(): NodeInterface
     {
@@ -138,7 +133,7 @@ trait NodeHelperTrait
     }
 
     /**
-     * @return ElementNode
+     * @return ElementInterface
      */
     protected function getNodeText(): NodeInterface
     {

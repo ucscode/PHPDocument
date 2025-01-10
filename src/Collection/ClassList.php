@@ -106,6 +106,11 @@ class ClassList extends AbstractCollection implements \Stringable
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return static
+     */
     public function clear(): static
     {
         return parent::clear();

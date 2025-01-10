@@ -2,6 +2,8 @@
 
 namespace Ucscode\UssElement\Support;
 
+use Ucscode\UssElement\Contracts\NodeInterface;
+
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
@@ -17,5 +19,10 @@ abstract class AbstractCharacterData extends AbstractNode
     public function getData(): string
     {
         return $this->data;
+    }
+
+    public function cloneNode(bool $deep = false): NodeInterface
+    {
+        return (new static($this->data))->setVisible($this->visible);
     }
 }

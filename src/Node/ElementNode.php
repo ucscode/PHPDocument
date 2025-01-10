@@ -26,7 +26,6 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    public readonly ClassList $classList;
     public readonly string $tagName;
     protected bool $void;
     protected Attributes $attributes;
@@ -181,6 +180,30 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->querySelectorAll($name);
     }
 
+    public function cloneNode(bool $deep = false): NodeInterface
+    {
+        /**
+         * @var static $clone
+         */
+        $clone = parent::cloneNode($deep);
+
+        $clone->attributes = new Attributes($this->attributes->toArray());
+        $readonlyReflector = new ObjectReflector($clone->readonlyProperties);
+
+        $readonlyReflector->setProperty('classList', new ClassList($this->classList->toArray()));
+
+        if ($deep) {
+            $children = new NodeList(array_map(
+                fn (NodeInterface $node) => $node->cloneNode($deep),
+                $this->childNodes->toArray()
+            ));
+
+            $readonlyReflector->setProperty('nodeList', $children);
+        }
+
+        return $clone;
+    }
+
     protected function getNodeTypeEnum(): NodeTypeEnum
     {
         return NodeTypeEnum::NODE_ELEMENT;
@@ -190,7 +213,6 @@ class ElementNode extends AbstractNode implements ElementInterface
     {
         $this->tagName = $this->nodeName;
         $this->attributes = new Attributes();
-        $this->classList = new ClassList();
         $this->readonlyProperties = new ElementReadonly(new NodeList(), $this->getNodeTypeEnum());
 
         foreach ($attributes as $name => $value) {

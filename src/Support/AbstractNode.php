@@ -185,19 +185,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function cloneNode(bool $deep = false): NodeInterface
     {
-        $clone = new static($this->nodeName);
-        $clone->visible = true;
-
-        if ($deep) {
-            $childClones = array_map(
-                fn (NodeInterface $node) => $node->cloneNode(true),
-                $this->childNodes->toArray()
-            );
-
-            $clone->childNodes = new NodeList($childClones);
-        }
-
-        return $clone;
+        return (new static($this->nodeName))->setVisible($this->visible);
     }
 
     public function moveBefore(NodeInterface $siblingNode): static
@@ -256,7 +244,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         return sprintf('%s%s%s', str_repeat("\t", $tab), $value ?? '', $newline ? "\n" : '');
     }
-
+    
     /**
      * Undocumented function
      *
