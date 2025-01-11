@@ -9,23 +9,23 @@ use Ucscode\UssElement\Contracts\CollectionInterface;
  */
 abstract class AbstractCollection implements CollectionInterface
 {
-    /**
-     * Validate the integrity of an item to retain an array of static types
-     *
-     * @param mixed $item The item to validate
-     */
-    abstract protected function validateItemType(mixed $item);
+    abstract protected function validateItem(mixed $item): void;
+    
+    protected array $items;
 
-    public function __construct(protected array $items = [])
+    public function __construct(array $items = [])
     {
-        foreach ($this->items as $item) {
-            $this->validateItemType($item);
-        }
+        $this->replaceItemsProperty($items);
     }
 
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->items);
+    }
+
+    public function count(): int
+    {
+        return count($this->items);
     }
 
     /**
@@ -39,18 +39,6 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Clear the entire items of the collection
-     *
-     * @return static
-     */
-    public function clear(): static
-    {
-        $this->items = [];
-
-        return $this;
-    }
-
-    /**
      * Returns a boolean indicating whether the items is empty or not
      *
      * @return boolean
@@ -58,11 +46,6 @@ abstract class AbstractCollection implements CollectionInterface
     public function isEmpty(): bool
     {
         return empty($this->items);
-    }
-
-    public function count(): int
-    {
-        return count($this->items);
     }
 
     /**
@@ -78,29 +61,36 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    public function offsetExists(mixed $offset): bool
+    /**
+     * Clear the entire items of the collection
+     *
+     * @return static
+     */
+    public function clear(): static
     {
-        return array_key_exists($offset, $this->items);
+        $this->items = [];
+
+        return $this;
     }
 
-    public function offsetUnset(mixed $offset): void
+    /**
+     * Replace every item in the list
+     *
+     * @param array $items
+     * @return static
+     */
+    protected function replaceItemsProperty(array $items): static
     {
-        if (array_keys($offset, $this->items)) {
-            unset($this->items[$offset]);
+        foreach ($items as $item) {
+            $this->validateItem($item);
         }
+
+        $this->items = $items;
+
+        return $this;
     }
 
-    public function offsetGet(mixed $offset): mixed
-    {
-        return $this->items[$offset] ?? null;
-    }
-
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        $this->items[$offset] = $value;
-    }
-
-    protected function canBeString(mixed $item): bool
+    protected function isStringable(mixed $item): bool
     {
         return is_null($item) || is_scalar($item) || $item instanceof \Stringable;
     }

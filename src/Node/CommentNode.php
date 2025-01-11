@@ -14,8 +14,9 @@ class CommentNode extends AbstractCharacterData
 {
     public function __construct(string $data = '')
     {
-        parent::__construct('#comment');
+        parent::__construct();
 
+        $this->nodeName = '#comment';
         $this->data = $data;
     }
 

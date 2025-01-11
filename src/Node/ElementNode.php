@@ -24,16 +24,28 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 class ElementNode extends AbstractNode implements ElementInterface
 {
-    protected readonly ClassList $classList;
     protected string $tagName;
     protected bool $void;
+    protected ClassList $classList;
     protected Attributes $attributes;
 
     public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
     {
-        parent::__construct($nodeName);
+        parent::__construct();
 
-        $this->nodePresets($attributes);
+        $this->nodeName = strtoupper($nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName);
+        $this->tagName = $this->nodeName;
+        $this->attributes = new Attributes($attributes);
+        $this->classList = new ClassList();
+
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+
+        $this->void = in_array(
+            $this->nodeName,
+            array_map(fn (NodeNameEnum $enum) => $enum->value, NodeNameEnum::voidCases())
+        );
     }
 
     final public function getTagName(): string
@@ -73,8 +85,8 @@ class ElementNode extends AbstractNode implements ElementInterface
     {
         $loadedNodes = (new HtmlLoader($html))->getNodeList()->toArray();
 
-        (new ObjectReflector($this->childNodes))->invokeMethod('replace', $loadedNodes);
-
+        (new ObjectReflector($this->childNodes))->invokeMethod('replaceItemsProperty', $loadedNodes);
+        
         return $this;
     }
 
@@ -202,21 +214,5 @@ class ElementNode extends AbstractNode implements ElementInterface
     public function getElementsByTagName(string $name): ElementList
     {
         return $this->querySelectorAll($name);
-    }
-
-    private function nodePresets(array $attributes): void
-    {
-        $this->tagName = $this->nodeName;
-        $this->attributes = new Attributes();
-        $this->classList = new ClassList();
-
-        foreach ($attributes as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-
-        $this->void = in_array(
-            $this->nodeName,
-            array_map(fn (NodeNameEnum $enum) => $enum->value, NodeNameEnum::voidCases())
-        );
     }
 }

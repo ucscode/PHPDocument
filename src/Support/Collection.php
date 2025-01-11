@@ -114,7 +114,7 @@ class Collection extends AbstractCollection
         return new static(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }
 
-    protected function validateItemType(mixed $item)
+    protected function validateItem(mixed $item)
     {
     }
 }

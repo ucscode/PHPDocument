@@ -70,23 +70,6 @@ class NodeList extends AbstractCollection
     }
 
     /**
-     * Replace every node in the item list
-     *
-     * @param array $items
-     * @return static
-     */
-    protected function replace(array $items): static
-    {
-        foreach ($items as $item) {
-            $this->validateItemType($item);
-        }
-
-        $this->items = $items;
-
-        return $this;
-    }
-
-    /**
      * Insert the given node at a specific position within the list
      *
      * @param integer $index
@@ -149,7 +132,7 @@ class NodeList extends AbstractCollection
         return $this;
     }
 
-    protected function validateItemType(mixed $item): void
+    protected function validateItem(mixed $item): void
     {
         if (!$item instanceof NodeInterface) {
             throw new InvalidNodeException(

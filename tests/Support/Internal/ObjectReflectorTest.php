@@ -30,6 +30,6 @@ class ObjectReflectorTest extends TestCase
 
         $this->expectException(InvalidNodeException::class);
 
-        $nodeListReflector->invokeMethod('validateItemType', 3);
+        $nodeListReflector->invokeMethod('validateItem', 3);
     }
 }

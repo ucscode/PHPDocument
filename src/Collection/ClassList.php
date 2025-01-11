@@ -75,7 +75,6 @@ class ClassList extends AbstractCollection implements \Stringable
     public function contains(string $value): bool
     {
         foreach ($this->splitClasses($value) as $class) {
-            // `false` if the class does not exist
             if (!in_array($class, $this->items)) {
                 return false;
             }
@@ -95,26 +94,21 @@ class ClassList extends AbstractCollection implements \Stringable
     public function toggle(string $value): static
     {
         foreach ($this->splitClasses($value) as $class) {
-            /**
-             * Use ternary operator (shortcut if/else)
-             *
-             * @see https://www.phptutorial.net/php-tutorial/php-ternary-operator/
-             */
             in_array($class, $this->items) ? $this->remove($class) : $this->add($class);
         }
 
         return $this;
     }
 
-    protected function validateItemType(mixed $item)
+    protected function validateItem(mixed $item): void
     {
-        if (!$this->canBeString($item)) {
+        if (!$this->isStringable($item)) {
             throw new InvalidAttributeException(
                 sprintf(InvalidAttributeException::CLASS_ATTRIBUTE_EXCEPTION, gettype($item))
             );
         }
     }
-
+    
     /**
      * Return an array of non-empty classes
      *
@@ -123,14 +117,8 @@ class ClassList extends AbstractCollection implements \Stringable
      */
     private function splitClasses(string $value): array
     {
-        // split the classes by space and trim all the values
         $classes = array_map('trim', explode(' ', $value));
 
-        /**
-         * remove empty classes (using arrow function)
-         *
-         * @see https://www.php.net/manual/en/functions.arrow.php
-         */
         return array_filter($classes, fn (string $class) => !empty($class));
     }
 }

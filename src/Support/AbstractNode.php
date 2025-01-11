@@ -15,25 +15,17 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
-    abstract public function getNodeType(): int;
-
     private int $nodeId;
     protected string $nodeName;
     protected bool $visible = true;
+    protected NodeList $childNodes;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
-    protected NodeList $childNodes;
-
-
-    public function __construct(string|NodeNameEnum $nodeName)
+    
+    public function __construct()
     {
-        if ($nodeName instanceof NodeNameEnum) {
-            $nodeName = $nodeName->value;
-        }
-
-        $this->nodeName = strtoupper($nodeName);
-        $this->childNodes = new NodeList();
         $this->nodeId = NodeSingleton::getInstance()->getNextId();
+        $this->childNodes = new NodeList();
     }
 
     public function __toString(): string

@@ -13,7 +13,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Attributes extends AbstractCollection implements \Stringable
-{
+{    
     public function __toString(): string
     {
         return $this->render();
@@ -110,9 +110,9 @@ class Attributes extends AbstractCollection implements \Stringable
         return strtolower(trim($name));
     }
 
-    protected function validateItemType(mixed $item)
+    protected function validateItem(mixed $item): void
     {
-        if (!$this->canBeString($item)) {
+        if (!$this->isStringable($item)) {
             throw new InvalidAttributeException(
                 sprintf(InvalidAttributeException::ATTRIBUTE_VALUE_EXCEPTION, gettype($item))
             );

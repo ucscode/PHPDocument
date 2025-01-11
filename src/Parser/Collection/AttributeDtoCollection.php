@@ -13,7 +13,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
  */
 class AttributeDtoCollection extends AbstractCollection
 {
-    protected function validateItemType(mixed $item)
+    protected function validateItem(mixed $item): void
     {
         if (!$item instanceof AttributeDto) {
             throw new InvalidParserComponentException(

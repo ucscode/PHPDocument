@@ -18,7 +18,7 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
  */
 class ElementList extends NodeList
 {
-    protected function validateItemType(mixed $item): void
+    protected function validateItem(mixed $item): void
     {
         if (!$item instanceof ElementInterface) {
             throw new InvalidNodeException(
