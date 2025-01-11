@@ -2,6 +2,7 @@
 
 namespace Ucscode\UssElement\Node;
 
+use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
 use Ucscode\UssElement\Support\AbstractNode;
 
@@ -12,6 +13,13 @@ use Ucscode\UssElement\Support\AbstractNode;
  */
 class DocumentTypeNode extends AbstractNode
 {
+    public function __construct(string|NodeNameEnum $nodeName)
+    {
+        parent::__construct();
+
+        $this->nodeName = $nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName;
+    }
+    
     public function getNodeType(): int
     {
         return NodeTypeEnum::NODE_DOCUMENT_TYPE->value;

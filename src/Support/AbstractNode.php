@@ -2,7 +2,6 @@
 
 namespace Ucscode\UssElement\Support;
 
-use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
@@ -15,12 +14,12 @@ use Ucscode\UssElement\Support\Internal\ObjectReflector;
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
 {
-    private int $nodeId;
     protected string $nodeName;
     protected bool $visible = true;
     protected NodeList $childNodes;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
+    private int $nodeId;
     
     public function __construct()
     {
@@ -224,16 +223,47 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function cloneNode(bool $deep = false): NodeInterface
     {
-        $clone = new static($this->nodeName);
-        $clone->visible = true;
+        $nodeReflection = new \ReflectionClass(static::class);
 
-        if ($deep) {
-            $childClones = array_map(
-                fn (NodeInterface $node) => $node->cloneNode(true),
-                $this->childNodes->toArray()
-            );
+        /**
+         * Create a clone without calling the __constructor
+         * 
+         * @var static $clone
+         */
+        $clone = $nodeReflection->newInstanceWithoutConstructor();
+        
+        foreach ($nodeReflection->getProperties() as $property) {
+            // Allow access to private/protected properties
+            $property->setAccessible(true); 
+            $value = $property->getValue($this);
+            $name = $property->getName();
 
-            $clone->childNodes = new NodeList($childClones);
+            // Handle deep cloning of child objects or arrays of objects
+            if (!$deep) {
+                if ($value instanceof NodeList) {
+                    $value = new NodeList();
+                }
+
+                if ($value instanceof NodeInterface && $property->getType()->allowsNull()) {
+                    $value = null;
+                }
+            }
+
+            if ($deep) {
+                if ($value instanceof NodeInterface) {
+                    $value = $value->cloneNode(true); // Recursively clone child nodes
+                } 
+                
+                if (is_array($value)) {
+                    $value = array_map(
+                        fn($item) => $item instanceof NodeInterface ? $item->cloneNode(true) : $item,
+                        $value
+                    );
+                }
+            }
+
+            // Assign the cloned or original value to the clone
+            $property->setValue($clone, $value);
         }
 
         return $clone;
