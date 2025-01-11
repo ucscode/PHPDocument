@@ -3,6 +3,7 @@
 namespace Ucscode\UssElement\Test\Node;
 
 use PHPUnit\Framework\TestCase;
+use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Test\Parser\Translator\HtmlLoaderTest;
@@ -184,5 +185,37 @@ class ElementNodeTest extends TestCase
         $this->assertCount(0, $this->getNodeForm()->getChildNodes());
         $this->assertNull($this->getNodeButton()->getParentNode());
         $this->assertNull($this->getNodeButton()->getParentElement());
+    }
+
+    public function testCloneNode(): void
+    {
+        /**
+         * @var ElementInterface
+         */
+        $divClone = $this->getNodeDiv()->cloneNode();
+
+        $this->assertSame($divClone->getAttribute('class'), 'position-relative case-1');
+        $this->assertSame($divClone->getAttribute('data-theme'), 'dark');
+        $this->assertTrue($divClone->getChildren()->isEmpty());
+
+        /**
+         * @var ElementInterface
+         */
+        $divDeepClone = $this->getNodeDiv()->cloneNode(true);
+
+        $this->assertFalse($divDeepClone->getChildren()->isEmpty());
+        $this->assertNotSame($this->getNodeDiv(), $divDeepClone);
+        $this->assertSame($this->getNodeDiv()->render(0), $divDeepClone->render(0));
+        $this->assertSame($this->getNodeDiv()->getChildren()->count(), $divDeepClone->getChildren()->count());
+
+        $textClone = $this->getNodeText()->cloneNode();
+
+        $this->assertNotSame($this->getNodeText(), $textClone);
+        $this->assertSame($this->getNodeText()->render(), $textClone->render());
+
+        $bodyClone = $this->getNodeBody()->cloneNode(true);
+        
+        $this->assertNotSame($this->getNodeBody(), $bodyClone);
+        $this->assertSame($this->getNodeBody()->render(), $bodyClone->render());
     }
 }

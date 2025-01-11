@@ -221,7 +221,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this;
     }
 
-    public function cloneNode(bool $deep = false): NodeInterface
+    public function cloneNode(bool $deep = false): static
     {
         $nodeReflection = new \ReflectionClass(static::class);
 
@@ -236,7 +236,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
             // Allow access to private/protected properties
             $property->setAccessible(true); 
             $value = $property->getValue($this);
-            $name = $property->getName();
+            // $name = $property->getName();
 
             // Handle deep cloning of child objects or arrays of objects
             if (!$deep) {

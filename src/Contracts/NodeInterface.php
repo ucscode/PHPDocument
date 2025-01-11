@@ -218,7 +218,7 @@ interface NodeInterface
      * @param boolean $deep
      * @return NodeInterface
      */
-    public function cloneNode(bool $deep): NodeInterface;
+    public function cloneNode(bool $deep): static;
 
     /**
      * Reorder the child nodes of a specified parent node

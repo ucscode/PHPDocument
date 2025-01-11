@@ -10,6 +10,7 @@ use Ucscode\UssElement\Collection\ClassList;
  * The base inteface for all element nodes
  *
  * @method ElementInterface getParentNode()
+ * @method ElementInterface cloneNode(bool $deep)
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface ElementInterface extends NodeInterface

@@ -11,15 +11,9 @@ use Ucscode\UssElement\Parser\Engine\Transformer;
 
 trait NodeHelperTrait
 {
-    /**
-     * @return ElementNode
-     */
     protected NodeList $nodeList;
     protected Transformer $transformer;
-
-    /**
-     * @return ElementNode
-     */
+    
     protected function setUp(): void
     {
         $this->transformer = new Transformer();
@@ -209,11 +203,5 @@ trait NodeHelperTrait
         return $this->transformer->encodeAttributes(
             $this->transformer->encodeQuotedStrings($rawSelector)
         );
-    }
-
-    protected function dump(mixed $value): void
-    {
-        var_dump($value);
-        echo "\n\n";
     }
 }

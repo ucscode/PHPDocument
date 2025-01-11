@@ -6,7 +6,6 @@ use Ucscode\UssElement\Collection\Attributes;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Collection\ClassList;
 use Ucscode\UssElement\Collection\ElementList;
-use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
@@ -215,17 +214,5 @@ class ElementNode extends AbstractNode implements ElementInterface
     public function getElementsByTagName(string $name): ElementList
     {
         return $this->querySelectorAll($name);
-    }
-
-    public function cloneNode(bool $deep = false): NodeInterface
-    {
-        $node = parent::cloneNode($deep);
-
-        if ($deep) {
-            $nodeList = array_map(fn (NodeInterface $node) => $node->cloneNode($deep), $this->childNodes->toArray());
-            $node->childNodes = new NodeList($nodeList);
-        }
-
-        return $node;
     }
 }
