@@ -15,13 +15,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Ucscode\\UssElement\\": "src/",
+            "Ucscode\\UssElement\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Ucscode\\UssElement\\Test\\": "tests/"
         }
     },
     "minimum-stability": "RC",
     "prefer-stable": true,
     "require-dev": {
-        "phpunit/phpunit": "^10"
+        "phpunit/phpunit": "^10",
+        "phpstan/phpstan": "^2.1"
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse"
     }
 }
