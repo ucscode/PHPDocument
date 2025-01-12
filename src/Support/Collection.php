@@ -100,7 +100,7 @@ class Collection extends AbstractCollection
      */
     public function map(callable $callback): static
     {
-        return new static(array_map($callback, $this->items));
+        return new self(array_map($callback, $this->items));
     }
 
     /**
@@ -111,10 +111,11 @@ class Collection extends AbstractCollection
      */
     public function filter(callable $callback): static
     {
-        return new static(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
+        return new self(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }
 
-    protected function validateItem(mixed $item)
+    protected function validateItem(mixed $item): void
     {
+        //
     }
 }

@@ -31,7 +31,7 @@ class Transformer
     /**
      * Decode strings in quotes from base64
      *
-     * @param string $encodedValueSelector
+     * @param string $encodedSelector
      * @return string
      */
     public function decodeQuotedStrings(string $encodedSelector): string

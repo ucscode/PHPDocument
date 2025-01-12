@@ -5,12 +5,14 @@ namespace Ucscode\UssElement\Collection;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\InvalidNodeException;
 use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Contracts\ElementInterface;
 
 /**
  * An instance of this class contains items that implement the NodeInterface
  *
- * @template T
- * @implements IteratorAggregate<int, NodeInterface>
+ * @template TKey of integer
+ * @template TValue of NodeInterface|ElementInterface
+ * @extends AbstractCollection<TKey, TValue>
  * @property NodeInterface[] $items
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

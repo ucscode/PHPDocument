@@ -8,12 +8,13 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
 /**
  * An instance of this class contains items that implement the ElementInterface
  *
- * @template T
- * @implements IteratorAggregate<int, ElementInterface>
  * @property ElementInterface[] $items
  * @method ?ElementInterface get(int $index)
  * @method ?ElementInterface first()
  * @method ?ElementInterface last()
+ * @template TKey of integer
+ * @template TValue of ElementInterface
+ * @extends NodeList<TKey, TValue>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class ElementList extends NodeList

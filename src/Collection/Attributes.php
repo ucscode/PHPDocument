@@ -8,8 +8,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
 /**
  * An instance of this class contains attribute names and values for an element
  *
- * @template T
- * @implements IteratorAggregate<string, string>
+ * @extends AbstractCollection<string, string>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Attributes extends AbstractCollection implements \Stringable

@@ -55,6 +55,7 @@ class NodeSelector
         );
 
         foreach ($selectorChunks as $hierarchicalSelector) {
+            // @phpstan-ignore-next-line
             $this->branchElementTraversal($this->node->getChildren(), $hierarchicalSelector);
         };
     }

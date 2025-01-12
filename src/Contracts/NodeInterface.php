@@ -216,7 +216,7 @@ interface NodeInterface
      * By default, it does not clone the content of the node.
      *
      * @param boolean $deep
-     * @return NodeInterface
+     * @return static
      */
     public function cloneNode(bool $deep): static;
 

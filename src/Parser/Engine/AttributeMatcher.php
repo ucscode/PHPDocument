@@ -21,7 +21,7 @@ class AttributeMatcher
      * Undocumented function
      *
      * @param ElementInterface $node
-     * @param AttributeDtoCollection<int, AttributeDto> $attributes values are base64 encoded
+     * @param AttributeDtoCollection<int, AttributeDto> $attributeDtoCollection values are base64 encoded
      */
     public function __construct(protected ElementInterface $node, protected AttributeDtoCollection $attributeDtoCollection)
     {

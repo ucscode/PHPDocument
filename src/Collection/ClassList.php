@@ -8,6 +8,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
 /**
  * An instance of this class contains a list of class names for an element
  *
+ * @extends AbstractCollection<int, string>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class ClassList extends AbstractCollection implements \Stringable
@@ -70,7 +71,7 @@ class ClassList extends AbstractCollection implements \Stringable
      * Check if a class exists
      *
      * @param string $value
-     * @return static
+     * @return bool
      */
     public function contains(string $value): bool
     {

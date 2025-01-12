@@ -5,6 +5,10 @@ namespace Ucscode\UssElement\Contracts;
 /**
  * The base interface for all collection objects
  *
+ * @template TKey
+ * @template TValue
+ * @extends \IteratorAggregate<TKey, TValue>
+ * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface CollectionInterface extends \IteratorAggregate, \Countable

@@ -48,7 +48,7 @@ class ObjectReflector
      * Invoke a private or protected method with zero or more arguments
      *
      * @param string $name The name of the method
-     * @param [mixed] ...$values Values passed by reference
+     * @param mixed ...$args Values passed by reference
      * @return mixed
      * @throws \ReflectionException
      */

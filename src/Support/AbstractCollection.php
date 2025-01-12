@@ -5,6 +5,10 @@ namespace Ucscode\UssElement\Support;
 use Ucscode\UssElement\Contracts\CollectionInterface;
 
 /**
+ * @template TKey
+ * @template TValue
+ * @implements CollectionInterface<TKey, TValue>
+ * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractCollection implements CollectionInterface
@@ -18,6 +22,9 @@ abstract class AbstractCollection implements CollectionInterface
         $this->replaceItemsProperty($items);
     }
 
+    /**
+     * @return \Traversable<TKey, TValue>
+     */
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->items);
