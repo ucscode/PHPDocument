@@ -176,7 +176,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
             $newNode->getParentElement()?->removeChild($newNode);
-            
+
             $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 

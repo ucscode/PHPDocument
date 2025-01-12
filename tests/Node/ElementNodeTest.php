@@ -214,7 +214,7 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getNodeText()->render(), $textClone->render());
 
         $bodyClone = $this->getNodeBody()->cloneNode(true);
-        
+
         $this->assertNotSame($this->getNodeBody(), $bodyClone);
         $this->assertSame($this->getNodeBody()->render(), $bodyClone->render());
     }

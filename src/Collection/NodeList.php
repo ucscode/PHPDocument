@@ -12,7 +12,7 @@ use Ucscode\UssElement\Contracts\ElementInterface;
  *
  * @template TKey of int
  * @template TValue of NodeInterface|ElementInterface
- * @extends AbstractCollection<int, TValue>
+ * @extends AbstractCollection<TKey, TValue>
  * @property NodeInterface[] $items
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

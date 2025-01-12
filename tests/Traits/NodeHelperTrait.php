@@ -13,7 +13,7 @@ trait NodeHelperTrait
 {
     protected NodeList $nodeList;
     protected Transformer $transformer;
-    
+
     protected function setUp(): void
     {
         $this->transformer = new Transformer();

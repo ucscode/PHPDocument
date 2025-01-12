@@ -66,6 +66,7 @@ class HtmlLoader
             };
         }
 
+        // @phpstan-ignore-next-line
         $this->nodeList = new NodeList($collection);
     }
 
@@ -84,7 +85,7 @@ class HtmlLoader
                 // var_dump($domNode);
             };
         };
-        
+
         return match($domNode->nodeType) {
             NodeTypeEnum::NODE_COMMENT->value => $this->createCommentNode($domNode),
             NodeTypeEnum::NODE_DOCUMENT_TYPE->value => $this->createDocumentTypeNode($domNode),

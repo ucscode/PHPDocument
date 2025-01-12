@@ -22,7 +22,7 @@ class NodeSelector
 {
     protected Transformer $transformer;
     /**
-     * @var array<int, ElementInterface> 
+     * @var array<int, ElementInterface>
      */
     protected array $elementList = [];
 
