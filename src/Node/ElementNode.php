@@ -29,6 +29,10 @@ class ElementNode extends AbstractNode implements ElementInterface
     protected ClassList $classList;
     protected Attributes $attributes;
 
+    /**
+     * @param string|NodeNameEnum $nodeName
+     * @param array<string, mixed> $attributes
+     */
     public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
     {
         parent::__construct();
@@ -126,6 +130,9 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->isVoid() ? null : sprintf('</%s>', strtolower($this->nodeName));
     }
 
+    /**
+     * @return ElementList<int, ElementInterface>
+     */
     public function getChildren(): ElementList
     {
         $filter = array_filter(
@@ -133,6 +140,7 @@ class ElementNode extends AbstractNode implements ElementInterface
             fn (NodeInterface $node) => $node->getNodeType() === NodeTypeEnum::NODE_ELEMENT->value
         );
 
+        // @phpstan-ignore-next-line
         return new ElementList($filter);
     }
 
@@ -153,6 +161,9 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->attributes->has($name);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getAttributeNames(): array
     {
         return $this->attributes->getNames();
@@ -185,6 +196,10 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this;
     }
 
+    /**
+     * @param string $selector
+     * @return ElementList<int, ElementInterface>
+     */
     public function querySelectorAll(string $selector): ElementList
     {
         return (new NodeSelector($this, $selector))->getResult();
@@ -204,6 +219,10 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $matcher->matchesNode();
     }
 
+    /**
+     * @param string $names
+     * @return ElementList<int, ElementInterface>
+     */
     public function getElementsByClassName(string $names): ElementList
     {
         $classes = implode('.', array_map('trim', explode(' ', $names)));
@@ -211,6 +230,10 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->querySelectorAll(".{$classes}");
     }
 
+    /**
+     * @param string $name
+     * @return ElementList<int, ElementInterface>
+     */
     public function getElementsByTagName(string $name): ElementList
     {
         return $this->querySelectorAll($name);

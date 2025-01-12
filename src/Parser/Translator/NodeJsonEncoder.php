@@ -28,7 +28,7 @@ class NodeJsonEncoder implements \Stringable
     /**
      * Convert node instance to array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function normalize(): array
     {
@@ -56,7 +56,7 @@ class NodeJsonEncoder implements \Stringable
      *
      * @param NodeInterface $node
      * @param NodeInterface|null $parent
-     * @return array
+     * @return array<string, mixed>
      */
     private function createElementArray(NodeInterface $node, ?NodeInterface $parent): array
     {
@@ -86,7 +86,7 @@ class NodeJsonEncoder implements \Stringable
      * CharacterData meta data
      *
      * @param AbstractCharacterData $node
-     * @return array
+     * @return array<string, mixed>
      */
     private function getCharacterDataMeta(AbstractCharacterData $node): array
     {
@@ -99,7 +99,7 @@ class NodeJsonEncoder implements \Stringable
      * Normalize element attributes to array
      *
      * @param NodeInterface $node
-     * @return array
+     * @return null|array<string, mixed>
      */
     private function normalizeAttributes(NodeInterface $node): ?array
     {

@@ -15,8 +15,14 @@ abstract class AbstractCollection implements CollectionInterface
 {
     abstract protected function validateItem(mixed $item): void;
 
+    /**
+     * @var array<TKey, TValue>
+     */
     protected array $items;
 
+    /**
+     * @param array<TKey, TValue> $items
+     */
     public function __construct(array $items = [])
     {
         $this->replaceItemsProperty($items);
@@ -38,7 +44,7 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * Return the collection as an array
      *
-     * @return array
+     * @return array<TKey, TValue>
      */
     public function toArray(): array
     {
@@ -83,7 +89,7 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * Replace every item in the list
      *
-     * @param array $items
+     * @param array<TKey, TValue> $items
      * @return static
      */
     protected function replaceItemsProperty(array $items): static

@@ -15,7 +15,7 @@ class Matcher
     protected ?AttributeMatcher $attributeMatcher = null;
 
     /**
-     * @var array<string, mixed>
+     * @var array<string, null|bool>
      */
     protected array $matches = [
         'tag' => null,
@@ -36,6 +36,9 @@ class Matcher
         $this->validateNodeAgainstTokenizer();
     }
 
+    /**
+     * @return array<string, bool>
+     */
     public function getMatches(): array
     {
         return $this->matches;

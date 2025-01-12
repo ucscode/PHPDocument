@@ -13,6 +13,9 @@ namespace Ucscode\UssElement\Contracts;
  */
 interface CollectionInterface extends \IteratorAggregate, \Countable
 {
+    /**
+     * @return array<TKey, TValue>
+     */
     public function toArray(): array;
     public function isEmpty(): bool;
     public function sort(callable $callback): static;

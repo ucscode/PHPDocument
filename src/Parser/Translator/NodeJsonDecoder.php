@@ -24,7 +24,7 @@ class NodeJsonDecoder
     /**
      * Return an array of the decoded node json
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function normalize(): array
     {
@@ -44,7 +44,7 @@ class NodeJsonDecoder
     /**
      * Recursive node instance creator
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param NodeInterface|null $parent
      * @return NodeInterface
      */
@@ -69,7 +69,7 @@ class NodeJsonDecoder
     /**
      * Factory and configuration method for comment nodes
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return CommentNode
      */
     private function createCommentNode(array $data): CommentNode
@@ -82,7 +82,7 @@ class NodeJsonDecoder
     /**
      * Factory and configuration method for text nodes
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return TextNode
      */
     private function createTextNode(array $data): TextNode
@@ -95,7 +95,7 @@ class NodeJsonDecoder
     /**
      * Factory and configuration method for document type nodes
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return DocumentTypeNode
      */
     private function createDocumentTypeNode(array $data): DocumentTypeNode
@@ -108,7 +108,7 @@ class NodeJsonDecoder
     /**
      * Factory and configuration method for element nodes
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return ElementNode
      */
     private function createElementNode(array $data): ElementNode
@@ -125,7 +125,7 @@ class NodeJsonDecoder
      *
      * @template T of NodeInterface
      * @param T $node
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return T
      */
     private function configureNode(NodeInterface $node, array $data): NodeInterface

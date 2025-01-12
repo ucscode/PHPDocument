@@ -64,7 +64,7 @@ class ObjectReflector
      * Invoke a private or protected method with an array of arguments
      *
      * @param string $name
-     * @param array $args
+     * @param mixed[] $args
      * @return mixed
      * @throws \ReflectionException
      */

@@ -20,9 +20,10 @@ use Ucscode\UssElement\Parser\Engine\Transformer;
  */
 class NodeSelector
 {
-    // Abstract Syntax Tree
-    protected array $selectorAST;
     protected Transformer $transformer;
+    /**
+     * @var array<int, ElementInterface> 
+     */
     protected array $elementList = [];
 
     public function __construct(protected ElementInterface|NodeInterface $node, protected string $selector)
@@ -33,6 +34,9 @@ class NodeSelector
         }
     }
 
+    /**
+     * @return ElementList<int, ElementInterface>
+     */
     public function getResult(): ElementList
     {
         return new ElementList($this->elementList);
@@ -63,7 +67,7 @@ class NodeSelector
     /**
      * Recursively find every child that matches the last selector in the sequence
      *
-     * @param ElementList $children  Collection of children to test for matches
+     * @param ElementList<int, ElementInterface> $children  Collection of children to test for matches
      * @param string[] $selectors       Chunk of selectors
      */
     protected function branchElementTraversal(ElementList $children, array $selectors): void
@@ -96,7 +100,7 @@ class NodeSelector
      * Once the selectors is empty, the target node becomes accepted
      *
      * @param ?ElementInterface $node   The node whose parent needs to be matched
-     * @param array $selectors          The selector sequence for matching parent nodes.
+     * @param array<string> $selectors  The selector sequence for matching parent nodes.
      * @param ElementInterface $target  The base node that started the recursion
      */
     protected function parentElementTraversal(?ElementInterface $node, array $selectors, ElementInterface $target): void

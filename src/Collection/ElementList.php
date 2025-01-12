@@ -12,7 +12,7 @@ use Ucscode\UssElement\Exception\InvalidNodeException;
  * @method ?ElementInterface get(int $index)
  * @method ?ElementInterface first()
  * @method ?ElementInterface last()
- * @template TKey of integer
+ * @template TKey of int
  * @template TValue of ElementInterface
  * @extends NodeList<TKey, TValue>
  * @author Uchenna Ajah <uche23mail@gmail.com>

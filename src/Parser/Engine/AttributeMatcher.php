@@ -15,19 +15,25 @@ use Ucscode\UssElement\Parser\Dto\AttributeDto;
  */
 class AttributeMatcher
 {
+    /**
+     * @var array<string, bool>
+     */
     public array $matches = [];
 
     /**
      * Undocumented function
      *
      * @param ElementInterface $node
-     * @param AttributeDtoCollection<int, AttributeDto> $attributeDtoCollection values are base64 encoded
+     * @param AttributeDtoCollection<string, AttributeDto> $attributeDtoCollection values are base64 encoded
      */
     public function __construct(protected ElementInterface $node, protected AttributeDtoCollection $attributeDtoCollection)
     {
         $this->validateNodeAgainstAttributes();
     }
 
+    /**
+     * @return array<string, bool>
+     */
     public function getMatches(): array
     {
         return $this->matches;

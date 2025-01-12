@@ -69,7 +69,7 @@ interface ElementInterface extends NodeInterface
     /**
      * Gets a collection of child elements.
      *
-     * @return ElementList The collection of child elements.
+     * @return ElementList<int, ElementInterface> The collection of child elements.
      */
     public function getChildren(): ElementList;
 
@@ -91,7 +91,7 @@ interface ElementInterface extends NodeInterface
     /**
      * Gets the names of all attributes on the element.
      *
-     * @return array The list of attribute names.
+     * @return array<string> The list of attribute names.
      */
     public function getAttributeNames(): array;
 
@@ -139,7 +139,7 @@ interface ElementInterface extends NodeInterface
      * Finds all elements matching a CSS selector.
      *
      * @param string $selector The CSS selector.
-     * @return ElementList The collection of matching elements.
+     * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function querySelectorAll(string $selector): ElementList;
 
@@ -162,7 +162,7 @@ interface ElementInterface extends NodeInterface
      * Finds all elements with specific class names.
      *
      * @param string $names The class names, separated by spaces.
-     * @return ElementList The collection of matching elements.
+     * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function getElementsByClassName(string $names): ElementList;
 
@@ -170,7 +170,7 @@ interface ElementInterface extends NodeInterface
      * Finds all elements with a specific tag name.
      *
      * @param string $name The tag name.
-     * @return ElementList The collection of matching elements.
+     * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function getElementsByTagName(string $name): ElementList;
 }

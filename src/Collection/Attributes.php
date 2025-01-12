@@ -8,7 +8,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
 /**
  * An instance of this class contains attribute names and values for an element
  *
- * @extends AbstractCollection<string, string>
+ * @extends AbstractCollection<string, string|null>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Attributes extends AbstractCollection implements \Stringable
@@ -43,7 +43,7 @@ class Attributes extends AbstractCollection implements \Stringable
     /**
      * Get all the names available in the attribute
      *
-     * @return array
+     * @return array<string>
      */
     public function getNames(): array
     {

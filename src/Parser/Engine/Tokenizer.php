@@ -90,7 +90,7 @@ class Tokenizer
     /**
      * Return a dto collection of attributes
      *
-     * @return AttributeDtoCollection<int, AttributeDto>
+     * @return AttributeDtoCollection<string, AttributeDto>
      */
     public function getAttributeDtoCollection(): AttributeDtoCollection
     {

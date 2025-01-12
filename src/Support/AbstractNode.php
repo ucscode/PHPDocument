@@ -15,6 +15,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 {
     protected string $nodeName;
     protected bool $visible = true;
+    /**
+     * @var NodeList<int, NodeInterface>
+     */
     protected NodeList $childNodes;
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
@@ -63,6 +66,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->visible;
     }
 
+    /**
+     * @return NodeList<int, NodeInterface>
+     */
     public function getChildNodes(): NodeList
     {
         return $this->childNodes;

@@ -9,6 +9,9 @@ use Ucscode\UssElement\Support\AbstractCollection;
 /**
  * An instance of this class holds a list of AttributoDto
  *
+ * @template TKey of string
+ * @template TValue of AttributeDto
+ * @extends AbstractCollection<TKey, TValue>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class AttributeDtoCollection extends AbstractCollection
@@ -32,11 +35,17 @@ class AttributeDtoCollection extends AbstractCollection
         return array_key_exists($name, $this->items);
     }
 
+    /**
+     * @return array<string>
+     */
     public function keys(): array
     {
         return array_keys($this->items);
     }
 
+    /**
+     * @return array<string|null>
+     */
     public function values(): array
     {
         return array_map(fn (AttributeDto $attributeDto) => $attributeDto->getValue(), $this->items);

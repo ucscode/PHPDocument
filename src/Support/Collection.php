@@ -5,6 +5,9 @@ namespace Ucscode\UssElement\Support;
 use Ucscode\UssElement\Support\AbstractCollection;
 
 /**
+ * @template TKey of int|string
+ * @template TValue
+ * @extends AbstractCollection<TKey, TValue>
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Collection extends AbstractCollection
@@ -75,7 +78,7 @@ class Collection extends AbstractCollection
     /**
      * Get a list of item keys
      *
-     * @return array
+     * @return array<string|int>
      */
     public function keys(): array
     {
@@ -85,7 +88,7 @@ class Collection extends AbstractCollection
     /**
      * Get a list of item values
      *
-     * @return array
+     * @return array<mixed>
      */
     public function values(): array
     {

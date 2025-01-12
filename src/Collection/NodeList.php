@@ -10,9 +10,9 @@ use Ucscode\UssElement\Contracts\ElementInterface;
 /**
  * An instance of this class contains items that implement the NodeInterface
  *
- * @template TKey of integer
+ * @template TKey of int
  * @template TValue of NodeInterface|ElementInterface
- * @extends AbstractCollection<TKey, TValue>
+ * @extends AbstractCollection<int, TValue>
  * @property NodeInterface[] $items
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */

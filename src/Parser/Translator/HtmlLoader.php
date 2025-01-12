@@ -24,6 +24,9 @@ use Ucscode\UssElement\Node\TextNode;
  */
 class HtmlLoader
 {
+    /**
+     * @var NodeList<int, NodeInterface>
+     */
     protected NodeList $nodeList;
 
     /**
@@ -42,6 +45,9 @@ class HtmlLoader
         $this->parseDocumentNodes($document);
     }
 
+    /**
+     * @return NodeList<int, NodeInterface>
+     */
     public function getNodeList(): NodeList
     {
         return $this->nodeList;

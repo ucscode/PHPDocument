@@ -111,7 +111,7 @@ class AttributeDto
      * Separate the attribute name from the operator
      *
      * @param string $key The attribute name + operator
-     * @return array
+     * @return array<string|null>
      * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors#syntax for attribute operator reference
      */
     public function splitKey(string $key): array

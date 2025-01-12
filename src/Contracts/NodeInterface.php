@@ -6,6 +6,7 @@ use Ucscode\UssElement\Collection\NodeList;
 
 /**
  * The base interface for all nodes
+ * 
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface NodeInterface
@@ -76,7 +77,7 @@ interface NodeInterface
     /**
      * Returns a NodeList containing all the children of this node (including elements, text and comments).
      *
-     * @return NodeList<NodeInterface>
+     * @return NodeList<int, ElementInterface|NodeInterface>
      */
     public function getChildNodes(): NodeList;
 
