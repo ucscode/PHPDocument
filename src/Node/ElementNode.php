@@ -86,7 +86,7 @@ class ElementNode extends AbstractNode implements ElementInterface
         $loadedNodes = (new HtmlLoader($html))->getNodeList()->toArray();
 
         (new ObjectReflector($this->childNodes))->invokeMethod('replaceItemsProperty', $loadedNodes);
-        
+
         return $this;
     }
 

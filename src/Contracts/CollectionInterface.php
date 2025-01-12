@@ -8,7 +8,7 @@ namespace Ucscode\UssElement\Contracts;
  * @template TKey
  * @template TValue
  * @extends \IteratorAggregate<TKey, TValue>
- * 
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface CollectionInterface extends \IteratorAggregate, \Countable

@@ -12,7 +12,7 @@ use Ucscode\UssElement\Support\AbstractCollection;
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 class Attributes extends AbstractCollection implements \Stringable
-{    
+{
     public function __toString(): string
     {
         return $this->render();

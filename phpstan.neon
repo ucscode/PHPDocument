@@ -1,4 +1,7 @@
 parameters:
-    level: 3
+    level: 4
     paths:
         - src
+    ignoreErrors:
+        - 
+            identifier: nullCoalesce.offset

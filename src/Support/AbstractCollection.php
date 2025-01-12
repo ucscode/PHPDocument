@@ -8,13 +8,13 @@ use Ucscode\UssElement\Contracts\CollectionInterface;
  * @template TKey
  * @template TValue
  * @implements CollectionInterface<TKey, TValue>
- * 
+ *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractCollection implements CollectionInterface
 {
     abstract protected function validateItem(mixed $item): void;
-    
+
     protected array $items;
 
     public function __construct(array $items = [])

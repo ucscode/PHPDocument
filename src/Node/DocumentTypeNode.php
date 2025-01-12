@@ -19,7 +19,7 @@ class DocumentTypeNode extends AbstractNode
 
         $this->nodeName = $nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName;
     }
-    
+
     public function getNodeType(): int
     {
         return NodeTypeEnum::NODE_DOCUMENT_TYPE->value;

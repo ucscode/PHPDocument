@@ -104,7 +104,7 @@ class AttributeDto
 
         // if value is empty (and not zero), express as null
         // else, remove the surrounding quotes
-        $this->value = ($value === '' || $value === null) ? null : trim($value, "'\"");
+        $this->value = in_array($value, ['', null], true) ? null : trim($value, "'\"");
     }
 
     /**

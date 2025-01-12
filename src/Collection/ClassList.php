@@ -109,7 +109,7 @@ class ClassList extends AbstractCollection implements \Stringable
             );
         }
     }
-    
+
     /**
      * Return an array of non-empty classes
      *

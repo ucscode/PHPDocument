@@ -20,7 +20,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     protected ?NodeInterface $parentNode = null;
     protected ?ElementInterface $parentElement = null;
     private int $nodeId;
-    
+
     public function __construct()
     {
         $this->nodeId = NodeSingleton::getInstance()->getNextId();
@@ -227,14 +227,14 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         /**
          * Create a clone without calling the __constructor
-         * 
+         *
          * @var static $clone
          */
         $clone = $nodeReflection->newInstanceWithoutConstructor();
-        
+
         foreach ($nodeReflection->getProperties() as $property) {
             // Allow access to private/protected properties
-            $property->setAccessible(true); 
+            $property->setAccessible(true);
             $value = $property->getValue($this);
             // $name = $property->getName();
 
@@ -252,11 +252,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
             if ($deep) {
                 if ($value instanceof NodeInterface) {
                     $value = $value->cloneNode(true); // Recursively clone child nodes
-                } 
-                
+                }
+
                 if (is_array($value)) {
                     $value = array_map(
-                        fn($item) => $item instanceof NodeInterface ? $item->cloneNode(true) : $item,
+                        fn ($item) => $item instanceof NodeInterface ? $item->cloneNode(true) : $item,
                         $value
                     );
                 }

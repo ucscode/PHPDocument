@@ -15,7 +15,7 @@ class TextNode extends AbstractCharacterData
     public function __construct(string $data = '')
     {
         parent::__construct();
-        
+
         $this->nodeName = '#text';
         $this->data = $data;
     }

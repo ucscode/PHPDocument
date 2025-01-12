@@ -106,7 +106,7 @@ class Collection extends AbstractCollection
 
     /**
      * Filter items and return instance of the collection
-     * 
+     *
      * @param callable $callback
      * @return static
      */
