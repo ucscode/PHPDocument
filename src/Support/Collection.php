@@ -100,18 +100,20 @@ class Collection extends AbstractCollection
      */
     public function map(callable $callback): static
     {
-        return new self(array_map($callback, $this->items));
+        // @phpstan-ignore-next-line
+        return new static(array_map($callback, $this->items));
     }
 
     /**
      * Filter items and return instance of the collection
-     *
+     * 
      * @param callable $callback
      * @return static
      */
     public function filter(callable $callback): static
     {
-        return new self(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
+        // @phpstan-ignore-next-line
+        return new static(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }
 
     protected function validateItem(mixed $item): void

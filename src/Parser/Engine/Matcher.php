@@ -15,7 +15,7 @@ class Matcher
     protected ?AttributeMatcher $attributeMatcher = null;
 
     /**
-     * @var array<int, boolean>
+     * @var array<string, mixed>
      */
     protected array $matches = [
         'tag' => null,

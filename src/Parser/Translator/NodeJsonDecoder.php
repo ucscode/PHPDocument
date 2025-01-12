@@ -123,9 +123,10 @@ class NodeJsonDecoder
     /**
      * General purpose configuration method for all node types
      *
-     * @param NodeInterface $node
+     * @template T of NodeInterface
+     * @param T $node
      * @param array $data
-     * @return NodeInterface
+     * @return T
      */
     private function configureNode(NodeInterface $node, array $data): NodeInterface
     {
