@@ -69,7 +69,9 @@ class NodeJsonEncoder implements \Stringable
             'void' => $node instanceof ElementInterface ? $node->isVoid() : null,
             'visible' => $node->isVisible(),
             'meta' => match($node->getNodeType()) {
+                // @phpstan-ignore-next-line
                 NodeTypeEnum::NODE_TEXT->value => $this->getCharacterDataMeta($node),
+                // @phpstan-ignore-next-line
                 NodeTypeEnum::NODE_COMMENT->value => $this->getCharacterDataMeta($node),
                 default => [],
             },

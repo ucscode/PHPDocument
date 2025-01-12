@@ -6,7 +6,6 @@ use Ucscode\UssElement\Collection\NodeList;
 
 /**
  * The base interface for all nodes
- *
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 interface NodeInterface

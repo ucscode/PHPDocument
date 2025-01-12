@@ -9,7 +9,6 @@ use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
- * @method void setParentNode(NodeInterface $parent) Sets the parent for the child element.
  * @author Uchenna Ajah <uche23mail@gmail.com>
  */
 abstract class AbstractNode implements NodeInterface, \Stringable
@@ -100,46 +99,46 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param static $node
+     * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::prepend()
      */
     public function prependChild(NodeInterface $node): static
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
 
-        $node->setParentNode($this);
+        !($node instanceof self) ?: $node->setParentNode($this);
 
         return $this;
     }
 
     /**
-     * @param static $node
+     * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::append()
      */
     public function appendChild(NodeInterface $node): static
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
 
-        $node->setParentNode($this);
+        !($node instanceof self) ?: $node->setParentNode($this);
 
         return $this;
     }
 
     /**
-     * @param static $node
+     * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::insertAt()
      */
     public function insertAdjacentNode(int $offset, NodeInterface $node): static
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
 
-        $node->setParentNode($this);
+        !($node instanceof self) ?: $node->setParentNode($this);
 
         return $this;
     }
 
     /**
-     * @param static $node
+     * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::remove()
      */
     public function removeChild(NodeInterface $node): static
@@ -147,7 +146,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         if ($this->hasChild($node)) {
             (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
 
-            $node->setParentNode(null);
+            !($node instanceof self) ?: $node->setParentNode(null);
         }
 
         return $this;
@@ -164,13 +163,14 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param static $newNode
+     * @param NodeInterface $newNode
      */
     public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
             $newNode->getParentElement()?->removeChild($newNode);
+            
             $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
@@ -178,7 +178,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param static $newNode
+     * @param NodeInterface $newNode
      */
     public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static
     {
@@ -192,6 +192,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this;
     }
 
+    /**
+     * @param NodeInterface $newNode
+     * @param NodeInterface $oldNode
+     * @return static
+     */
     public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): static
     {
         if ($this->hasChild($oldNode)) {

@@ -72,16 +72,13 @@ class HtmlLoader
     protected function createAppropriateNode(DOMNode $domNode): ?NodeInterface
     {
         if (!in_array($domNode->nodeType, [3, 10, 8])) {
-            if (!in_array(strtolower($domNode->nodeName), [
-                'div',
-                'button',
-                'p',
-                'h5'
-            ])) {
+            $debugList = ['div', 'button', 'p', 'h5'];
+
+            if (!in_array(strtolower($domNode->nodeName), $debugList)) {
                 // var_dump($domNode);
             };
         };
-
+        
         return match($domNode->nodeType) {
             NodeTypeEnum::NODE_COMMENT->value => $this->createCommentNode($domNode),
             NodeTypeEnum::NODE_DOCUMENT_TYPE->value => $this->createDocumentTypeNode($domNode),

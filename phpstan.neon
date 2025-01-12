@@ -1,7 +1,10 @@
 parameters:
-    level: 4
+    level: 5
     paths:
         - src
     ignoreErrors:
         - 
             identifier: nullCoalesce.offset
+        -
+            path: src/Parser/Translator/HtmlLoader.php
+            identifier: argument.type
