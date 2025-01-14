@@ -108,46 +108,46 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::prepend()
      */
-    public function prependChild(NodeInterface $node): static
+    public function prependChild(NodeInterface $node): ?NodeInterface
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
 
         !($node instanceof self) ?: $node->setParentNode($this);
 
-        return $this;
+        return $node;
     }
 
     /**
      * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::append()
      */
-    public function appendChild(NodeInterface $node): static
+    public function appendChild(NodeInterface $node): ?NodeInterface
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
 
         !($node instanceof self) ?: $node->setParentNode($this);
 
-        return $this;
+        return $node;
     }
 
     /**
      * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::insertAt()
      */
-    public function insertAdjacentNode(int $offset, NodeInterface $node): static
+    public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
     {
         (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
 
         !($node instanceof self) ?: $node->setParentNode($this);
 
-        return $this;
+        return $node;
     }
 
     /**
      * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::remove()
      */
-    public function removeChild(NodeInterface $node): static
+    public function removeChild(NodeInterface $node): ?NodeInterface
     {
         if ($this->hasChild($node)) {
             (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
@@ -155,7 +155,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
             !($node instanceof self) ?: $node->setParentNode(null);
         }
 
-        return $this;
+        return $node;
     }
 
     public function hasChild(NodeInterface $node): bool
@@ -171,31 +171,31 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     /**
      * @param NodeInterface $newNode
      */
-    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static
+    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
             $newNode->getParentElement()?->removeChild($newNode);
 
-            $this->insertAdjacentNode($this->childNodes->indexOf($referenceNode), $newNode);
+            $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode), $newNode);
         }
 
-        return $this;
+        return $newNode;
     }
 
     /**
      * @param NodeInterface $newNode
      */
-    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static
+    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
     {
         if ($this->hasChild($referenceNode)) {
             // detach the new Node from its previous parent
             $newNode->getParentNode()?->removeChild($newNode);
             $key = $this->childNodes->indexOf($referenceNode);
-            $this->insertAdjacentNode($key + 1, $newNode);
+            $this->insertChildAtPosition($key + 1, $newNode);
         }
 
-        return $this;
+        return $newNode;
     }
 
     /**
@@ -312,9 +312,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this;
     }
 
-    public function moveToIndex(int $index): static
+    public function moveToPosition(int $index): static
     {
-        $this->parentNode?->insertAdjacentNode($index, $this);
+        $this->parentNode?->insertChildAtPosition($index, $this);
 
         return $this;
     }

@@ -92,17 +92,17 @@ interface NodeInterface
      * Adds the specified Node argument as the last child to the current node.
      *
      * @param NodeInterface $node
-     * @return static
+     * @return null|NodeInterface
      */
-    public function appendChild(NodeInterface $node): static;
+    public function appendChild(NodeInterface $node): ?NodeInterface;
 
     /**
      * Adds the specified Node argument as the first child to the current node.
      *
      * @param NodeInterface $node
-     * @return static
+     * @return null|NodeInterface
      */
-    public function prependChild(NodeInterface $node): static;
+    public function prependChild(NodeInterface $node): ?NodeInterface;
 
     /**
      * Returns a Node representing the first direct child node of the current node, or null if the node has no child.
@@ -153,27 +153,27 @@ interface NodeInterface
      *
      * @param NodeInterface $newNode The node to be inserted
      * @param NodeInterface $referenceNode The node before which newNode is inserted. If this is null, then newNode will not be inserted
-     * @return static
+     * @return null|NodeInterface
      */
-    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): static;
+    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
 
     /**
      * Inserts a Node after the reference node as a child of a specified parent node.
      *
      * @param NodeInterface $newNode The node to be inserted
      * @param NodeInterface $referenceNode The node after which newNode is inserted. If this is null, then newNode will not be inserted
-     * @return static
+     * @return null|NodeInterface
      */
-    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): static;
+    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
 
     /**
      * Inserts a Node at a specific position relative to other child nodes of a specified parent node.
      *
      * @param integer $offset
      * @param NodeInterface $node
-     * @return static
+     * @return null|NodeInterface
      */
-    public function insertAdjacentNode(int $offset, NodeInterface $node): static;
+    public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface;
 
     /**
      * Verify that a node has the provided child node
@@ -197,18 +197,18 @@ interface NodeInterface
      * Removes a child node from the current element, which must be a child of the current node.
      *
      * @param NodeInterface $node
-     * @return static
+     * @return ?NodeInterface
      */
-    public function removeChild(NodeInterface $node): static;
+    public function removeChild(NodeInterface $node): ?NodeInterface;
 
     /**
      * Replaces one child Node of the current one with the second one given in parameter.
      *
      * @param NodeInterface $newNode The new node to replace oldChild.
      * @param NodeInterface $oldNode The child to be replaced.
-     * @return static
+     * @return ?NodeInterface
      */
-    public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): static;
+    public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): ?NodeInterface;
 
     /**
      * Clone a Node, and optionally, all of its contents.
@@ -267,7 +267,7 @@ interface NodeInterface
      *
      * @return static
      */
-    public function moveToIndex(int $index): static;
+    public function moveToPosition(int $index): static;
 
     /**
      * Convert node to json enabling seemless data transfer

@@ -49,7 +49,7 @@ class ElementNodeTest extends TestCase
         $this->assertCount(3, $this->getNodeForm()->getChildNodes());
         $this->assertSame($this->getNodeA()->getParentElement(), $this->getNodeBody());
 
-        $this->getNodeForm()->insertAdjacentNode(1, $this->getNodeImg());
+        $this->getNodeForm()->insertChildAtPosition(1, $this->getNodeImg());
         $this->assertCount(0, $this->getNodeA()->getChildNodes());
         $this->assertCount(4, $this->getNodeForm()->getChildNodes());
 
@@ -87,7 +87,7 @@ class ElementNodeTest extends TestCase
 
         $this->assertSame($this->getNodeForm()->getLastChild(), $selectNode);
 
-        $selectNode->moveToIndex(3);
+        $selectNode->moveToPosition(3);
 
         $this->assertSame($this->getNodeForm()->getChildNodes()->get(3), $selectNode);
 
