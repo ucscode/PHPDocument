@@ -112,14 +112,6 @@ interface NodeInterface
     public function getFirstChild(): ?NodeInterface;
 
     /**
-     * Verify that the specified Node argument is first in the NodeList
-     *
-     * @param NodeInterface $node
-     * @return boolean
-     */
-    public function isFirstChild(NodeInterface $node): bool;
-
-    /**
      * Returns a Node representing the last direct child node of the current node, or null if the node has no child.
      *
      * @return NodeInterface|null

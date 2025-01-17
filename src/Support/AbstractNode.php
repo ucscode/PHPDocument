@@ -89,21 +89,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         return $this->childNodes->first();
     }
 
-    public function isFirstChild(NodeInterface $node): bool
-    {
-        return $this->childNodes->first() === $node;
-    }
-
     public function getLastChild(): ?NodeInterface
     {
         return $this->childNodes->last();
     }
-
-    public function isLastChild(NodeInterface $node): bool
-    {
-        return $this->childNodes->last() === $node;
-    }
-
+    
     /**
      * @param NodeInterface $node
      * @see Ucscode\UssElement\Collection\NodeList::prepend()

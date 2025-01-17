@@ -26,7 +26,11 @@ class NodeSelector
      */
     protected array $elementList = [];
 
-    public function __construct(protected ElementInterface|NodeInterface $node, protected string $selector)
+    /**
+     * @param ElementInterface|NodeInterface $node
+     * @param string $selector
+     */
+    public function __construct(protected NodeInterface $node, protected string $selector)
     {
         if ($this->node instanceof ElementInterface) {
             $this->transformer = new Transformer();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\UssElement\Parser\Translator;
+namespace Ucscode\UssElement\Parser;
 
 use DOMAttr;
 use DOMComment;

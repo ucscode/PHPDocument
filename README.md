@@ -382,19 +382,9 @@ Both the `NodeJsonEncoder` and `NodeJsonDecoder` provide a `normalize` method to
       <td><code>NodeInterface|null</code></td>
     </tr>
     <tr>
-      <td><code>isFirstChild</code></td>
-      <td>Verify that the specified Node argument is first in the NodeList</td>
-      <td><code>boolean</code></td>
-    </tr>
-    <tr>
       <td><code>getLastChild</code></td>
       <td>Returns a Node representing the last direct child node of the node</td>
       <td><code>NodeInterface|null</code></td>
-    </tr>
-    <tr>
-      <td><code>isLastChild</code></td>
-      <td>Verify that the specified Node argument is last in the NodeList</td>
-      <td><code>boolean</code></td>
     </tr>
     <tr>
       <td><code>getNextSibling</code></td>
