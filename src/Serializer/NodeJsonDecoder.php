@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\UssElement\Parser\Translator;
+namespace Ucscode\UssElement\Serializer;
 
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;

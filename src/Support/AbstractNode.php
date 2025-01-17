@@ -5,7 +5,7 @@ namespace Ucscode\UssElement\Support;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
-use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
+use Ucscode\UssElement\Serializer\NodeJsonEncoder;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**

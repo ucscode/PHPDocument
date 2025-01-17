@@ -173,4 +173,6 @@ interface ElementInterface extends NodeInterface
      * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function getElementsByTagName(string $name): ElementList;
+
+    public function getFirstElementChild(): ?ElementInterface;
 }

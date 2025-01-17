@@ -6,8 +6,8 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
-use Ucscode\UssElement\Parser\Translator\NodeJsonDecoder;
-use Ucscode\UssElement\Parser\Translator\NodeJsonEncoder;
+use Ucscode\UssElement\Serializer\NodeJsonDecoder;
+use Ucscode\UssElement\Serializer\NodeJsonEncoder;
 use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
 
 class NodeJsonEncoderTest extends TestCase
