@@ -3,7 +3,7 @@
 namespace Ucscode\UssElement\Collection;
 
 use Ucscode\UssElement\Exception\InvalidAttributeException;
-use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Abstraction\AbstractCollection;
 
 /**
  * An instance of this class contains a list of class names for an element
@@ -97,6 +97,18 @@ class ClassList extends AbstractCollection implements \Stringable
         foreach ($this->splitClasses($value) as $class) {
             in_array($class, $this->items) ? $this->remove($class) : $this->add($class);
         }
+
+        return $this;
+    }
+
+    /**
+     * Remove all element from the class list
+     *
+     * @return static
+     */
+    public function clear(): static
+    {
+        $this->items = [];
 
         return $this;
     }

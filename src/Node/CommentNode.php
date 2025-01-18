@@ -3,7 +3,7 @@
 namespace Ucscode\UssElement\Node;
 
 use Ucscode\UssElement\Enums\NodeTypeEnum;
-use Ucscode\UssElement\Support\AbstractCharacterData;
+use Ucscode\UssElement\Abstraction\AbstractCharacterData;
 
 /**
  * An object oriented representation of HTML comment

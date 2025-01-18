@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\UssElement\Support\Internal;
+namespace Ucscode\UssElement\Support;
 
 /**
  * This class provides access to encapsulated object properties and methods

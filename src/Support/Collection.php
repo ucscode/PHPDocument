@@ -2,7 +2,7 @@
 
 namespace Ucscode\UssElement\Support;
 
-use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Abstraction\AbstractCollection;
 
 /**
  * @template TKey of int|string

@@ -3,7 +3,7 @@
 namespace Ucscode\UssElement\Collection;
 
 use Ucscode\UssElement\Exception\InvalidAttributeException;
-use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Abstraction\AbstractCollection;
 
 /**
  * An instance of this class contains attribute names and values for an element

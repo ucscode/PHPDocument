@@ -8,7 +8,7 @@ use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Exception\InvalidNodeException;
 use Ucscode\UssElement\Node\ElementNode;
-use Ucscode\UssElement\Support\Internal\ObjectReflector;
+use Ucscode\UssElement\Support\ObjectReflector;
 
 class ObjectReflectorTest extends TestCase
 {

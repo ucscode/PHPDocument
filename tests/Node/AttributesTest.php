@@ -4,8 +4,7 @@ namespace Ucscode\UssElement\Test\Node;
 
 use PHPUnit\Framework\TestCase;
 use Ucscode\UssElement\Collection\Attributes;
-use Ucscode\UssElement\Collection\AttributesMutable;
-use Ucscode\UssElement\Support\Internal\ObjectReflector;
+use Ucscode\UssElement\Support\ObjectReflector;
 
 final class AttributesTest extends TestCase
 {

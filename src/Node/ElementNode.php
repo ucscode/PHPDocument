@@ -14,8 +14,8 @@ use Ucscode\UssElement\Parser\Engine\Tokenizer;
 use Ucscode\UssElement\Parser\Engine\Transformer;
 use Ucscode\UssElement\Parser\NodeSelector;
 use Ucscode\UssElement\Parser\HtmlLoader;
-use Ucscode\UssElement\Support\AbstractNode;
-use Ucscode\UssElement\Support\Internal\ObjectReflector;
+use Ucscode\UssElement\Abstraction\AbstractNode;
+use Ucscode\UssElement\Support\ObjectReflector;
 
 /**
  * An object oriented representation of HTML element

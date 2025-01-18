@@ -4,7 +4,7 @@ namespace Ucscode\UssElement\Node;
 
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
-use Ucscode\UssElement\Support\AbstractNode;
+use Ucscode\UssElement\Abstraction\AbstractNode;
 
 /**
  * An object oriented representation of HTML doctype

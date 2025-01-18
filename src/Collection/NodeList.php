@@ -4,9 +4,8 @@ namespace Ucscode\UssElement\Collection;
 
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\InvalidNodeException;
-use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Abstraction\AbstractCollection;
 use Ucscode\UssElement\Contracts\ElementInterface;
-use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
  * An instance of this class contains items that implement the NodeInterface

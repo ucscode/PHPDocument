@@ -5,7 +5,7 @@ namespace Ucscode\UssElement\Serializer;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
-use Ucscode\UssElement\Support\AbstractCharacterData;
+use Ucscode\UssElement\Abstraction\AbstractCharacterData;
 
 /**
  * A parser that converts `NodeInteface` instance into JSON string

@@ -1,13 +1,14 @@
 <?php
 
-namespace Ucscode\UssElement\Support;
+namespace Ucscode\UssElement\Abstraction;
 
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\DOMException;
 use Ucscode\UssElement\Serializer\NodeJsonEncoder;
-use Ucscode\UssElement\Support\Internal\ObjectReflector;
+use Ucscode\UssElement\Support\NodeSingleton;
+use Ucscode\UssElement\Support\ObjectReflector;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>
@@ -275,7 +276,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         foreach ($this->childNodes->toArray() as $node) {
             $this->removeChild($node);
         }
-
+        
         return $this;
     }
 

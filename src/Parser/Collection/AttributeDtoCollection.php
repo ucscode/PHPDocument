@@ -4,7 +4,7 @@ namespace Ucscode\UssElement\Parser\Collection;
 
 use Ucscode\UssElement\Parser\Dto\AttributeDto;
 use Ucscode\UssElement\Parser\Exception\InvalidParserComponentException;
-use Ucscode\UssElement\Support\AbstractCollection;
+use Ucscode\UssElement\Abstraction\AbstractCollection;
 
 /**
  * An instance of this class holds a list of AttributoDto

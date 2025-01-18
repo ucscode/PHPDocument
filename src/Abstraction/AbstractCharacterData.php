@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\UssElement\Support;
+namespace Ucscode\UssElement\Abstraction;
 
 /**
  * @author Uchenna Ajah <uche23mail@gmail.com>

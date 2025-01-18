@@ -1,6 +1,6 @@
 <?php
 
-namespace Ucscode\UssElement\Support;
+namespace Ucscode\UssElement\Abstraction;
 
 use Ucscode\UssElement\Contracts\CollectionInterface;
 
