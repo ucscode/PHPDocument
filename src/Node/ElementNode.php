@@ -13,7 +13,7 @@ use Ucscode\UssElement\Parser\Engine\Matcher;
 use Ucscode\UssElement\Parser\Engine\Tokenizer;
 use Ucscode\UssElement\Parser\Engine\Transformer;
 use Ucscode\UssElement\Parser\NodeSelector;
-use Ucscode\UssElement\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Parser\HtmlLoader;
 use Ucscode\UssElement\Support\AbstractNode;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 

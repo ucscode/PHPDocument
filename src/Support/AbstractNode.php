@@ -5,6 +5,7 @@ namespace Ucscode\UssElement\Support;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
+use Ucscode\UssElement\Exception\DOMException;
 use Ucscode\UssElement\Serializer\NodeJsonEncoder;
 use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
@@ -76,12 +77,12 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function getNextSibling(): ?NodeInterface
     {
-        return $this->getSibling(1);
+        return $this->getNodeSibling($this->parentNode?->getChildNodes(), 1);
     }
-
+    
     public function getPreviousSibling(): ?NodeInterface
     {
-        return $this->getSibling(-1);
+        return $this->getNodeSibling($this->parentNode?->getChildNodes(), -1);
     }
 
     public function getFirstChild(): ?NodeInterface
@@ -92,60 +93,6 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function getLastChild(): ?NodeInterface
     {
         return $this->childNodes->last();
-    }
-    
-    /**
-     * @param NodeInterface $node
-     * @see Ucscode\UssElement\Collection\NodeList::prepend()
-     */
-    public function prependChild(NodeInterface $node): ?NodeInterface
-    {
-        (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
-
-        !($node instanceof self) ?: $node->setParentNode($this);
-
-        return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @see Ucscode\UssElement\Collection\NodeList::append()
-     */
-    public function appendChild(NodeInterface $node): ?NodeInterface
-    {
-        (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
-
-        !($node instanceof self) ?: $node->setParentNode($this);
-
-        return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @see Ucscode\UssElement\Collection\NodeList::insertAt()
-     */
-    public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
-    {
-        (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
-
-        !($node instanceof self) ?: $node->setParentNode($this);
-
-        return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @see Ucscode\UssElement\Collection\NodeList::remove()
-     */
-    public function removeChild(NodeInterface $node): ?NodeInterface
-    {
-        if ($this->hasChild($node)) {
-            (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
-
-            !($node instanceof self) ?: $node->setParentNode(null);
-        }
-
-        return $node;
     }
 
     public function hasChild(NodeInterface $node): bool
@@ -159,48 +106,161 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param NodeInterface $newNode
+     * @param NodeInterface $node
+     * @see Ucscode\UssElement\Collection\NodeList::insertAt()
      */
-    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
+    public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
     {
-        if ($this->hasChild($referenceNode)) {
-            // detach the new Node from its previous parent
-            $newNode->getParentElement()?->removeChild($newNode);
+        /**
+         * @var bool $inserted
+         */
+        $inserted = (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
 
-            $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode), $newNode);
+        if ($inserted) {
+            /**
+             * set current node as parent element
+             * 
+             * @var self $node
+             */
+            $node->setParentNode($this); // -> consider using ObjectReflector
+
+            return $node;
         }
 
-        return $newNode;
+        return null;
+    }
+    
+    /**
+     * @param NodeInterface $node
+     * @see Ucscode\UssElement\Collection\NodeList::prepend()
+     */
+    public function prependChild(NodeInterface $node): ?NodeInterface
+    {
+        /**
+         * @var bool $prepended
+         */
+        $prepended = (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
+
+        if ($prepended) {
+            /**
+             * set parent node to the current element
+             * 
+             * @var self $node
+             */
+            $node->setParentNode($this); // -> consider using ObjectReflector
+
+            return $node;
+        }
+
+        return null;
     }
 
     /**
-     * @param NodeInterface $newNode
+     * @param NodeInterface $node
+     * @see Ucscode\UssElement\Collection\NodeList::append()
      */
-    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
+    public function appendChild(NodeInterface $node): ?NodeInterface
     {
-        if ($this->hasChild($referenceNode)) {
-            // detach the new Node from its previous parent
-            $newNode->getParentNode()?->removeChild($newNode);
-            $key = $this->childNodes->indexOf($referenceNode);
-            $this->insertChildAtPosition($key + 1, $newNode);
+        /**
+         * @var bool $appended
+         */
+        $appended = (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
+
+        if ($appended) {
+            /**
+             * set parent node to the current element
+             * 
+             * @var self $node
+             */
+            $node->setParentNode($this); // -> consider using ObjectReflector
+
+            return $node;
         }
 
-        return $newNode;
+        return null;
     }
 
     /**
-     * @param NodeInterface $newNode
-     * @param NodeInterface $oldNode
-     * @return static
+     * @param NodeInterface $node
+     * @see Ucscode\UssElement\Collection\NodeList::remove()
      */
-    public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): static
+    public function removeChild(NodeInterface $node): ?NodeInterface
     {
-        if ($this->hasChild($oldNode)) {
-            $this->insertBefore($newNode, $oldNode);
-            $this->removeChild($oldNode);
+        if ($this->hasChild($node)) {
+            /**
+             * @var bool $removed
+             */
+            $removed = (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
+
+            if ($removed) {
+                /** 
+                 * Set parent node to null; indicating it no longer has a parent
+                 * 
+                 * @var self $node 
+                 */
+                $node->setParentNode(null); // -> consider using ObjectReflector
+
+                return $node;
+            }
         }
 
-        return $this;
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws DOMException If the referenceNode is not an actual child of the parent element
+     */
+    public function insertBefore(NodeInterface $newNode, ?NodeInterface $referenceNode): ?NodeInterface
+    {
+        if (!$referenceNode) {
+            return null;
+        }
+
+        if (!$this->hasChild($referenceNode)) {
+            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
+        }
+
+        return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode), $newNode);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws DOMException If the referenceNode is not an actual child of the parent element
+     */
+    public function insertAfter(NodeInterface $newNode, ?NodeInterface $referenceNode): ?NodeInterface
+    {
+        if (!$referenceNode) {
+            return null;
+        }
+
+        if (!$this->hasChild($referenceNode)) {
+            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
+        }
+
+        return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode) + 1, $newNode);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws DOMException if oldNode does not have a parent
+     * @throws DOMException if oldNode is not an actual child of the parent element
+     */
+    public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): ?NodeInterface
+    {
+        if (!$oldNode->getParentNode()) {
+            throw new DOMException(DOMException::NOT_FOUND_ERR);
+        }
+
+        if (!$this->hasChild($oldNode)) {
+            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
+        }
+
+        if ($this->insertBefore($newNode, $oldNode)) {
+            return $this->removeChild($oldNode);
+        }
+
+        return null;
     }
 
     public function sortChildNodes(callable $func): static
@@ -212,10 +272,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function clearChildNodes(): static
     {
-        /**
-         * @var static $node
-         */
-        foreach ($this->getChildNodes()->toArray() as $node) {
+        foreach ($this->childNodes->toArray() as $node) {
             $this->removeChild($node);
         }
 
@@ -315,14 +372,14 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     }
 
     /**
-     * @param NodeInterface $parentNode
+     * @param ?NodeInterface $parentNode
      * @return void
      */
     protected function setParentNode(?NodeInterface $parentNode): void
     {
         $this->parentNode = $parentNode;
 
-        if ($parentNode instanceof ElementInterface || $parentNode === null) {
+        if ($parentNode === null || $parentNode instanceof ElementInterface) {
             $this->parentElement = $parentNode;
         }
     }
@@ -331,13 +388,13 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      * @param integer $index Unsigned
      * @return NodeInterface|null
      */
-    private function getSibling(int $index): ?NodeInterface
+    protected function getNodeSibling(?NodeList $siblings, int $index): ?NodeInterface
     {
-        if ($this->parentNode) {
-            $parentNodelist = $this->parentNode->getChildNodes();
+        if ($siblings) {
+            $currentNodeIndex = $siblings->indexOf($this);
 
-            if (false !== $key = $parentNodelist->indexOf($this)) {
-                return $parentNodelist->get($key + $index);
+            if ($currentNodeIndex !== false) {
+                return $siblings->get($currentNodeIndex + $index);
             }
         }
 

@@ -6,6 +6,7 @@ use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\InvalidNodeException;
 use Ucscode\UssElement\Support\AbstractCollection;
 use Ucscode\UssElement\Contracts\ElementInterface;
+use Ucscode\UssElement\Support\Internal\ObjectReflector;
 
 /**
  * An instance of this class contains items that implement the NodeInterface
@@ -72,66 +73,71 @@ class NodeList extends AbstractCollection
     }
 
     /**
-     * Insert the given node at a specific position within the list
+     * Insert the given node at a specific position within the NodeList
      *
      * @param integer $index
      * @param NodeInterface $node
-     * @return static
+     * @return bool
      */
-    protected function insertAt(int $index, NodeInterface $node): static
+    protected function insertAt(int $index, NodeInterface $node): bool
     {
-        if ($this->removeParentNode($node)) {
-            array_splice($this->items, $index, 0, [$node]);
+        if ($this->removeParentNodeIfExists($node)) {
+            return !!array_splice($this->items, $index, 0, [$node]);
         }
 
-        return $this;
+        return false;
     }
 
     /**
-     * Add a node to the beginning of the list
+     * Add a node to the beginning of the NodeList
      *
      * @param NodeInterface $node
-     * @return static
+     * @return bool
      */
-    protected function prepend(NodeInterface $node): static
+    protected function prepend(NodeInterface $node): bool
     {
-        if ($this->removeParentNode($node)) {
-            array_unshift($this->items, $node);
+        if ($this->removeParentNodeIfExists($node)) {
+            return !!array_unshift($this->items, $node);
         }
 
-        return $this;
+        return false;
     }
 
     /**
-     * Add a node to the end of the list
+     * Add a node to the end of the NodeList
      *
      * @param NodeInterface $node
-     * @return static
+     * @return bool
      */
-    protected function append(NodeInterface $node): static
+    protected function append(NodeInterface $node): bool
     {
-        if ($this->removeParentNode($node)) {
-            array_push($this->items, $node);
+        if ($this->removeParentNodeIfExists($node)) {
+            return !!array_push($this->items, $node);
         }
 
-        return $this;
+        return false;
     }
 
     /**
-     * Remove a node from the list and reorder the indexes
+     * Remove a node from the NodeList and reorder the indexes
      *
      * @param NodeInterface $node
-     * @return static
+     * @return bool
      */
-    protected function remove(NodeInterface $node): static
+    protected function remove(NodeInterface $node): bool
     {
-        if (false !== $key = $this->indexOf($node)) {
-            unset($this->items[$key]);
+        $index = $this->indexOf($node);
 
+        if ($index !== false) {
+            unset($this->items[$index]);
+            
+            // reset item indexes
             $this->items = array_values($this->items);
+
+            return true;
         }
 
-        return $this;
+        return false;
     }
 
     protected function validateItem(mixed $item): void
@@ -144,16 +150,20 @@ class NodeList extends AbstractCollection
     }
 
     /**
-     * This method ensures the node is not its own parent before removing the parent
+     * Detach the node from it's previous parent element
      *
      * @param NodeInterface $node
      * @return boolean
      */
-    private function removeParentNode(NodeInterface $node): bool
+    private function removeParentNodeIfExists(NodeInterface $node): bool
     {
-        if ($node->getParentElement() !== $node) {
-            $node->getParentElement()?->removeChild($node);
+        // if node has no parent
+        if (!$node->getParentElement()) {
             return true;
+        }
+
+        if ($node->getParentElement() !== $node) {
+            return !!$node->getParentElement()->removeChild($node);
         }
 
         return false;

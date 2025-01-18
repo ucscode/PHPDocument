@@ -19,5 +19,4 @@ interface CollectionInterface extends \IteratorAggregate, \Countable
     public function toArray(): array;
     public function isEmpty(): bool;
     public function sort(callable $callback): static;
-    public function clear(): static;
 }

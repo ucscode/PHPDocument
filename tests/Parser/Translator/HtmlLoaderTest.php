@@ -3,7 +3,7 @@
 namespace Ucscode\UssElement\Test\Parser\Translator;
 
 use PHPUnit\Framework\TestCase;
-use Ucscode\UssElement\Parser\Translator\HtmlLoader;
+use Ucscode\UssElement\Parser\HtmlLoader;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Node\TextNode;
 

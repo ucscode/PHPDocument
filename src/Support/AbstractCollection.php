@@ -75,18 +75,6 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Clear the entire items of the collection
-     *
-     * @return static
-     */
-    public function clear(): static
-    {
-        $this->items = [];
-
-        return $this;
-    }
-
-    /**
      * Replace every item in the list
      *
      * @param array<TKey, TValue> $items
