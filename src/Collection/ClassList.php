@@ -104,13 +104,11 @@ class ClassList extends AbstractCollection implements \Stringable
     /**
      * Remove all element from the class list
      *
-     * @return static
+     * @return void
      */
-    public function clear(): static
+    public function clear(): void
     {
         $this->items = [];
-
-        return $this;
     }
 
     protected function validateItem(mixed $item): void
