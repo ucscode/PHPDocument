@@ -7,6 +7,7 @@ use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\DOMException;
 use Ucscode\UssElement\Serializer\NodeJsonEncoder;
+use Ucscode\UssElement\Support\Analyser;
 use Ucscode\UssElement\Support\Assertion;
 use Ucscode\UssElement\Support\NodeState;
 use Ucscode\UssElement\Support\ObjectReflector;
@@ -45,6 +46,11 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     final public function getNodeName(): string
     {
         return $this->nodeName;
+    }
+
+    final public function getNodeType(): int
+    {
+        return $this->getNodeTypeEnum()->value;
     }
 
     public function getParentNode(): ?NodeInterface
@@ -113,7 +119,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
     {
-        Assertion::isNodeInsertable($this, $node);
+        (new Assertion())->assertCanAcceptChildNode($this, $node);
 
         /** @var bool $inserted */
         $inserted = (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
@@ -133,11 +139,13 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     
     /**
      * @param NodeInterface $node
+     * @throws DOMException if node is not an Element or Document
+     * @throws DOMException if node (parameter) is same as the target node or an ancestor of the target node
      * @see Ucscode\UssElement\Collection\NodeList::prepend()
      */
     public function prependChild(NodeInterface $node): ?NodeInterface
     {
-        Assertion::isNodeInsertable($this, $node);
+        (new Assertion())->assertCanAcceptChildNode($this, $node);
         
         /** @var bool $prepended */
         $prepended = (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
@@ -158,12 +166,12 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     /**
      * {@inheritDoc}
      * @throws DOMException if node is not an Element or Document
-     * @throws DOMException if node is an ancestor or same as the target node
+     * @throws DOMException if node (parameter) is same as the target node or an ancestor of the target node
      * @see Ucscode\UssElement\Collection\NodeList::append()
      */
     public function appendChild(NodeInterface $node): ?NodeInterface
     {
-        Assertion::isNodeInsertable($this, $node);
+        (new Assertion())->assertCanAcceptChildNode($this, $node);
 
         /** @var bool $appended */
         $appended = (new ObjectReflector($this->childNodes))->invokeMethod('append', $node);
@@ -188,26 +196,22 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function removeChild(NodeInterface $node): ?NodeInterface
     {
-        if ($this->hasChild($node)) {
-            /**
-             * @var bool $removed
+        (new Assertion())->assertChildExists($this, $node);
+
+        /**  @var bool $removed */
+        $removed = (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
+
+        if ($removed) {
+            /** 
+             * Set parent node to null; indicating it no longer has a parent
+             * @var self $node 
              */
-            $removed = (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
+            $node->setParentNode(null); // -> consider using ObjectReflector
 
-            if ($removed) {
-                /** 
-                 * Set parent node to null; indicating it no longer has a parent
-                 * @var self $node 
-                 */
-                $node->setParentNode(null); // -> consider using ObjectReflector
-
-                return $node;
-            }
-
-            return null;
+            return $node;
         }
 
-        throw new DOMException(DOMException::NOT_FOUND_ERR);
+        return null;
     }
 
     /**
@@ -216,9 +220,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
     {
-        if (!$this->hasChild($referenceNode)) {
-            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
-        }
+        (new Assertion())->assertChildExists($this, $referenceNode);
 
         return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode), $newNode);
     }
@@ -229,9 +231,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
     {
-        if (!$this->hasChild($referenceNode)) {
-            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
-        }
+        (new Assertion())->assertChildExists($this, $referenceNode);
 
         return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode) + 1, $newNode);
     }
@@ -243,13 +243,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
      */
     public function replaceChild(NodeInterface $newNode, NodeInterface $oldNode): ?NodeInterface
     {
-        if (!$oldNode->getParentNode()) {
-            throw new DOMException(DOMException::NOT_FOUND_ERR);
-        }
-
-        if (!$this->hasChild($oldNode)) {
-            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
-        }
+        (new Assertion())->assertChildExists($this, $oldNode);
 
         if ($this->insertBefore($newNode, $oldNode)) {
             return $this->removeChild($oldNode);
@@ -328,7 +322,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveBeforeSibling(NodeInterface $siblingNode): ?NodeInterface
     {
-        Assertion::isSiblingMovable($this, $siblingNode);
+        (new Assertion())->canChangeSiblingsPosition($this, $siblingNode);
         
         $this->parentNode->insertBefore($this, $siblingNode);
 
@@ -337,7 +331,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function moveAfterSibling(NodeInterface $siblingNode): ?NodeInterface
     {
-        Assertion::isSiblingMovable($this, $siblingNode);
+        (new Assertion())->canChangeSiblingsPosition($this, $siblingNode);
 
         $this->parentNode->insertAfter($this, $siblingNode);
 

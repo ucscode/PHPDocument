@@ -3,6 +3,7 @@
 namespace Ucscode\UssElement\Contracts;
 
 use Ucscode\UssElement\Collection\NodeList;
+use Ucscode\UssElement\Enums\NodeTypeEnum;
 
 /**
  * The base interface for all nodes
@@ -12,21 +13,28 @@ use Ucscode\UssElement\Collection\NodeList;
 interface NodeInterface
 {
     /**
-     * Return the unique id of this node
+     * Return the unique id of the target node
      *
      * @return integer
      */
     public function getNodeId(): int;
 
     /**
-     * Return the name of the current node
+     * Return the name of the target node
      *
      * @return string
      */
     public function getNodeName(): string;
 
     /**
-     * Return the node identifier
+     * Return an enumuration instance representing the node type
+     *
+     * @return NodeTypeEnum
+     */
+    public function getNodeTypeEnum(): NodeTypeEnum;
+
+    /**
+     * Return the node type (identifier) of the target node
      *
      * @return integer
      */
@@ -57,7 +65,7 @@ interface NodeInterface
     public function render(?int $indent = null): string;
 
     /**
-     * Returns an Element that is the parent of this node.
+     * Returns an element that is the parent of the target node.
      *
      * If the node has no parent, or if that parent is not an Element, this method returns null.
      *
@@ -66,7 +74,7 @@ interface NodeInterface
     public function getParentElement(): ?ElementInterface;
 
     /**
-     * Returns a Node that is the parent of this node.
+     * Returns a node that is the parent of the target node.
      *
      * If there is no such node, like if this node is the top of the tree or if doesn't participate in a tree, this method returns null.
      *

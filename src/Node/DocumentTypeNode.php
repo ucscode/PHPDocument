@@ -20,9 +20,9 @@ class DocumentTypeNode extends AbstractNode
         $this->nodeName = $nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName;
     }
 
-    public function getNodeType(): int
+    public function getNodeTypeEnum(): NodeTypeEnum
     {
-        return NodeTypeEnum::NODE_DOCUMENT_TYPE->value;
+        return NodeTypeEnum::NODE_DOCUMENT_TYPE;
     }
 
     public function render(?int $indent = null): string

@@ -20,9 +20,9 @@ class CommentNode extends AbstractCharacterData
         $this->data = $data;
     }
 
-    public function getNodeType(): int
+    public function getNodeTypeEnum(): NodeTypeEnum
     {
-        return NodeTypeEnum::NODE_COMMENT->value;
+        return NodeTypeEnum::NODE_COMMENT;
     }
 
     public function render(?int $indent = null): string

@@ -52,8 +52,8 @@ class DOMException extends \Exception
         self::DATA_CLONE_ERR => "The object can not be cloned",
     ];
 
-    public function __construct(int $code = 0, \Throwable $previous = null)
+    public function __construct(int $code = 0, ?string $message = null, \Throwable $previous = null)
     {
-        parent::__construct($this->messages[$code] ?? 'Unknown error', $code, $previous);
+        parent::__construct($message ?? $this->messages[$code] ?? 'Unknown error', $code, $previous);
     }
 }

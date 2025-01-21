@@ -57,9 +57,9 @@ class ElementNode extends AbstractNode implements ElementInterface
         return $this->nodeName;
     }
 
-    public function getNodeType(): int
+    public function getNodeTypeEnum(): NodeTypeEnum
     {
-        return NodeTypeEnum::NODE_ELEMENT->value;
+        return NodeTypeEnum::NODE_ELEMENT;
     }
 
     public function getClassList(): ClassList

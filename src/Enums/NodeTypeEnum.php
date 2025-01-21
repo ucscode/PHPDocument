@@ -18,4 +18,9 @@ enum NodeTypeEnum: int
     case NODE_DOCUMENT = 9;
     case NODE_DOCUMENT_TYPE = 10;
     case NODE_DOCUMENT_FRAGMENT = 11;
+
+    public function getLabel(): string
+    {
+        return trim(preg_replace(['/^NODE/', '_'], ['', ' '], $this->name));
+    } 
 }
