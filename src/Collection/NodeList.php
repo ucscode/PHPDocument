@@ -80,8 +80,10 @@ class NodeList extends AbstractCollection
      */
     protected function insertAt(int $index, NodeInterface $node): bool
     {
-        if ($this->removeParentNodeIfExists($node)) {
-            return !!array_splice($this->items, $index, 0, [$node]);
+        if ($this->detachParentNode($node)) {
+            array_splice($this->items, $index, 0, [$node]);
+
+            return in_array($node, $this->items, true);
         }
 
         return false;
@@ -95,8 +97,10 @@ class NodeList extends AbstractCollection
      */
     protected function prepend(NodeInterface $node): bool
     {
-        if ($this->removeParentNodeIfExists($node)) {
-            return !!array_unshift($this->items, $node);
+        if ($this->detachParentNode($node)) {
+            array_unshift($this->items, $node);
+
+            return in_array($node, $this->items, true);
         }
 
         return false;
@@ -110,8 +114,10 @@ class NodeList extends AbstractCollection
      */
     protected function append(NodeInterface $node): bool
     {
-        if ($this->removeParentNodeIfExists($node)) {
-            return !!array_push($this->items, $node);
+        if ($this->detachParentNode($node)) {
+            array_push($this->items, $node);
+
+            return in_array($node, $this->items, true);
         }
 
         return false;
@@ -152,19 +158,15 @@ class NodeList extends AbstractCollection
      * Detach the node from it's previous parent element
      *
      * @param NodeInterface $node
-     * @return boolean
+     * @return bool
      */
-    private function removeParentNodeIfExists(NodeInterface $node): bool
+    private function detachParentNode(NodeInterface $node): bool
     {
         // if node has no parent
-        if (!$node->getParentElement()) {
-            return true;
+        if ($node->getParentNode()) {
+            return !!$node->getParentNode()->removeChild($node);
         }
-
-        if ($node->getParentElement() !== $node) {
-            return !!$node->getParentElement()->removeChild($node);
-        }
-
-        return false;
+        
+        return $node->getParentNode() === null;
     }
 }

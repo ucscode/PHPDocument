@@ -144,19 +144,19 @@ interface NodeInterface
      * Inserts a Node before the reference node as a child of a specified parent node.
      *
      * @param NodeInterface $newNode The node to be inserted
-     * @param NodeInterface $referenceNode The node before which newNode is inserted. If this is null, then newNode will not be inserted
+     * @param NodeInterface $childNode The node before which newNode is inserted. If this is null, then newNode will not be inserted
      * @return null|NodeInterface The new node that was inserted
      */
-    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
+    public function insertBefore(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface;
 
     /**
      * Inserts a Node after the reference node as a child of a specified parent node.
      *
      * @param NodeInterface $newNode The node to be inserted
-     * @param NodeInterface $referenceNode The node after which newNode is inserted. If this is null, then newNode will not be inserted
+     * @param NodeInterface $childNode The node after which newNode is inserted. If this is null, then newNode will not be inserted
      * @return null|NodeInterface The new node that was inserted
      */
-    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
+    public function insertAfter(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface;
 
     /**
      * Inserts a Node at a specific position relative to other child nodes of a specified parent node.

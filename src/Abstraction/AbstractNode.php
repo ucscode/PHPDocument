@@ -7,7 +7,6 @@ use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
 use Ucscode\UssElement\Exception\DOMException;
 use Ucscode\UssElement\Serializer\NodeJsonEncoder;
-use Ucscode\UssElement\Support\Analyser;
 use Ucscode\UssElement\Support\Assertion;
 use Ucscode\UssElement\Support\NodeState;
 use Ucscode\UssElement\Support\ObjectReflector;
@@ -120,10 +119,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
     {
         (new Assertion())->assertCanAcceptChildNode($this, $node);
-
+        
         /** @var bool $inserted */
         $inserted = (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
-
+        
         if ($inserted) {
             /**
              * set current node as parent element
@@ -216,24 +215,24 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     /**
      * {@inheritDoc}
-     * @throws DOMException If the referenceNode is not an actual child of the parent element
+     * @throws DOMException If the child node is not an actual child of the parent element
      */
-    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
+    public function insertBefore(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface
     {
-        (new Assertion())->assertChildExists($this, $referenceNode);
+        (new Assertion())->assertChildExists($this, $childNode);
 
-        return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode), $newNode);
+        return $this->insertChildAtPosition($this->childNodes->indexOf($childNode), $newNode);
     }
 
     /**
      * {@inheritDoc}
-     * @throws DOMException If the referenceNode is not an actual child of the parent element
+     * @throws DOMException If the child node is not an actual child of the parent element
      */
-    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface
+    public function insertAfter(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface
     {
-        (new Assertion())->assertChildExists($this, $referenceNode);
-
-        return $this->insertChildAtPosition($this->childNodes->indexOf($referenceNode) + 1, $newNode);
+        (new Assertion())->assertChildExists($this, $childNode);
+        
+        return $this->insertChildAtPosition($this->childNodes->indexOf($childNode) + 1, $newNode);
     }
 
     /**
