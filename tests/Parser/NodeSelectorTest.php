@@ -13,7 +13,7 @@ class NodeSelectorTest extends TestCase
     public function testNodeSelectorCases(): void
     {
         $collection = (new NodeSelector(
-            $this->getNodeBody(),
+            $this->getBodyNode(),
             '
             body .case-1, 
             div .case-1, 
@@ -24,7 +24,7 @@ class NodeSelectorTest extends TestCase
         $this->assertCount(4, $collection);
 
         $collection = (new NodeSelector(
-            $this->getNodeDiv(),
+            $this->getDivNode(),
             '
             form.btn, 
             div form .btn, 
@@ -35,7 +35,7 @@ class NodeSelectorTest extends TestCase
 
         $this->assertCount(2, $collection);
 
-        $collection = (new NodeSelector($this->getNodeBody(), '*'))->getResult();
+        $collection = (new NodeSelector($this->getBodyNode(), '*'))->getResult();
 
         $this->assertCount(8, $collection);
     }

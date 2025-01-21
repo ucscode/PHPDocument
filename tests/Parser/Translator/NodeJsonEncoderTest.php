@@ -16,7 +16,7 @@ class NodeJsonEncoderTest extends TestCase
 
     public function testElementEncoding(): string
     {
-        $encoder = new NodeJsonEncoder($this->getNodeBody());
+        $encoder = new NodeJsonEncoder($this->getBodyNode());
         $normalize = $encoder->normalize();
 
         $this->assertSame(NodeNameEnum::NODE_BODY->value, $normalize['nodeName']);
@@ -48,8 +48,8 @@ class NodeJsonEncoderTest extends TestCase
         $this->assertSame('BODY', $element->getNodeName());
         $this->assertNotNull($element->getChildren()->first());
         $this->assertSame('position-relative case-1', $element->getChildren()->first()->getAttribute('class'));
-        $this->assertSame($this->getNodeBody()->render(), $element->render());
-        $this->assertSame($this->jsonWithoutId($nodeJson), $this->jsonWithoutId($this->getNodeBody()->toJson()));
+        $this->assertSame($this->getBodyNode()->render(), $element->render());
+        $this->assertSame($this->jsonWithoutId($nodeJson), $this->jsonWithoutId($this->getBodyNode()->toJson()));
     }
 
     private function jsonWithoutId(string $json): string

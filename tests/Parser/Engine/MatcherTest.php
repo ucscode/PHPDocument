@@ -16,55 +16,55 @@ class MatcherTest extends TestCase
     {
         return [
             '.position-relative[data-theme*="dark"]' => [
-                $this->getNodeDiv(),
+                $this->getDivNode(),
                 true,
             ],
             '[name=\'username\'][value=][type="text"]' => [
-                $this->getNodeInput(),
+                $this->getInputNode(),
                 true,
             ],
             '[name=\'username\'][value=][type=""]' => [
-                $this->getNodeInput(),
+                $this->getInputNode(),
                 false,
             ],
             '[name][value="224"][type=]' => [
-                $this->getNodeInput(),
+                $this->getInputNode(),
                 true,
             ],
             '[name][value="224"][type=text]' => [
-                $this->getNodeInput(),
+                $this->getInputNode(),
                 true,
             ],
             '[name][value="224"][type=tex]' => [
-                $this->getNodeInput(),
+                $this->getInputNode(),
                 false,
             ],
             '[href$=.com][error=3]' => [
-                $this->getNodeA(),
+                $this->getANode(),
                 true,
             ],
             '[href^=https][error=3]' => [
-                $this->getNodeA(),
+                $this->getANode(),
                 true,
             ],
             '[src=300]#factor.img-fluid' => [
-                $this->getNodeImg(),
+                $this->getImgNode(),
                 false
             ],
             '[src*=300]#factor.img-fluid' => [
-                $this->getNodeImg(),
+                $this->getImgNode(),
                 true
             ],
             '[src$=/FFF]#factor.img-fluid' => [
-                $this->getNodeImg(),
+                $this->getImgNode(),
                 false
             ],
             '[src$=/FFF i]#factor.img-fluid' => [
-                $this->getNodeImg(),
+                $this->getImgNode(),
                 true
             ],
             'img[src$="/FFF" i].img-fluid#factor' => [
-                $this->getNodeImg(),
+                $this->getImgNode(),
                 true
             ],
         ];

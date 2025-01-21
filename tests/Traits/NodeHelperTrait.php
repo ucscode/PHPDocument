@@ -62,7 +62,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeBody(): NodeInterface
+    protected function getBodyNode(): NodeInterface
     {
         return $this->nodeList->get(0);
     }
@@ -70,7 +70,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeDiv(): NodeInterface
+    protected function getDivNode(): NodeInterface
     {
         return $this->nodeList->get(1);
     }
@@ -78,7 +78,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeH1(): NodeInterface
+    protected function getH1Node(): NodeInterface
     {
         return $this->nodeList->get(2);
     }
@@ -86,7 +86,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeForm(): NodeInterface
+    protected function getFormNode(): NodeInterface
     {
         return $this->nodeList->get(3);
     }
@@ -94,7 +94,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeInput(): NodeInterface
+    protected function getInputNode(): NodeInterface
     {
         return $this->nodeList->get(4);
     }
@@ -102,7 +102,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeA(): NodeInterface
+    protected function getANode(): NodeInterface
     {
         return $this->nodeList->get(5);
     }
@@ -110,7 +110,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeBr(): NodeInterface
+    protected function getBrNode(): NodeInterface
     {
         return $this->nodeList->get(6);
     }
@@ -118,7 +118,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeButton(): NodeInterface
+    protected function getButtonNode(): NodeInterface
     {
         return $this->nodeList->get(7);
     }
@@ -126,7 +126,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeImg(): NodeInterface
+    protected function getImgNode(): NodeInterface
     {
         return $this->nodeList->get(8);
     }
@@ -134,7 +134,7 @@ trait NodeHelperTrait
     /**
      * @return ElementNode
      */
-    protected function getNodeText(): NodeInterface
+    protected function getTextNode(): NodeInterface
     {
         return $this->nodeList->get(9);
     }
@@ -142,27 +142,27 @@ trait NodeHelperTrait
     protected function randomizeNodesHierarchy(): void
     {
         // body > div
-        $this->getNodeBody()->appendChild($this->getNodeDiv());
+        $this->getBodyNode()->appendChild($this->getDivNode());
 
         // body > div > h1
-        $this->getNodeDiv()->appendChild($this->getNodeH1());
+        $this->getDivNode()->appendChild($this->getH1Node());
         // body > div > a
-        $this->getNodeDiv()->appendChild($this->getNodeA());
+        $this->getDivNode()->appendChild($this->getANode());
         // body > div > form
-        $this->getNodeDiv()->appendChild($this->getNodeForm());
+        $this->getDivNode()->appendChild($this->getFormNode());
 
         // body > div > a > img
-        $this->getNodeA()->appendChild($this->getNodeImg());
+        $this->getANode()->appendChild($this->getImgNode());
 
         // body > div > form > input
-        $this->getNodeForm()->appendChild($this->getNodeInput());
+        $this->getFormNode()->appendChild($this->getInputNode());
         // body > div > form > br
-        $this->getNodeForm()->appendChild($this->getNodeBr());
+        $this->getFormNode()->appendChild($this->getBrNode());
         // body > div > form > button
-        $this->getNodeForm()->appendChild($this->getNodeButton());
+        $this->getFormNode()->appendChild($this->getButtonNode());
 
         // body > div > form > button > text
-        $this->getNodeButton()->appendChild($this->getNodeText());
+        $this->getButtonNode()->appendChild($this->getTextNode());
 
         // Visualization
         /*

@@ -220,6 +220,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertBefore(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface
     {
         (new Assertion())->assertChildExists($this, $childNode);
+        
+        if ($this->hasChild($newNode)) {
+            $this->removeChild($newNode);
+        }
 
         return $this->insertChildAtPosition($this->childNodes->indexOf($childNode), $newNode);
     }
@@ -232,6 +236,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         (new Assertion())->assertChildExists($this, $childNode);
         
+        if ($this->hasChild($newNode)) {
+            $this->removeChild($newNode);
+        }
+
         return $this->insertChildAtPosition($this->childNodes->indexOf($childNode) + 1, $newNode);
     }
 
