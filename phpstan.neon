@@ -6,5 +6,5 @@ parameters:
         - 
             identifier: nullCoalesce.offset
         -
-            path: src/Parser/Translator/HtmlLoader.php
+            path: src/Parser/HtmlLoader.php
             identifier: argument.type

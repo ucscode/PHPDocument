@@ -2,17 +2,17 @@
 
 namespace Ucscode\UssElement\Support;
 
-class NodeSingleton
+final class NodeState
 {
-    private static ?NodeSingleton $instance = null;
+    private static ?self $instance = null;
     private int $nextId = 0;
 
     /**
      * Return a single instance of this object shared between nodes for safe interaction
      *
-     * @return NodeSingleton
+     * @return self
      */
-    public static function getInstance(): NodeSingleton
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();

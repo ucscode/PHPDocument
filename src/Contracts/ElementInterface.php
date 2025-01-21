@@ -174,13 +174,46 @@ interface ElementInterface extends NodeInterface
      */
     public function getElementsByTagName(string $name): ElementList;
 
+    /**
+     * Get a collection of all parents of the target element
+     *
+     * @return ElementList<int, ElementInterface>
+     */
+    public function getParentElements(): ElementList;
+    
+    /**
+     * Get an element by id
+     *
+     * @param string $id
+     * @return ElementInterface|null
+     */
     public function getElementById(string $id): ?ElementInterface;
 
+    /**
+     * Get the first element child of the target node
+     *
+     * @return ElementInterface|null
+     */
     public function getFirstElementChild(): ?ElementInterface;
     
+    /**
+     * Get the last element child of the target node
+     *
+     * @return ElementInterface|null
+     */
     public function getLastElementChild(): ?ElementInterface;
     
+    /**
+     * Get the next element sibling of the target node
+     *
+     * @return ElementInterface|null
+     */
     public function getNextElementSibling(): ?ElementInterface;
     
+    /**
+     * Get the last element sibling of the target node
+     *
+     * @return ElementInterface|null
+     */
     public function getPreviousElementSibling(): ?ElementInterface;
 }

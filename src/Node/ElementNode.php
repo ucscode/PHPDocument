@@ -238,4 +238,45 @@ class ElementNode extends AbstractNode implements ElementInterface
     {
         return $this->querySelectorAll($name);
     }
+
+    public function getElementById(string $id): ?ElementInterface
+    {
+        return $this->querySelector(sprintf('#%s', $id));
+    }
+
+    public function getFirstElementChild(): ?ElementInterface
+    {
+        return $this->getChildren()->first();
+    }
+
+    public function getLastElementChild(): ?ElementInterface
+    {
+        return $this->getChildren()->last();
+    }
+
+    /**
+     * @return ElementList<int, ElementInterface>
+     */
+    public function getParentElements(): ElementList
+    {
+        $node = $this;
+        $parents = [];
+
+        while ($node->getParentElement()) {
+            $node = $node->getParentElement();
+            $parents[] = $node;
+        }
+
+        return new ElementList($parents);
+    }
+
+    public function getNextElementSibling(): ?ElementInterface
+    {
+        return $this->getNodeSibling($this->parentElement?->getChildren(), 1);
+    }
+
+    public function getPreviousElementSibling(): ?ElementInterface
+    {
+        return $this->getNodeSibling($this->parentElement?->getChildren(), -1);
+    }
 }

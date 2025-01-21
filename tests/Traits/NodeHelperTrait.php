@@ -142,41 +142,27 @@ trait NodeHelperTrait
     protected function randomizeNodesHierarchy(): void
     {
         // body > div
-        $this->getNodeBody()
-            ->appendChild($this->getNodeDiv())
-        ;
+        $this->getNodeBody()->appendChild($this->getNodeDiv());
 
-        // body >
-        $this->getNodeDiv()
-            // div > h1
-            ->appendChild($this->getNodeH1())
-            // div > a
-            ->appendChild($this->getNodeA())
-            // div > form
-            ->appendChild($this->getNodeForm())
-        ;
+        // body > div > h1
+        $this->getNodeDiv()->appendChild($this->getNodeH1());
+        // body > div > a
+        $this->getNodeDiv()->appendChild($this->getNodeA());
+        // body > div > form
+        $this->getNodeDiv()->appendChild($this->getNodeForm());
 
-        // body > div >
-        $this->getNodeA()
-            // a > img
-            ->appendChild($this->getNodeImg())
-        ;
+        // body > div > a > img
+        $this->getNodeA()->appendChild($this->getNodeImg());
 
-        // body > div >
-        $this->getNodeForm()
-            // form > input
-            ->appendChild($this->getNodeInput())
-            // form > br
-            ->appendChild($this->getNodeBr())
-            // form > button
-            ->appendChild($this->getNodeButton())
-        ;
+        // body > div > form > input
+        $this->getNodeForm()->appendChild($this->getNodeInput());
+        // body > div > form > br
+        $this->getNodeForm()->appendChild($this->getNodeBr());
+        // body > div > form > button
+        $this->getNodeForm()->appendChild($this->getNodeButton());
 
-        // body > div > form >
-        $this->getNodeButton()
-            // button > text
-            ->appendChild($this->getNodeText())
-        ;
+        // body > div > form > button > text
+        $this->getNodeButton()->appendChild($this->getNodeText());
 
         // Visualization
         /*

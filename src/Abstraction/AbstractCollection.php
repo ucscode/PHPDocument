@@ -75,6 +75,21 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
+     * Iterate through each item on the collection
+     *
+     * @param callable $callback
+     * @return static
+     */
+    public function each(callable $callback): static
+    {
+        foreach ($this->items as $key => $value) {
+            call_user_func($callback, $value, $key);
+        }
+
+        return $this;
+    }
+
+    /**
      * Replace every item in the list
      *
      * @param array<TKey, TValue> $items

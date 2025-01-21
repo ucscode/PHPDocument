@@ -82,11 +82,11 @@ interface NodeInterface
     public function getChildNodes(): NodeList;
 
     /**
-     * Remove all the child Nodes from the current element
+     * Remove all the child Nodes from the target element
      *
-     * @return static
+     * @return void
      */
-    public function clearChildNodes(): static;
+    public function clearChildNodes(): void;
 
     /**
      * Adds the specified Node argument as the last child to the current node.
@@ -136,19 +136,19 @@ interface NodeInterface
      * Inserts a Node before the reference node as a child of a specified parent node.
      *
      * @param NodeInterface $newNode The node to be inserted
-     * @param ?NodeInterface $referenceNode The node before which newNode is inserted. If this is null, then newNode will not be inserted
+     * @param NodeInterface $referenceNode The node before which newNode is inserted. If this is null, then newNode will not be inserted
      * @return null|NodeInterface The new node that was inserted
      */
-    public function insertBefore(NodeInterface $newNode, ?NodeInterface $referenceNode): ?NodeInterface;
+    public function insertBefore(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
 
     /**
      * Inserts a Node after the reference node as a child of a specified parent node.
      *
      * @param NodeInterface $newNode The node to be inserted
-     * @param ?NodeInterface $referenceNode The node after which newNode is inserted. If this is null, then newNode will not be inserted
+     * @param NodeInterface $referenceNode The node after which newNode is inserted. If this is null, then newNode will not be inserted
      * @return null|NodeInterface The new node that was inserted
      */
-    public function insertAfter(NodeInterface $newNode, ?NodeInterface $referenceNode): ?NodeInterface;
+    public function insertAfter(NodeInterface $newNode, NodeInterface $referenceNode): ?NodeInterface;
 
     /**
      * Inserts a Node at a specific position relative to other child nodes of a specified parent node.
@@ -213,45 +213,53 @@ interface NodeInterface
     public function sortChildNodes(callable $func): static;
 
     /**
-     * Move the current node before a sibling node within the same parent node.
+     * Check if the target node has a sibling node
+     *
+     * @param NodeInterface $siblingNode
+     * @return boolean
+     */
+    public function hasSibling(NodeInterface $siblingNode): bool;
+
+    /**
+     * Move the target node before a sibling node within the same parent node.
      *
      * Movement will not occur if the specified sibling node does not share the same parent with the current node
      *
-     * @param NodeInterface $siblingNode The reference node before which the current node is inserted
-     * @return static
+     * @param NodeInterface $siblingNode The reference node before which the target node is inserted
+     * @return ?NodeInterface The sibling node or null if failed
      */
-    public function moveBefore(NodeInterface $siblingNode): static;
+    public function moveBeforeSibling(NodeInterface $siblingNode): ?NodeInterface;
 
     /**
-     * Move the current node before a sibling node within the same parent node.
+     * Move the target node before a sibling node within the same parent node.
      *
      * Movement will not occur if the specified sibling node does not share the same parent with the current node
      *
-     * @param NodeInterface $siblingNode The reference node after which the current node is inserted
-     * @return static
+     * @param NodeInterface $siblingNode The reference node after which the target node is inserted
+     * @return ?NodeInterface The sibling node or null if failed
      */
-    public function moveAfter(NodeInterface $siblingNode): static;
+    public function moveAfterSibling(NodeInterface $siblingNode): ?NodeInterface;
 
     /**
-     * Move the current node to the first position of the its relative sibling nodes
+     * Move the target node to the first position of the its relative sibling nodes
      *
-     * @return static
+     * @return ?NodeInterface The previous first sibling or null if movement failed
      */
-    public function moveToFirst(): static;
+    public function moveToFirstSibling(): ?NodeInterface;
 
     /**
-     * Move the current node to the last position of its relative sibling nodes
+     * Move the target node to the last position of its relative sibling nodes
      *
-     * @return static
+     * @return ?NodeInterface The previous last sibling or null if movement failed
      */
-    public function moveToLast(): static;
+    public function moveToLastSibling(): ?NodeInterface;
 
     /**
-     * Move the current node to a specific position within its sibling nodes
+     * Move the target node to a specific position within its sibling nodes
      *
-     * @return static
+     * @return ?NodeInterface The previous sibling in that position or null if failed
      */
-    public function moveToPosition(int $index): static;
+    public function moveToSiblingPosition(int $index): ?NodeInterface;
 
     /**
      * Convert node to json enabling seemless data transfer
