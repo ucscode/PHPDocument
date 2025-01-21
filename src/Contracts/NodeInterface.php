@@ -2,6 +2,7 @@
 
 namespace Ucscode\UssElement\Contracts;
 
+use Ucscode\UssElement\Collection\ElementList;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
 
@@ -275,4 +276,18 @@ interface NodeInterface
      * @return string
      */
     public function toJson(): string;
+    
+    /**
+     * Get a collection of all parent nodes of the target element
+     *
+     * @return NodeList<int, NodeInterface>
+     */
+    public function getParentNodes(): NodeList;
+    
+    /**
+     * Get a collection of all parent elements of the target element
+     *
+     * @return ElementList<int, ElementInterface>
+     */
+   public function getParentElements(): ElementList;   
 }

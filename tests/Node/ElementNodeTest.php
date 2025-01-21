@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Enums\NodeNameEnum;
 use Ucscode\UssElement\Enums\NodeTypeEnum;
+use Ucscode\UssElement\Exception\DOMException;
 use Ucscode\UssElement\Node\ElementNode;
 use Ucscode\UssElement\Test\Parser\Translator\HtmlLoaderTest;
 use Ucscode\UssElement\Test\Traits\NodeHelperTrait;
@@ -240,7 +241,7 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getBodyNode()->render(), $bodyClone->render());
     }
 
-    public function elementTest(): void
+    public function testElementMethods(): void
     {
         $this->assertSame($this->getBodyNode()->getElementById('factor'), $this->getImgNode());
 
@@ -249,5 +250,19 @@ class ElementNodeTest extends TestCase
         $this->assertCount(4, $parents);
         $this->assertTrue($parents->exists($this->getDivNode()));
         $this->assertSame($this->getFormNode(), $parents->get(1));
+
+        $this->assertSame($this->getDivNode()->getNodeTypeEnum()->getLabel(), 'ELEMENT');
+    }
+
+    public function testChildAssignmentToNonElement(): void
+    {
+        $this->expectException(DOMException::class);
+        $this->getTextNode()->appendChild($this->getInputNode());
+    }
+
+    public function testAncestorAsChildNode(): void
+    {
+        $this->expectException(DOMException::class);
+        $this->getFormNode()->appendChild($this->getDivNode());
     }
 }

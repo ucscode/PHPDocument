@@ -2,6 +2,7 @@
 
 namespace Ucscode\UssElement\Abstraction;
 
+use Ucscode\UssElement\Collection\ElementList;
 use Ucscode\UssElement\Collection\NodeList;
 use Ucscode\UssElement\Contracts\ElementInterface;
 use Ucscode\UssElement\Contracts\NodeInterface;
@@ -375,6 +376,38 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function toJson(bool $prettyPrint = false): string
     {
         return (new NodeJsonEncoder($this))->encode($prettyPrint);
+    }
+
+    /**
+     * @return NodeList<int, NodeInterface>
+     */
+    public function getParentNodes(): NodeList
+    {
+        $node = $this;
+        $parents = [];
+
+        while ($node->getParentNode()) {
+            $node = $node->getParentNode();
+            $parents[] = $node;
+        }
+
+        return new NodeList($parents);
+    }
+
+    /**
+     * @return ElementList<int, ElementInterface>
+     */
+    public function getParentElements(): ElementList
+    {
+        $parents = [];
+
+        foreach ($this->getParentNodes() as $node) {
+            if ($node instanceof ElementInterface) {
+                $parents[] = $node;
+            }
+        }
+
+        return new ElementList($parents);
     }
 
     /**

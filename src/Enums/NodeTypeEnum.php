@@ -21,6 +21,6 @@ enum NodeTypeEnum: int
 
     public function getLabel(): string
     {
-        return trim(preg_replace(['/^NODE/', '_'], ['', ' '], $this->name));
+        return trim(preg_replace(['/(?:^NODE)|_/'], ' ', $this->name));
     } 
 }

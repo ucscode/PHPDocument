@@ -167,6 +167,6 @@ class NodeList extends AbstractCollection
             return !!$node->getParentNode()->removeChild($node);
         }
         
-        return $node->getParentNode() === null;
+        return true;
     }
 }

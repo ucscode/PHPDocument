@@ -173,13 +173,6 @@ interface ElementInterface extends NodeInterface
      * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function getElementsByTagName(string $name): ElementList;
-
-    /**
-     * Get a collection of all parents of the target element
-     *
-     * @return ElementList<int, ElementInterface>
-     */
-    public function getParentElements(): ElementList;
     
     /**
      * Get an element by id

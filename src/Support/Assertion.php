@@ -26,7 +26,7 @@ final class Assertion
         if (!$this->analyser->canHaveChildNode($target)) {
             throw new DOMException(
                 DOMException::HIERARCHY_REQUEST_ERR,
-                sprintf("Cannot add a child node to node of type %s", $target->getNodeTypeEnum()->getLabel())
+                sprintf("Cannot add a child node to a parent node of type %s", $target->getNodeTypeEnum()->getLabel())
             );
         }
     }
@@ -43,12 +43,8 @@ final class Assertion
 
     public function assertChildNodeIsNotAncestor(NodeInterface $target, NodeInterface $child): void
     {
-        while ($target?->getParentNode()) {
-            if ($target->getParentNode() === $child) {
-                throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
-            }
-
-            $target = $target->getParentNode();
+        if ($target->getParentNodes()->exists($child)) {
+            throw new DOMException(DOMException::HIERARCHY_REQUEST_ERR);
         }
     }
 

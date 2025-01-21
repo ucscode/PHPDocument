@@ -29,6 +29,9 @@ class DOMException extends \Exception
     public const INVALID_NODE_TYPE_ERR = 24;
     public const DATA_CLONE_ERR = 25;
     
+    /**
+     * @var array<int, string>
+     */
     private array $messages = [
         self::INDEX_SIZE_ERR => "The index is not in the allowed range",
         self::HIERARCHY_REQUEST_ERR => "The operation would yield an incorrect node tree",
