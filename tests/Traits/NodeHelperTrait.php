@@ -37,6 +37,7 @@ trait NodeHelperTrait
                 'value' => '224',
                 'type' => 'text',
                 'class' => 'case-1 case-2',
+                'id' => 'factor'
             ]),
             new ElementNode(NodeNameEnum::NODE_A, [
                 'href' => 'https://example.com',

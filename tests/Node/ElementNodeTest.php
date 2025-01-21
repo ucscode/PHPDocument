@@ -123,6 +123,7 @@ class ElementNodeTest extends TestCase
         
         $this->assertSame($selectNode->getPreviousSibling(), $this->getImgNode());
 
+        // Modification 11
         $this->getFormNode()->sortChildNodes(function ($a, $b) {
             return strcmp($a->getNodeName(), $b->getNodeName());
         });
@@ -132,10 +133,6 @@ class ElementNodeTest extends TestCase
         $this->assertSame($this->getFormNode()->getChild(2), $this->getImgNode());
         $this->assertSame($this->getFormNode()->getChild(3), $this->getInputNode());
         $this->assertSame($this->getFormNode()->getLastChild(), $selectNode);
-
-        foreach ($this->getFormNode()->getChildren() as $kid) {
-
-        };
     }
 
     public function testElementAttributes(): void
@@ -241,5 +238,16 @@ class ElementNodeTest extends TestCase
 
         $this->assertNotSame($this->getBodyNode(), $bodyClone);
         $this->assertSame($this->getBodyNode()->render(), $bodyClone->render());
+    }
+
+    public function elementTest(): void
+    {
+        $this->assertSame($this->getBodyNode()->getElementById('factor'), $this->getImgNode());
+
+        $parents = $this->getTextNode()->getParentElements();
+
+        $this->assertCount(4, $parents);
+        $this->assertTrue($parents->exists($this->getDivNode()));
+        $this->assertSame($this->getFormNode(), $parents->get(1));
     }
 }
