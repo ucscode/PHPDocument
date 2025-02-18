@@ -173,7 +173,7 @@ interface ElementInterface extends NodeInterface
      * @return ElementList<int, ElementInterface> The collection of matching elements.
      */
     public function getElementsByTagName(string $name): ElementList;
-    
+
     /**
      * Get an element by id
      *
@@ -188,21 +188,21 @@ interface ElementInterface extends NodeInterface
      * @return ElementInterface|null
      */
     public function getFirstElementChild(): ?ElementInterface;
-    
+
     /**
      * Get the last element child of the target node
      *
      * @return ElementInterface|null
      */
     public function getLastElementChild(): ?ElementInterface;
-    
+
     /**
      * Get the next element sibling of the target node
      *
      * @return ElementInterface|null
      */
     public function getNextElementSibling(): ?ElementInterface;
-    
+
     /**
      * Get the last element sibling of the target node
      *

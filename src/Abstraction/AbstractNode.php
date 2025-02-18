@@ -87,7 +87,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     {
         return $this->getNodeSibling($this->parentNode?->getChildNodes(), 1);
     }
-    
+
     public function getPreviousSibling(): ?NodeInterface
     {
         return $this->getNodeSibling($this->parentNode?->getChildNodes(), -1);
@@ -120,10 +120,10 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertChildAtPosition(int $offset, NodeInterface $node): ?NodeInterface
     {
         (new Assertion())->assertCanAcceptChildNode($this, $node);
-        
+
         /** @var bool $inserted */
         $inserted = (new ObjectReflector($this->childNodes))->invokeMethod('insertAt', $offset, $node);
-        
+
         if ($inserted) {
             /**
              * set current node as parent element
@@ -136,7 +136,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         return null;
     }
-    
+
     /**
      * @param NodeInterface $node
      * @throws DOMException if node is not an Element or Document
@@ -146,7 +146,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function prependChild(NodeInterface $node): ?NodeInterface
     {
         (new Assertion())->assertCanAcceptChildNode($this, $node);
-        
+
         /** @var bool $prepended */
         $prepended = (new ObjectReflector($this->childNodes))->invokeMethod('prepend', $node);
 
@@ -202,9 +202,9 @@ abstract class AbstractNode implements NodeInterface, \Stringable
         $removed = (new ObjectReflector($this->childNodes))->invokeMethod('remove', $node);
 
         if ($removed) {
-            /** 
+            /**
              * Set parent node to null; indicating it no longer has a parent
-             * @var self $node 
+             * @var self $node
              */
             $node->setParentNode(null); // -> consider using ObjectReflector
 
@@ -221,7 +221,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertBefore(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface
     {
         (new Assertion())->assertChildExists($this, $childNode);
-        
+
         if ($this->hasChild($newNode)) {
             $this->removeChild($newNode);
         }
@@ -236,7 +236,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
     public function insertAfter(NodeInterface $newNode, NodeInterface $childNode): ?NodeInterface
     {
         (new Assertion())->assertChildExists($this, $childNode);
-        
+
         if ($this->hasChild($newNode)) {
             $this->removeChild($newNode);
         }
@@ -287,7 +287,7 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
         // iterate properties of the target node
         foreach ($nodeReflection->getProperties() as $property) {
-            
+
             $property->setAccessible(true);
             $value = $property->getValue($this);
             // $name = $property->getName();
@@ -325,13 +325,13 @@ abstract class AbstractNode implements NodeInterface, \Stringable
 
     public function hasSibling(NodeInterface $siblingNode): bool
     {
-        return $this->parentNode?->hasChild($siblingNode);    
+        return $this->parentNode?->hasChild($siblingNode);
     }
 
     public function moveBeforeSibling(NodeInterface $siblingNode): ?NodeInterface
     {
         (new Assertion())->canChangeSiblingsPosition($this, $siblingNode);
-        
+
         $this->parentNode->insertBefore($this, $siblingNode);
 
         return $siblingNode;

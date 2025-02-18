@@ -135,7 +135,7 @@ class NodeList extends AbstractCollection
 
         if ($index !== false) {
             unset($this->items[$index]);
-            
+
             // reset item indexes
             $this->items = array_values($this->items);
 
@@ -166,7 +166,7 @@ class NodeList extends AbstractCollection
         if ($node->getParentNode()) {
             return !!$node->getParentNode()->removeChild($node);
         }
-        
+
         return true;
     }
 }

@@ -179,7 +179,7 @@ class ElementNode extends AbstractNode implements ElementInterface
             }
         }
 
-        (new ObjectReflector($this->attributes))->invokeMethod('set', $name, $value);
+        $this->attributes->set($name, $value);
 
         return $this;
     }
@@ -191,7 +191,7 @@ class ElementNode extends AbstractNode implements ElementInterface
 
     public function removeAttribute(string $name): static
     {
-        (new ObjectReflector($this->attributes))->invokeMethod('remove', $name);
+        $this->attributes->remove($name);
 
         return $this;
     }

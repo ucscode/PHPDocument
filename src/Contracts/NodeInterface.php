@@ -126,7 +126,7 @@ interface NodeInterface
      * @return NodeInterface|null
      */
     public function getLastChild(): ?NodeInterface;
-    
+
     /**
      * Returns a Node representing the next node in the tree, or null if there isn't such node.
      *
@@ -276,18 +276,18 @@ interface NodeInterface
      * @return string
      */
     public function toJson(): string;
-    
+
     /**
      * Get a collection of all parent nodes of the target element
      *
      * @return NodeList<int, NodeInterface>
      */
     public function getParentNodes(): NodeList;
-    
+
     /**
      * Get a collection of all parent elements of the target element
      *
      * @return ElementList<int, ElementInterface>
      */
-    public function getParentElements(): ElementList;   
+    public function getParentElements(): ElementList;
 }

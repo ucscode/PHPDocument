@@ -28,7 +28,7 @@ class DOMException extends \Exception
     public const TIMEOUT_ERR = 23;
     public const INVALID_NODE_TYPE_ERR = 24;
     public const DATA_CLONE_ERR = 25;
-    
+
     /**
      * @var array<int, string>
      */

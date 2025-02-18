@@ -85,7 +85,7 @@ class Attributes extends AbstractCollection implements \Stringable
      * @param string $name The attribute name.
      * @param \Stringable|string|null $value The attribute value. Null means the attribute has no value.
      */
-    protected function set(string $name, \Stringable|string|null $value): static
+    public function set(string $name, \Stringable|string|null $value): static
     {
         $this->items[$this->insensitive($name)] = $value;
 
@@ -97,7 +97,7 @@ class Attributes extends AbstractCollection implements \Stringable
      *
      * @param string $name The attribute name to remove.
      */
-    protected function remove(string $name): static
+    public function remove(string $name): static
     {
         if (array_key_exists($this->insensitive($name), $this->items)) {
             unset($this->items[$this->insensitive($name)]);
