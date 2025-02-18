@@ -33,13 +33,13 @@ class ElementNode extends AbstractNode implements ElementInterface
      * @param string|NodeNameEnum $nodeName
      * @param array<string, mixed> $attributes
      */
-    public function __construct(string|NodeNameEnum $nodeName, array $attributes = [])
+    public function __construct(string|NodeNameEnum $nodeName, array|Attributes $attributes = [])
     {
         parent::__construct();
 
         $this->nodeName = strtoupper($nodeName instanceof NodeNameEnum ? $nodeName->value : $nodeName);
         $this->tagName = $this->nodeName;
-        $this->attributes = new Attributes($attributes);
+        $this->attributes = $attributes instanceof Attributes ? $attributes : new Attributes($attributes);
         $this->classList = new ClassList();
 
         foreach ($attributes as $name => $value) {

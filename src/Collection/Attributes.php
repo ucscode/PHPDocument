@@ -13,6 +13,14 @@ use Ucscode\UssElement\Abstraction\AbstractCollection;
  */
 class Attributes extends AbstractCollection implements \Stringable
 {
+    public function __construct(array $items = [])
+    {
+        parent::__construct(array_combine(
+            array_map(fn ($key) => $this->insensitive($key), array_keys($items)),
+            array_values($items)
+        ));
+    }
+
     public function __toString(): string
     {
         return $this->render();
